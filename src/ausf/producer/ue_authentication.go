@@ -118,7 +118,7 @@ func UeAuthPostRequestProcedure(updateAuthenticationInfo models.AuthenticationIn
 
 	udmUrl :="http://192.168.2.106:29503"
 
-	udmUrl := getUdmUrl(self.NrfUri)
+	//udmUrl := getUdmUrl(self.NrfUri)
 	client := createClientToUdmUeau(udmUrl)
 	authInfoResult, _, err := client.GenerateAuthDataApi.GenerateAuthData(context.Background(), supiOrSuci, authInfoReq)
 	if err != nil {
