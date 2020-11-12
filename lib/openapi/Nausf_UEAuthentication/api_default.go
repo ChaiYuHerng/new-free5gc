@@ -258,6 +258,8 @@ func (a *DefaultApiService) UeAuthenticationsPost(ctx context.Context, authentic
 	// create path and map variables
 	localVarPath := a.client.cfg.BasePath() + "/ue-authentications"
 
+	fmt.Printf("localVarPath is %s\n",localVarPath)
+
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
