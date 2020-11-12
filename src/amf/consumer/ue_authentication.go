@@ -20,6 +20,7 @@ import (
 func SendUEAuthenticationAuthenticateRequest(ue *amf_context.AmfUe,
 	resynchronizationInfo *models.ResynchronizationInfo) (*models.UeAuthenticationCtx, *models.ProblemDetails, error) {
 	configuration := Nausf_UEAuthentication.NewConfiguration()
+	fmt.Printf("ue.AusfUri is %s\n",ue.AusfUri)
 	configuration.SetBasePath(ue.AusfUri)
 
 	client := Nausf_UEAuthentication.NewAPIClient(configuration)
