@@ -30,7 +30,7 @@ func PutUpuAck(ue *amf_context.AmfUe, upuMacIue string) error {
 func SDMGetAmData(ue *amf_context.AmfUe) (problemDetails *models.ProblemDetails, err error) {
 
 	configuration := Nudm_SubscriberDataManagement.NewConfiguration()
-	ue.NudmSDMUri :="http://192.168.2.106:29503"
+	ue.NudmSDMUri ="http://192.168.2.106:29503"
 	configuration.SetBasePath(ue.NudmSDMUri)
 	client := Nudm_SubscriberDataManagement.NewAPIClient(configuration)
 
@@ -59,7 +59,7 @@ func SDMGetAmData(ue *amf_context.AmfUe) (problemDetails *models.ProblemDetails,
 func SDMGetSmfSelectData(ue *amf_context.AmfUe) (problemDetails *models.ProblemDetails, err error) {
 
 	configuration := Nudm_SubscriberDataManagement.NewConfiguration()
-	ue.NudmSDMUri :="http://192.168.2.106:29503"
+	ue.NudmSDMUri ="http://192.168.2.106:29503"
 	configuration.SetBasePath(ue.NudmSDMUri)
 	client := Nudm_SubscriberDataManagement.NewAPIClient(configuration)
 
@@ -87,7 +87,7 @@ func SDMGetSmfSelectData(ue *amf_context.AmfUe) (problemDetails *models.ProblemD
 func SDMGetUeContextInSmfData(ue *amf_context.AmfUe) (problemDetails *models.ProblemDetails, err error) {
 
 	configuration := Nudm_SubscriberDataManagement.NewConfiguration()
-	ue.NudmSDMUri :="http://192.168.2.106:29503"
+	ue.NudmSDMUri ="http://192.168.2.106:29503"
 	configuration.SetBasePath(ue.NudmSDMUri)
 	client := Nudm_SubscriberDataManagement.NewAPIClient(configuration)
 
@@ -112,7 +112,7 @@ func SDMGetUeContextInSmfData(ue *amf_context.AmfUe) (problemDetails *models.Pro
 func SDMSubscribe(ue *amf_context.AmfUe) (problemDetails *models.ProblemDetails, err error) {
 
 	configuration := Nudm_SubscriberDataManagement.NewConfiguration()
-	ue.NudmSDMUri :="http://192.168.2.106:29503"
+	ue.NudmSDMUri ="http://192.168.2.106:29503"
 	configuration.SetBasePath(ue.NudmSDMUri)
 	client := Nudm_SubscriberDataManagement.NewAPIClient(configuration)
 
@@ -140,7 +140,7 @@ func SDMSubscribe(ue *amf_context.AmfUe) (problemDetails *models.ProblemDetails,
 
 func SDMGetSliceSelectionSubscriptionData(ue *amf_context.AmfUe) (problemDetails *models.ProblemDetails, err error) {
 	configuration := Nudm_SubscriberDataManagement.NewConfiguration()
-	ue.NudmSDMUri :="http://192.168.2.106:29503"
+	ue.NudmSDMUri ="http://192.168.2.106:29503"
 	configuration.SetBasePath(ue.NudmSDMUri)
 	client := Nudm_SubscriberDataManagement.NewAPIClient(configuration)
 
