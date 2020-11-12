@@ -25,6 +25,8 @@ func SendUEAuthenticationAuthenticateRequest(ue *amf_context.AmfUe,
 
 	client := Nausf_UEAuthentication.NewAPIClient(configuration)
 
+	fmt.Printf("client is %s\n",client)
+
 	amfSelf := amf_context.AMF_Self()
 	servedGuami := amfSelf.ServedGuamiList[0]
 
