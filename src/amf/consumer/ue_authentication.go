@@ -32,6 +32,8 @@ func SendUEAuthenticationAuthenticateRequest(ue *amf_context.AmfUe,
 
 	var authInfo models.AuthenticationInfo
 	authInfo.SupiOrSuci = ue.Suci
+
+	fmt.Printf("ue.Suci is %s\n",ue.Suci)
 	if mnc, err := strconv.Atoi(servedGuami.PlmnId.Mnc); err != nil {
 		return nil, nil, err
 	} else {
