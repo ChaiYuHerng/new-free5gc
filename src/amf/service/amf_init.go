@@ -76,7 +76,7 @@ func (*AMF) Initialize(c *cli.Context) {
 	if config.amfcfg != "" {
 		factory.InitConfigFactory(config.amfcfg)
 	} else {
-		DefaultAmfConfigPath := path_util.Gofree5gcPath("free5gc/config/amfcfg.conf")
+		DefaultAmfConfigPath := path_util.Gofree5gcPath("new-free5gc/config/amfcfg.conf")
 		factory.InitConfigFactory(DefaultAmfConfigPath)
 	}
 

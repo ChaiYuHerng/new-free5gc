@@ -9,6 +9,7 @@ import (
 	"free5gc/src/amf/producer/callback"
 	"free5gc/src/amf/util"
 	"time"
+	"fmt"
 
 	"github.com/sirupsen/logrus"
 )
@@ -30,6 +31,8 @@ func SendToRan(ran *context.AmfRan, packet []byte) {
 		ngaplog.Error("packet len is 0")
 		return
 	}
+
+	fmt.Printf("RAN IP is %s\n",ran.Conn.RemoteAddr().String())
 
 	ngaplog.Debugf("[NGAP] Send To Ran [IP: %s]", ran.Conn.RemoteAddr().String())
 
