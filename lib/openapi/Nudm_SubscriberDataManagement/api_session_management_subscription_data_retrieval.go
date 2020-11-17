@@ -71,17 +71,22 @@ func (a *SessionManagementSubscriptionDataRetrievalApiService) GetSmData(ctx con
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	fmt.Printf("Start GetSmData\n\n")
 
 	if localVarOptionals != nil && localVarOptionals.SupportedFeatures.IsSet() {
+		fmt.Printf("check1\n\n")
 		localVarQueryParams.Add("supported-features", openapi.ParameterToString(localVarOptionals.SupportedFeatures.Value(), ""))
 	}
 	if localVarOptionals != nil && localVarOptionals.SingleNssai.IsSet() {
+		fmt.Printf("check2\n\n")
 		localVarQueryParams.Add("single-nssai", openapi.ParameterToString(localVarOptionals.SingleNssai.Value(), ""))
 	}
 	if localVarOptionals != nil && localVarOptionals.Dnn.IsSet() {
+		fmt.Printf("check3\n\n")
 		localVarQueryParams.Add("dnn", openapi.ParameterToString(localVarOptionals.Dnn.Value(), ""))
 	}
 	if localVarOptionals != nil && localVarOptionals.PlmnId.IsSet() {
+		fmt.Printf("check4\n\n")
 		localVarQueryParams.Add("plmn-id", openapi.ParameterToString(localVarOptionals.PlmnId.Value(), ""))
 	}
 
@@ -114,6 +119,7 @@ func (a *SessionManagementSubscriptionDataRetrievalApiService) GetSmData(ctx con
 	if err != nil || localVarHTTPResponse == nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
+	fmt.Printf("localVarHTTPResponse is %s\n\n",localVarHTTPResponse)
 
 	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
