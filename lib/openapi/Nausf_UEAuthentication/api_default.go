@@ -283,6 +283,7 @@ func (a *DefaultApiService) UeAuthenticationsPost(ctx context.Context, authentic
 
 	r, err := openapi.PrepareRequest(ctx, a.client.cfg, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFormFileName, localVarFileName, localVarFileBytes)
 	if err != nil {
+		fmt.Printf("wrong ~~~~~~~~~~~~")
 		return localVarReturnValue, nil, err
 	}
 
