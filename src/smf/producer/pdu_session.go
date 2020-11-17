@@ -64,6 +64,8 @@ func HandlePDUSessionSMContextCreate(request models.PostSmContextsRequest) *http
 
 	smPlmnID := createData.Guami.PlmnId
 
+	fmt.Printf("smPlmnID is %s\n\n",smPlmnID)
+
 	smDataParams := &Nudm_SubscriberDataManagement.GetSmDataParamOpts{
 		Dnn:         optional.NewString(createData.Dnn),
 		PlmnId:      optional.NewInterface(smPlmnID.Mcc + smPlmnID.Mnc),
