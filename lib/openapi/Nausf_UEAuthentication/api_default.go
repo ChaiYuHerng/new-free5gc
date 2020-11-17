@@ -297,7 +297,7 @@ func (a *DefaultApiService) UeAuthenticationsPost(ctx context.Context, authentic
 	}*/
 	if err != nil {
 		fmt.Printf("wrong2 ~~~~~~~~~~~~\n")
-		fmt.Printf("localVarHTTPResponse is %s\n\n",localVarHTTPResponse)
+		fmt.Printf("err is %s\n\n",err)
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 	if localVarHTTPResponse == nil {
