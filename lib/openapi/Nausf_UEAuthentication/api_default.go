@@ -258,7 +258,7 @@ func (a *DefaultApiService) UeAuthenticationsPost(ctx context.Context, authentic
 	// create path and map variables
 	localVarPath := a.client.cfg.BasePath() + "/ue-authentications"
 
-	fmt.Printf("localVarPath is %s\n",localVarPath)
+	fmt.Printf("localVarPath is %s\n\n",localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -279,6 +279,7 @@ func (a *DefaultApiService) UeAuthenticationsPost(ctx context.Context, authentic
 
 	// body params
 	localVarPostBody = &authenticationInfo
+	fmt.Printf("localVarPostBody is %s\n\n",localVarPostBody)
 
 	r, err := openapi.PrepareRequest(ctx, a.client.cfg, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFormFileName, localVarFileName, localVarFileBytes)
 	if err != nil {
@@ -289,12 +290,15 @@ func (a *DefaultApiService) UeAuthenticationsPost(ctx context.Context, authentic
 	if err != nil || localVarHTTPResponse == nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
+	fmt.Printf("localVarHTTPResponse is %s\n\n",localVarHTTPResponse)
 
 	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
+
+	fmt.Printf("localVarBody is %s\n\n",localVarBody)
 
 	apiError := openapi.GenericOpenAPIError{
 		RawBody:     localVarBody,
