@@ -102,6 +102,7 @@ func (a *SessionManagementSubscriptionDataRetrievalApiService) GetSmData(ctx con
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	fmt.Printf("localVarHTTPHeaderAccept is %s\n\n",localVarHTTPHeaderAccept)
 
 	if localVarOptionals != nil && localVarOptionals.IfNoneMatch.IsSet() {
 		localVarHeaderParams["If-None-Match"] = openapi.ParameterToString(localVarOptionals.IfNoneMatch.Value(), "")
@@ -114,6 +115,7 @@ func (a *SessionManagementSubscriptionDataRetrievalApiService) GetSmData(ctx con
 	if err != nil {
 		return localVarReturnValue, nil, err
 	}
+	fmt.Printf("r is %s\n\n",r)
 
 	localVarHTTPResponse, err := openapi.CallAPI(a.client.cfg, r)
 	if err != nil || localVarHTTPResponse == nil {
