@@ -290,11 +290,23 @@ func (a *DefaultApiService) UeAuthenticationsPost(ctx context.Context, authentic
 	fmt.Printf("r is %s\n\n",r)
 
 	localVarHTTPResponse, err := openapi.CallAPI(a.client.cfg, r)
-	if err != nil || localVarHTTPResponse == nil {
+	/*if err != nil || localVarHTTPResponse == nil {
+		fmt.Printf("wrong2 ~~~~~~~~~~~~\n")
+		fmt.Printf("localVarHTTPResponse is %s\n\n",localVarHTTPResponse)
+		return localVarReturnValue, localVarHTTPResponse, err
+	}*/
+	if err != nil {
 		fmt.Printf("wrong2 ~~~~~~~~~~~~\n")
 		fmt.Printf("localVarHTTPResponse is %s\n\n",localVarHTTPResponse)
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
+	if localVarHTTPResponse == nil {
+		fmt.Printf("wrong3 ~~~~~~~~~~~~\n")
+		fmt.Printf("localVarHTTPResponse is %s\n\n",localVarHTTPResponse)
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+
 	fmt.Printf("localVarHTTPResponse is %s\n\n",localVarHTTPResponse)
 
 	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
