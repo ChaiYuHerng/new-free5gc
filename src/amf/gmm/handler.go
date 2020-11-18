@@ -184,7 +184,7 @@ func HandlePDUSessionEstablishmentRequest(ue *context.AmfUe, anType models.Acces
 
 		fmt.Printf("go into smfSelect\n")
 		//UeType := sNssai.Sd
-		UeType := PduSessionId
+		UeType := pduSessionID
 
 		smfID, smfUri, err := selectSmf(ue, anType, &pduSession, payload, UeType)
 		
