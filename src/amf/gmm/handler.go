@@ -319,7 +319,7 @@ func HandlePDUSessionEstablishmentRequest(ue *context.AmfUe, anType models.Acces
 }
 
 func selectSmf(ue *context.AmfUe, anType models.AccessType, pduSession *models.PduSessionContext,
-	payload []byte, UeType int32) (string, string, error) {
+	payload []byte, UeType string) (string, string, error) {
 	
 	fmt.Printf("now in the selectsmf function\n")
 
@@ -399,10 +399,10 @@ func selectSmf(ue *context.AmfUe, anType models.AccessType, pduSession *models.P
 			break
 		}
 	}*/
-	if UeType == 010203 {
+	if UeType == "010203" {
 		smfUri = "http://192.168.2.103:29502"
 		smfID = "1"
-	} else if UeType == 112233 {
+	} else if UeType == "112233" {
 		smfUri = "http://192.168.2.114:29512"
 		smfID = "2"
 	} else {
