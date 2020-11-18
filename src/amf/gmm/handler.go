@@ -320,7 +320,7 @@ func HandlePDUSessionEstablishmentRequest(ue *context.AmfUe, anType models.Acces
 }
 
 func selectSmf(ue *context.AmfUe, anType models.AccessType, pduSession *models.PduSessionContext,
-	payload []byte, UeType int) (string, string, error) {
+	payload []byte, UeType int32) (string, string, error) {
 	
 	fmt.Printf("now in the selectsmf function\n")
 
