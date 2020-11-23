@@ -515,7 +515,7 @@ func getSmDataProcedure(supi string, plmnID string, Dnn string, Snssai string, s
 		fmt.Printf("ManageSmData2\n\n")
 		fmt.Printf("sessionManagementSubscriptionDataResp is %s\n\n".sessionManagementSubscriptionDataResp)
 		fmt.Printf("Snssai is %s\n\n",Snssai)
-		fmt.Printf("Dnn is %s\n\n".Dnn)
+		fmt.Printf("Dnn is %s\n\n",Dnn)
 		smData, snssaikey, AllDnnConfigsbyDnn, AllDnns := udm_context.UDM_Self().ManageSmData(
 			sessionManagementSubscriptionDataResp, Snssai, Dnn)
 		udmUe.SetSMSubsData(smData)
