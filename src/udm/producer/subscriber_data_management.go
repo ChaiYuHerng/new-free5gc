@@ -489,6 +489,11 @@ func getSmDataProcedure(supi string, plmnID string, Dnn string, Snssai string, s
 	//fmt.Printf("clientAPI is %s\n\n",clientAPI)
 	var querySmDataParamOpts Nudr.QuerySmDataParamOpts
 	querySmDataParamOpts.SingleNssai = optional.NewInterface(Snssai)
+	fmt.Printf("Now in the getSmDataProcedure function,try to call QuerySmData\n\n")
+	fmt.Printf("context.Background() is %s\n\n",context.Background())
+	fmt.Printf("supi is %s\n\n",supi)
+	fmt.Printf("plmnID is %s\n\n",plmnID)
+	fmt.Printf("&querySmDataParamOpts is %s\n\n",&querySmDataParamOpts)
 
 	sessionManagementSubscriptionDataResp, res, err := clientAPI.SessionManagementSubscriptionDataApi.
 		QuerySmData(context.Background(), supi, plmnID, &querySmDataParamOpts)
