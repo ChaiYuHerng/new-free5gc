@@ -108,7 +108,7 @@ func (context *UDMContext) ManageSmData(smDatafromUDR []models.SessionManagement
 	smDataMap := make(map[string]models.SessionManagementSubscriptionData)
 	sNssaiList := make([]string, len(smDatafromUDR))
 	fmt.Printf("smDataMap is %s\n\n",smDataMap)
-	fmt.Printf("len(sNssaiList) us %d\n\n",len(sNssaiList))
+	fmt.Printf("len(sNssaiList) is %d, len(smDatafromUDR) is %d\n\n",len(sNssaiList),len(smDatafromUDR))
 	for item, itemData := range sNssaiList {
 		fmt.Printf("item is %d,itemData is %s\n\n",item,itemData)
 	}

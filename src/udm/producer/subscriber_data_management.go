@@ -313,6 +313,7 @@ func getSupiProcedure(supi string, plmnID string, dataSetNames []string, support
 	}
 	if res4.StatusCode == http.StatusOK {
 		udmUe := udm_context.UDM_Self().NewUdmUe(supi)
+		fmt.Printf("ManageSmData1\n\n")
 		smData, _, _, _ := udm_context.UDM_Self().ManageSmData(sessionManagementSubscriptionData, "", "")
 		udmUe.SetSMSubsData(smData)
 		subscriptionDataSets.SmData = sessionManagementSubscriptionData
@@ -510,6 +511,7 @@ func getSmDataProcedure(supi string, plmnID string, Dnn string, Snssai string, s
 
 	if res.StatusCode == http.StatusOK {
 		udmUe := udm_context.UDM_Self().NewUdmUe(supi)
+		fmt.Printf("ManageSmData2\n\n")
 		smData, snssaikey, AllDnnConfigsbyDnn, AllDnns := udm_context.UDM_Self().ManageSmData(
 			sessionManagementSubscriptionDataResp, Snssai, Dnn)
 		udmUe.SetSMSubsData(smData)
