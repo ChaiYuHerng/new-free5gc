@@ -107,6 +107,11 @@ func (context *UDMContext) ManageSmData(smDatafromUDR []models.SessionManagement
 
 	smDataMap := make(map[string]models.SessionManagementSubscriptionData)
 	sNssaiList := make([]string, len(smDatafromUDR))
+	fmt.Printf("smDataMap is %s\n\n",smDataMap)
+	fmt.Printf("len(sNssaiList) us %d\n\n",len(sNssaiList))
+	for item := range sNssaiList {
+		fmt.Printf("item is %s\n\n",item)
+	}
 	// to obtain all DNN configurations identified by "dnn" for all network slices where such DNN is available
 	AllDnnConfigsbyDnn := make([]models.DnnConfiguration, 1, len(sNssaiList))
 	// to obtain all DNN configurations for all network slice(s)
