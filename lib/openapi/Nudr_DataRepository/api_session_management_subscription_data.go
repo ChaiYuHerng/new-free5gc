@@ -65,6 +65,7 @@ func (a *SessionManagementSubscriptionDataApiService) QuerySmData(ctx context.Co
 	)
 
 	// create path and map variables
+	fmt.Printf("Now in the QuerySmData function\n\n")
 	localVarPath := a.client.cfg.BasePath() + "/subscription-data/{ueId}/{servingPlmnId}/provisioned-data/sm-data"
 	localVarPath = strings.Replace(localVarPath, "{"+"ueId"+"}", fmt.Sprintf("%v", ueId), -1)
 	localVarPath = strings.Replace(localVarPath, "{"+"servingPlmnId"+"}", fmt.Sprintf("%v", servingPlmnId), -1)
@@ -72,17 +73,25 @@ func (a *SessionManagementSubscriptionDataApiService) QuerySmData(ctx context.Co
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	fmt.Printf("localVarPath is %s\n\n",localVarPath)
+	fmt.Printf("localVarHeaderParams is %s\n\n",localVarHeaderParams)
+	fmt.Printf("localVarQueryParams is %s\n\n",localVarQueryParams)
+	fmt.Printf("localVarFormParams is %s\n\n",localVarFormParams)
 
 	if localVarOptionals != nil && localVarOptionals.SingleNssai.IsSet() {
+		fmt.Printf("check1\n")
 		localVarQueryParams.Add("single-nssai", openapi.ParameterToString(localVarOptionals.SingleNssai.Value(), ""))
 	}
 	if localVarOptionals != nil && localVarOptionals.Dnn.IsSet() {
+		fmt.Printf("check2\n")
 		localVarQueryParams.Add("dnn", openapi.ParameterToString(localVarOptionals.Dnn.Value(), ""))
 	}
 	if localVarOptionals != nil && localVarOptionals.Fields.IsSet() {
+		fmt.Printf("check3\n")
 		localVarQueryParams.Add("fields", openapi.ParameterToString(localVarOptionals.Fields.Value(), "csv"))
 	}
 	if localVarOptionals != nil && localVarOptionals.SupportedFeatures.IsSet() {
+		fmt.Printf("check4\n")
 		localVarQueryParams.Add("supported-features", openapi.ParameterToString(localVarOptionals.SupportedFeatures.Value(), ""))
 	}
 
