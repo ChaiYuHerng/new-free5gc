@@ -105,29 +105,35 @@ func (a *SessionManagementSubscriptionDataApiService) QuerySmData(ctx context.Co
 	// set Accept header
 	localVarHTTPHeaderAccept := openapi.SelectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
+		fmt.Printf("check5\n")
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
 
 	if localVarOptionals != nil && localVarOptionals.IfNoneMatch.IsSet() {
+		fmt.Printf("check6\n")
 		localVarHeaderParams["If-None-Match"] = openapi.ParameterToString(localVarOptionals.IfNoneMatch.Value(), "")
 	}
 	if localVarOptionals != nil && localVarOptionals.IfModifiedSince.IsSet() {
+		fmt.Printf("check7\n")
 		localVarHeaderParams["If-Modified-Since"] = openapi.ParameterToString(localVarOptionals.IfModifiedSince.Value(), "")
 	}
 
 	r, err := openapi.PrepareRequest(ctx, a.client.cfg, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFormFileName, localVarFileName, localVarFileBytes)
 	if err != nil {
+		fmt.Printf("check8\n")
 		return localVarReturnValue, nil, err
 	}
 
 	localVarHTTPResponse, err := openapi.CallAPI(a.client.cfg, r)
 	if err != nil || localVarHTTPResponse == nil {
+		fmt.Printf("check9\n")
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
 	if err != nil {
+		fmt.Printf("check10\n")
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
