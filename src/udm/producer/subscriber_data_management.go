@@ -486,7 +486,7 @@ func getSmDataProcedure(supi string, plmnID string, Dnn string, Snssai string, s
 	logger.SdmLog.Infof("getSmDataProcedure: SUPI[%s] PLMNID[%s] DNN[%s] SNssai[%s]", supi, plmnID, Dnn, Snssai)
 
 	clientAPI := createUDMClientToUDR(supi, false)
-	fmt.Printf("clientAPI is %s\n\n",clientAPI)
+	//fmt.Printf("clientAPI is %s\n\n",clientAPI)
 	var querySmDataParamOpts Nudr.QuerySmDataParamOpts
 	querySmDataParamOpts.SingleNssai = optional.NewInterface(Snssai)
 
