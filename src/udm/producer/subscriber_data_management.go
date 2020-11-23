@@ -511,6 +511,7 @@ func getSmDataProcedure(supi string, plmnID string, Dnn string, Snssai string, s
 
 	if res.StatusCode == http.StatusOK {
 		udmUe := udm_context.UDM_Self().NewUdmUe(supi)
+		fmt.Printf("udmUe is %s\n\n",udmUe)
 		fmt.Printf("ManageSmData2\n\n")
 		smData, snssaikey, AllDnnConfigsbyDnn, AllDnns := udm_context.UDM_Self().ManageSmData(
 			sessionManagementSubscriptionDataResp, Snssai, Dnn)
