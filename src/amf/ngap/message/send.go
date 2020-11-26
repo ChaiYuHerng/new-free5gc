@@ -283,6 +283,7 @@ func SendPDUSessionResourceSetupRequest(ue *context.RanUe, nasPdu []byte,
 		return
 	}
 	SendToRanUe(ue, pkt)
+	fmt.Printf("pkt is %v\n\n",pkt)
 }
 
 // pduSessionResourceModifyConfirmList: provided by AMF, and transfer data is return from SMF
