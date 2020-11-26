@@ -227,7 +227,7 @@ func TestRegistration(t *testing.T) {
 	var recvMsg = make([]byte, 2048)
 
 	// RAN connect to AMF
-	conn, err := conntectToAmf(amfIpAddr, ranIpAddr, 38412, 9487)
+	conn, err := ConntectToAmf(amfIpAddr, ranIpAddr, 38412, 9487)
 	assert.Nil(t, err)
         fmt.Printf("RAN connect to AMF\n")
 	// RAN connect to UPF
@@ -311,7 +311,7 @@ func TestRegistration(t *testing.T) {
 	//}
 
 	ueSecurityCapability := setUESecurityCapability(ue)
-	registrationRequest := nasTestpacket.GetRegistrationRequestWith5GMM(nasMessage.RegistrationType5GSInitialRegistration, mobileIdentity5GS, nil, nil, ueSecurityCapability)
+	registrationRequest := nasTestpacket.GetRegistrationRequest(nasMessage.RegistrationType5GSInitialRegistration, mobileIdentity5GS, nil, nil, ueSecurityCapability)
 	sendMsg, err = test.GetInitialUEMessage(ue.RanUeNgapId, registrationRequest, "")
 	assert.Nil(t, err)
 	_, err = conn.Write(sendMsg)
@@ -324,7 +324,7 @@ func TestRegistration(t *testing.T) {
 	assert.Nil(t, err)
         fmt.Printf("receive NAS Authentication Request Msg\n")
 	// Calculate for RES*
-	nasPdu := test.GetNasPdu(ngapMsg.InitiatingMessage.Value.DownlinkNASTransport)
+	nasPdu := test.GetNasPdu(ue,ngapMsg.InitiatingMessage.Value.DownlinkNASTransport)
 	assert.NotNil(t, nasPdu)
 	rand := nasPdu.AuthenticationRequest.GetRANDValue()
 	resStat := ue.DeriveRESstarAndSetKey(ue.AuthenticationSubs, rand[:], "5G:mnc093.mcc208.3gppnetwork.org")
