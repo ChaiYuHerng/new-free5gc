@@ -282,7 +282,7 @@ func SendPDUSessionResourceSetupRequest(ue *context.RanUe, nasPdu []byte,
 		ngaplog.Errorf("Build PDUSessionResourceSetupRequest failed : %s", err.Error())
 		return
 	}
-	fmt.Printf("pkt is %v\n\n",pkt)
+	fmt.Printf("ue is %v, pkt is %v\n\n",ue,pkt)
 	SendToRanUe(ue, pkt)
 }
 
