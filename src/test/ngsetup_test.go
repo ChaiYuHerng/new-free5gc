@@ -1,13 +1,13 @@
 package test_test
 
 import (
-	"flag"
-	"fmt"
+	//"flag"
+	//"fmt"
 	"free5gc/lib/CommonConsumerTestData/UDM/TestGenAuthData"
 	"free5gc/lib/MongoDBLibrary"
 	"free5gc/lib/nas/security"
 	"free5gc/lib/ngap"
-	"free5gc/lib/path_util"
+	//"free5gc/lib/path_util"
 	amf_service "free5gc/src/amf/service"
 	"free5gc/src/app"
 	ausf_service "free5gc/src/ausf/service"
@@ -18,14 +18,14 @@ import (
 	"free5gc/src/test"
 	udm_service "free5gc/src/udm/service"
 	udr_service "free5gc/src/udr/service"
-	"log"
-	"os"
+	//"log"
+	//"os"
 	"sync"
 	"testing"
-	"time"
+	//"time"
 
 	"github.com/stretchr/testify/assert"
-	"github.com/urfave/cli"
+	//"github.com/urfave/cli"
 )
 
 var NFs = []app.NetworkFunction{
