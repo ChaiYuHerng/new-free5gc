@@ -282,8 +282,8 @@ func SendPDUSessionResourceSetupRequest(ue *context.RanUe, nasPdu []byte,
 		ngaplog.Errorf("Build PDUSessionResourceSetupRequest failed : %s", err.Error())
 		return
 	}
-	SendToRanUe(ue, pkt)
 	fmt.Printf("pkt is %v\n\n",pkt)
+	SendToRanUe(ue, pkt)
 }
 
 // pduSessionResourceModifyConfirmList: provided by AMF, and transfer data is return from SMF
