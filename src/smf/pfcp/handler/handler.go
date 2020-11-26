@@ -191,7 +191,7 @@ func HandlePfcpSessionEstablishmentResponse(msg *pfcpUdp.Message) {
 		smContext.SMContextState = smf_context.Active
 		logger.CtxLog.Traceln("SMContextState Change State: ", smContext.SMContextState.String())
 		if err != nil {
-			logger.PfcpLog.Warnf("Send N1N2Transfer failed")
+			logger.PfcpLog.Warnf("Send N1N2Transfer failed1")
 		}
 		if rspData.Cause == models.N1N2MessageTransferCause_N1_MSG_NOT_TRANSFERRED {
 			logger.PfcpLog.Warnf("%v", rspData.Cause)
@@ -367,7 +367,7 @@ func HandlePfcpSessionReportRequest(msg *pfcpUdp.Message) {
 				N1N2MessageTransfer(context.Background(), smContext.Supi, n1n2Request)
 
 			if err != nil {
-				logger.PfcpLog.Warnf("Send N1N2Transfer failed")
+				logger.PfcpLog.Warnf("Send N1N2Transfer failed2")
 			}
 			if rspData.Cause == models.N1N2MessageTransferCause_ATTEMPTING_TO_REACH_UE {
 				logger.PfcpLog.Infof("Receive %v, AMF is able to page the UE", rspData.Cause)
