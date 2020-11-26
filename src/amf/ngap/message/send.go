@@ -32,7 +32,7 @@ func SendToRan(ran *context.AmfRan, packet []byte) {
 		return
 	}
 
-	fmt.Printf("RAN IP is %s\n",ran.Conn.RemoteAddr().String())
+	fmt.Printf("RAN IP is %v\n",ran.Conn.RemoteAddr())
 
 	ngaplog.Debugf("[NGAP] Send To Ran [IP: %s]", ran.Conn.RemoteAddr().String())
 
