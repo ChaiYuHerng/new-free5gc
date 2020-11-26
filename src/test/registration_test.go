@@ -227,7 +227,7 @@ func TestRegistration(t *testing.T) {
 	var recvMsg = make([]byte, 2048)
 
 	// RAN connect to AMF
-	conn, err := ConntectToAmf(amfIpAddr, ranIpAddr, 38412, 9487)
+	conn, err := test.ConntectToAmf(amfIpAddr, ranIpAddr, 38412, 9487)
 	assert.Nil(t, err)
         fmt.Printf("RAN connect to AMF\n")
 	// RAN connect to UPF
