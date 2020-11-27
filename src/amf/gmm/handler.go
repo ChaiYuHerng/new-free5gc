@@ -805,7 +805,7 @@ func HandleInitialRegistration(ue *context.AmfUe, anType models.AccessType) erro
 	} else {
 		/*gmm_message.SendRegistrationReject(ue.RanUe[anType], nasMessage.Cause5GMMProtocolErrorUnspecified, "")
 		return fmt.Errorf("Capability5GMM is nil")*/
-		ue.Capability5GMM = "{16 1 [7 0 0 0 0 0 0 0 0 0 0 0 0]}"
+		//ue.Capability5GMM = "{16 1 [7 0 0 0 0 0 0 0 0 0 0 0 0]}"
 	}
 
 	storeLastVisitedRegisteredTAI(ue, ue.RegistrationRequest.LastVisitedRegisteredTAI)
@@ -969,7 +969,7 @@ func HandleMobilityAndPeriodicRegistrationUpdating(ue *context.AmfUe, anType mod
 			gmm_message.SendRegistrationReject(ue.RanUe[anType], nasMessage.Cause5GMMProtocolErrorUnspecified, "")
 			return fmt.Errorf("Capability5GMM is nil")
 		}*/
-		ue.Capability5GMM = "{16 1 [7 0 0 0 0 0 0 0 0 0 0 0 0]}"
+		//ue.Capability5GMM = "{16 1 [7 0 0 0 0 0 0 0 0 0 0 0 0]}"
 	}
 
 	storeLastVisitedRegisteredTAI(ue, ue.RegistrationRequest.LastVisitedRegisteredTAI)
