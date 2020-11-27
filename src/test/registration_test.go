@@ -46,7 +46,7 @@ var udpPacketCount int =        15000
 var totalUdpPacket int = 120000000000
 
 const my_type int = 1
-const ranIpAddr string = "192.168.2.157"
+const ranIpAddr string = "192.168.2.151"
 const amfIpAddr string = "192.168.2.102" // no need to change
 const upfIpAddr1 string = "192.168.2.111" // 110, 111
 const upfIpAddr2 string = "192.168.2.112" // 110, 111
