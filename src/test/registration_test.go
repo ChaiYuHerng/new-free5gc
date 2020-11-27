@@ -512,13 +512,13 @@ func TestTransfer(t *testing.T) {
     wg.Add(1)
     go icmpTrafficGenerator2(1, "60.60.0.1", upfConn2, logger)
     wg.Add(1)
-	go udpTrafficGenerator(1, "60.60.0.1", upfConn2, logger)
+	go udpTrafficGenerator2(1, "60.60.0.1", upfConn2, logger)
 	wg.Add(1)
     go gtpPacketListener(upfConn3, logger)
     wg.Add(1)
     go icmpTrafficGenerator3(1, "60.60.0.1", upfConn3, logger)
     wg.Add(1)
-    go udpTrafficGenerator(1, "60.60.0.1", upfConn3, logger)
+    go udpTrafficGenerator3(1, "60.60.0.1", upfConn3, logger)
     //}
 
     wg.Wait()
@@ -782,7 +782,7 @@ func udpTrafficGenerator(teid uint32, ip string, conn *net.UDPConn, logger *log.
         FragOff:  0,
         TTL:      64,
         Src:      net.ParseIP(ip).To4(),
-        Dst:      net.ParseIP(dNServer).To4(),
+        Dst:      net.ParseIP(dNServer1).To4(),
         Checksum: 0,
     }
     v4HdrBuf, err := ipv4hdr.Marshal()
@@ -847,7 +847,7 @@ func udpTrafficGenerator(teid uint32, ip string, conn *net.UDPConn, logger *log.
     }
     fmt.Println("UDP END")
 }
-func udpTrafficGenerator(teid uint32, ip string, conn *net.UDPConn, logger *log.Logger) {
+func udpTrafficGenerator2(teid uint32, ip string, conn *net.UDPConn, logger *log.Logger) {
 
     buff := make([]byte, 1028)
     ip_addr_src, _, _ := net.ParseCIDR(ip + "/24")
@@ -864,7 +864,7 @@ func udpTrafficGenerator(teid uint32, ip string, conn *net.UDPConn, logger *log.
         FragOff:  0,
         TTL:      64,
         Src:      net.ParseIP(ip).To4(),
-        Dst:      net.ParseIP(dNServer).To4(),
+        Dst:      net.ParseIP(dNServer2).To4(),
         Checksum: 0,
     }
     v4HdrBuf, err := ipv4hdr.Marshal()
@@ -929,7 +929,7 @@ func udpTrafficGenerator(teid uint32, ip string, conn *net.UDPConn, logger *log.
     }
     fmt.Println("UDP END")
 }
-func udpTrafficGenerator(teid uint32, ip string, conn *net.UDPConn, logger *log.Logger) {
+func udpTrafficGenerator3(teid uint32, ip string, conn *net.UDPConn, logger *log.Logger) {
 
     buff := make([]byte, 1028)
     ip_addr_src, _, _ := net.ParseCIDR(ip + "/24")
@@ -946,7 +946,7 @@ func udpTrafficGenerator(teid uint32, ip string, conn *net.UDPConn, logger *log.
         FragOff:  0,
         TTL:      64,
         Src:      net.ParseIP(ip).To4(),
-        Dst:      net.ParseIP(dNServer).To4(),
+        Dst:      net.ParseIP(dNServer3).To4(),
         Checksum: 0,
     }
     v4HdrBuf, err := ipv4hdr.Marshal()
