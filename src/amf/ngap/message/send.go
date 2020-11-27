@@ -46,6 +46,7 @@ func SendToRan(ran *context.AmfRan, packet []byte) {
 
 func SendToRanUe(ue *context.RanUe, packet []byte) {
 
+	fmt.Printf("now in the SendToRanUe\n")
 	var ran *context.AmfRan
 
 	if ue == nil {
