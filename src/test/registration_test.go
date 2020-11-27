@@ -487,10 +487,10 @@ func TestTransfer(t *testing.T) {
     upfConn1, err := test.ConnectToUpf(ranIpAddr, upfIpAddr1, 2152, 2152)
     //upfConn1, err := connectToUpf("192.168.2.146", "192.168.122.204", 2152, 2152)
 	assert.Nil(t, err)
-	upfConn2, err := test.ConnectToUpf(ranIpAddr, upfIpAddr2, 2152, 2152)
+	/*upfConn2, err := test.ConnectToUpf(ranIpAddr, upfIpAddr2, 2152, 2152)
 	assert.Nil(t, err)
 	upfConn3, err := test.ConnectToUpf(ranIpAddr, upfIpAddr3, 2152, 2152)
-	assert.Nil(t, err)
+	assert.Nil(t, err)*/
 
     // wait 1s
     time.Sleep(1 * time.Second)
