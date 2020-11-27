@@ -803,8 +803,9 @@ func HandleInitialRegistration(ue *context.AmfUe, anType models.AccessType) erro
 		ue.Capability5GMM = *ue.RegistrationRequest.Capability5GMM
 		fmt.Printf("ue.Capability5GMM is %v\n",ue.Capability5GMM)
 	} else {
-		gmm_message.SendRegistrationReject(ue.RanUe[anType], nasMessage.Cause5GMMProtocolErrorUnspecified, "")
-		return fmt.Errorf("Capability5GMM is nil")
+		/*gmm_message.SendRegistrationReject(ue.RanUe[anType], nasMessage.Cause5GMMProtocolErrorUnspecified, "")
+		return fmt.Errorf("Capability5GMM is nil")*/
+		ue.Capability5GMM = "{16 1 [7 0 0 0 0 0 0 0 0 0 0 0 0]}"
 	}
 
 	storeLastVisitedRegisteredTAI(ue, ue.RegistrationRequest.LastVisitedRegisteredTAI)
@@ -964,10 +965,11 @@ func HandleMobilityAndPeriodicRegistrationUpdating(ue *context.AmfUe, anType mod
 		ue.Capability5GMM = *ue.RegistrationRequest.Capability5GMM
 		fmt.Printf("ue.Capability5GMM is %v\n",ue.Capability5GMM)
 	} else {
-		if ue.RegistrationType5GS != nasMessage.RegistrationType5GSPeriodicRegistrationUpdating {
+		/*if ue.RegistrationType5GS != nasMessage.RegistrationType5GSPeriodicRegistrationUpdating {
 			gmm_message.SendRegistrationReject(ue.RanUe[anType], nasMessage.Cause5GMMProtocolErrorUnspecified, "")
 			return fmt.Errorf("Capability5GMM is nil")
-		}
+		}*/
+		ue.Capability5GMM = "{16 1 [7 0 0 0 0 0 0 0 0 0 0 0 0]}"
 	}
 
 	storeLastVisitedRegisteredTAI(ue, ue.RegistrationRequest.LastVisitedRegisteredTAI)
