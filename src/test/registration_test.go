@@ -48,9 +48,15 @@ var totalUdpPacket int = 120000000000
 const my_type int = 1
 const ranIpAddr string = "192.168.2.157"
 const amfIpAddr string = "192.168.2.102" // no need to change
-const upfIpAddr string = "192.168.2.111" // 110, 111
-const dNServer  string = "192.168.2.54" // 205, 206
+const upfIpAddr1 string = "192.168.2.111" // 110, 111
+const upfIpAddr2 string = "192.168.2.112" // 110, 111
+const upfIpAddr3 string = "192.168.2.113" // 110, 111
+const dNServer1  string = "192.168.2.54" // 205, 206
+const dNServer2  string = "192.168.2.219" // 205, 206
+const dNServer3  string = "192.168.2.23" // 205, 206
 var dNServerI = [4]byte{192, 168, 2, 54} // 205, 206
+var dNServerII = [4]byte{192, 168, 2, 219} // 205, 206
+var dNServerX = [4]byte{192, 168, 2, 23} // 205, 206
 
 type UE struct {
     Supi              string
@@ -97,21 +103,6 @@ var my_ue2 = UE{
     ranIpAddr:     ranIpAddr,
 }
 
-var my_ue3 = UE{
-    Supi:        "imsi-2089300007489",
-    Teid:        3,
-    RanUeNgapId: 3,
-    AmfUeNgapId: 3,
-    MobileIdentity5GS: nasType.MobileIdentity5GS{
-        Len:    12, //, suci
-        Buffer: []uint8{0x01, 0x02, 0xf8, 0x39, 0xf0, 0x00, 0x00, 0x00, 0x00, 0x00, 0x47, 0x98},
-    },
-    PduSessionId1: 12,
-    PduSessionId2: 12,
-    DN:            "internet",
-    Ip:            "60.60.0.3",
-    ranIpAddr:     ranIpAddr,
-}
 
 
 
@@ -493,9 +484,13 @@ func setUESecurityCapability(ue *test.RanUeContext) (UESecurityCapability *nasTy
 func TestTransfer(t *testing.T) {
     fmt.Println("Start Transmission...")
     // RAN connect to UPF
-    upfConn, err := test.ConnectToUpf(ranIpAddr, upfIpAddr, 2152, 2152)
+    upfConn1, err := test.ConnectToUpf(ranIpAddr, upfIpAddr1, 2152, 2152)
     //upfConn1, err := connectToUpf("192.168.2.146", "192.168.122.204", 2152, 2152)
-    assert.Nil(t, err)
+	assert.Nil(t, err)
+	upfConn2, err := test.ConnectToUpf(ranIpAddr, upfIpAddr2, 2152, 2152)
+	assert.Nil(t, err)
+	upfConn3, err := test.ConnectToUpf(ranIpAddr, upfIpAddr3, 2152, 2152)
+	assert.Nil(t, err)
 
     // wait 1s
     time.Sleep(1 * time.Second)
@@ -507,11 +502,23 @@ func TestTransfer(t *testing.T) {
     //for _, ueData := range ues {
         //go gtpPacketListener(upfConn, logger)
     wg.Add(1)
-    go gtpPacketListener(upfConn, logger)
+    go gtpPacketListener(upfConn1, logger)
     wg.Add(1)
-    go icmpTrafficGenerator(1, "60.60.0.1", upfConn, logger)
+    go icmpTrafficGenerator(1, "60.60.0.1", upfConn1, logger)
     wg.Add(1)
-    go udpTrafficGenerator(1, "60.60.0.1", upfConn, logger)
+	go udpTrafficGenerator(1, "60.60.0.1", upfConn1, logger)
+	wg.Add(1)
+    go gtpPacketListener(upfConn2, logger)
+    wg.Add(1)
+    go icmpTrafficGenerator2(1, "60.60.0.1", upfConn2, logger)
+    wg.Add(1)
+	go udpTrafficGenerator(1, "60.60.0.1", upfConn2, logger)
+	wg.Add(1)
+    go gtpPacketListener(upfConn3, logger)
+    wg.Add(1)
+    go icmpTrafficGenerator3(1, "60.60.0.1", upfConn3, logger)
+    wg.Add(1)
+    go udpTrafficGenerator(1, "60.60.0.1", upfConn3, logger)
     //}
 
     wg.Wait()
@@ -593,7 +600,125 @@ func icmpTrafficGenerator(teid uint32, ip string, conn *net.UDPConn, logger *log
             TotalLen: packetLen,
             TTL:      64,
             Src:      net.ParseIP(ip).To4(),
-            Dst:      net.ParseIP(dNServer).To4(),
+            Dst:      net.ParseIP(dNServer1).To4(),
+            ID:       1,
+            Checksum: 0,
+        }
+        v4HdrBuf, err := ipv4hdr.Marshal()
+        ipv4hdr.Checksum = int(CheckSum(v4HdrBuf))
+
+        v4HdrBuf, err = ipv4hdr.Marshal()
+
+        // Create ICMP payload
+        m := icmp.Message{
+            Type: ipv4.ICMPTypeEcho, Code: 0,
+            Body: &icmp.Echo{
+                ID: 0, Seq: i,
+                Data: icmpData,
+            },
+        }
+
+        tt := append(gtpHdr, v4HdrBuf...)
+        b, err := m.Marshal(nil)
+
+        conn.Write(append(tt, b...))
+
+        time.Sleep(500 * time.Millisecond)
+    }
+    log.Println("icmp finished")
+
+    wg.Done()
+}
+func icmpTrafficGenerator2(teid uint32, ip string, conn *net.UDPConn, logger *log.Logger) {
+    //var t_rep int64
+    //t_rep = 0
+    // Create ICMP payload
+
+    // gtp packet read buffer
+    //data := make([]byte, 1024)
+
+    //icmp_start_t := time.Now()
+    for i := 0; i < 4000; i++ {
+        // Create GTP header
+        gtpHdr, err := BuildGTPHeader(teid, uint16(i))
+	//gtpHdr, err := hex.DecodeString("32ff00340000000100000000")
+        errLog(err, logger)
+
+        // Create ICMP data payload
+        icmpData := Int64ToBytes(time.Now().UnixNano())
+        //icmpData, err := hex.DecodeString("1234567890") //8c870d0000000000101112131415161718191a1b
+        //errLog(err, logger)
+        packetLen := 28 + len(icmpData)
+
+        // Create IPv4 header
+        ipv4hdr := ipv4.Header{
+            Version:  4,
+            Len:      20,
+            Protocol: 1,
+            Flags:    0,
+            TotalLen: packetLen,
+            TTL:      64,
+            Src:      net.ParseIP(ip).To4(),
+            Dst:      net.ParseIP(dNServer2).To4(),
+            ID:       1,
+            Checksum: 0,
+        }
+        v4HdrBuf, err := ipv4hdr.Marshal()
+        ipv4hdr.Checksum = int(CheckSum(v4HdrBuf))
+
+        v4HdrBuf, err = ipv4hdr.Marshal()
+
+        // Create ICMP payload
+        m := icmp.Message{
+            Type: ipv4.ICMPTypeEcho, Code: 0,
+            Body: &icmp.Echo{
+                ID: 0, Seq: i,
+                Data: icmpData,
+            },
+        }
+
+        tt := append(gtpHdr, v4HdrBuf...)
+        b, err := m.Marshal(nil)
+
+        conn.Write(append(tt, b...))
+
+        time.Sleep(500 * time.Millisecond)
+    }
+    log.Println("icmp finished")
+
+    wg.Done()
+}
+func icmpTrafficGenerator3(teid uint32, ip string, conn *net.UDPConn, logger *log.Logger) {
+    //var t_rep int64
+    //t_rep = 0
+    // Create ICMP payload
+
+    // gtp packet read buffer
+    //data := make([]byte, 1024)
+
+    //icmp_start_t := time.Now()
+    for i := 0; i < 4000; i++ {
+        // Create GTP header
+        gtpHdr, err := BuildGTPHeader(teid, uint16(i))
+	//gtpHdr, err := hex.DecodeString("32ff00340000000100000000")
+        errLog(err, logger)
+
+        // Create ICMP data payload
+        icmpData := Int64ToBytes(time.Now().UnixNano())
+        //icmpData, err := hex.DecodeString("1234567890") //8c870d0000000000101112131415161718191a1b
+        //errLog(err, logger)
+        packetLen := 28 + len(icmpData)
+
+        // Create IPv4 header
+        ipv4hdr := ipv4.Header{
+            Version:  4,
+            Len:      20,
+            Protocol: 1,
+            Flags:    0,
+            TotalLen: packetLen,
+            TTL:      64,
+            Src:      net.ParseIP(ip).To4(),
+            Dst:      net.ParseIP(dNServer3).To4(),
             ID:       1,
             Checksum: 0,
         }
@@ -646,6 +771,170 @@ func udpTrafficGenerator(teid uint32, ip string, conn *net.UDPConn, logger *log.
     ip_addr_src, _, _ := net.ParseCIDR(ip + "/24")
     src := ip_addr_src
     dst := net.IPv4(dNServerI[0], dNServerI[1], dNServerI[2], dNServerI[3])
+
+    ipv4hdr := ipv4.Header{
+        Version:  ipv4.Version,
+        Len:      ipv4.HeaderLen,
+        Protocol: 17,
+        Flags:    ipv4.DontFragment,
+        TotalLen: ipv4.HeaderLen + len(buff),
+        TOS:      0x00,
+        FragOff:  0,
+        TTL:      64,
+        Src:      net.ParseIP(ip).To4(),
+        Dst:      net.ParseIP(dNServer).To4(),
+        Checksum: 0,
+    }
+    v4HdrBuf, err := ipv4hdr.Marshal()
+    errLog(err, logger)
+    ipv4hdr.Checksum = int(CheckSum(v4HdrBuf))
+
+    //填充udp首部
+    //udp伪首部
+    udph := make([]byte, 20)
+    //源ip地址
+    udph[0], udph[1], udph[2], udph[3] = src[12], src[13], src[14], src[15]
+    //目的ip地址
+    udph[4], udph[5], udph[6], udph[7] = dst[12], dst[13], dst[14], dst[15]
+    //协议类型
+    udph[8], udph[9] = 0x00, 0x11
+    //udp头长度
+    udph[10], udph[11] = IntToBytes(len(buff))[0], IntToBytes(len(buff))[1]
+    //下面开始就真正的udp头部
+    //源端口号
+    udph[12], udph[13] = 0x27, 0x10
+    //目的端口号
+    udph[14], udph[15] = 0x17, 0x70
+    //udp头长度
+    udph[16], udph[17] = IntToBytes(len(buff))[0], IntToBytes(len(buff))[1]
+    //校验和
+    udph[18], udph[19] = 0x00, 0x00
+    //计算校验值
+    check := CheckSum(append(udph, buff...))
+    udph[18], udph[19] = byte(check>>8&255), byte(check&255)
+
+    // wait 1s
+    time.Sleep(1 * time.Second)
+    i := 0
+    traffic := (udpPacketCount*1024)/(1024*1024)*8 // Mbp
+    for i < totalUdpPacket {
+        j := 0
+        startTime := time.Now()
+        for j < udpPacketCount {
+            // Create GTP header
+            //gtpHdr, err := BuildGTPHeader(teid, uint16(i))
+            //errLog(err, logger)
+            gtpHdr, err := hex.DecodeString("32ff00340000000100000000")
+	    errLog(err, logger)
+            v4HdrBuf, err = ipv4hdr.Marshal()
+            udp := append(udph[12:20], buff[:]...)
+            UDP := append(v4HdrBuf, udp...)
+
+            //gtpHdr, err := BuildGTPHeader(1)
+            tt := append(gtpHdr, UDP...)
+
+            _, err = conn.Write(tt)
+           errLog(err, logger)
+
+           time.Sleep(udpInterval)
+           i++
+           j++
+        }
+        endTime := time.Now()
+        duration := endTime.Sub(startTime)
+        durationSec := float64(duration) / 1000000000
+        fmt.Printf("%f Mbps\n", float64(traffic)/durationSec)
+    }
+    fmt.Println("UDP END")
+}
+func udpTrafficGenerator(teid uint32, ip string, conn *net.UDPConn, logger *log.Logger) {
+
+    buff := make([]byte, 1028)
+    ip_addr_src, _, _ := net.ParseCIDR(ip + "/24")
+    src := ip_addr_src
+    dst := net.IPv4(dNServerII[0], dNServerII[1], dNServerII[2], dNServerII[3])
+
+    ipv4hdr := ipv4.Header{
+        Version:  ipv4.Version,
+        Len:      ipv4.HeaderLen,
+        Protocol: 17,
+        Flags:    ipv4.DontFragment,
+        TotalLen: ipv4.HeaderLen + len(buff),
+        TOS:      0x00,
+        FragOff:  0,
+        TTL:      64,
+        Src:      net.ParseIP(ip).To4(),
+        Dst:      net.ParseIP(dNServer).To4(),
+        Checksum: 0,
+    }
+    v4HdrBuf, err := ipv4hdr.Marshal()
+    errLog(err, logger)
+    ipv4hdr.Checksum = int(CheckSum(v4HdrBuf))
+
+    //填充udp首部
+    //udp伪首部
+    udph := make([]byte, 20)
+    //源ip地址
+    udph[0], udph[1], udph[2], udph[3] = src[12], src[13], src[14], src[15]
+    //目的ip地址
+    udph[4], udph[5], udph[6], udph[7] = dst[12], dst[13], dst[14], dst[15]
+    //协议类型
+    udph[8], udph[9] = 0x00, 0x11
+    //udp头长度
+    udph[10], udph[11] = IntToBytes(len(buff))[0], IntToBytes(len(buff))[1]
+    //下面开始就真正的udp头部
+    //源端口号
+    udph[12], udph[13] = 0x27, 0x10
+    //目的端口号
+    udph[14], udph[15] = 0x17, 0x70
+    //udp头长度
+    udph[16], udph[17] = IntToBytes(len(buff))[0], IntToBytes(len(buff))[1]
+    //校验和
+    udph[18], udph[19] = 0x00, 0x00
+    //计算校验值
+    check := CheckSum(append(udph, buff...))
+    udph[18], udph[19] = byte(check>>8&255), byte(check&255)
+
+    // wait 1s
+    time.Sleep(1 * time.Second)
+    i := 0
+    traffic := (udpPacketCount*1024)/(1024*1024)*8 // Mbp
+    for i < totalUdpPacket {
+        j := 0
+        startTime := time.Now()
+        for j < udpPacketCount {
+            // Create GTP header
+            //gtpHdr, err := BuildGTPHeader(teid, uint16(i))
+            //errLog(err, logger)
+            gtpHdr, err := hex.DecodeString("32ff00340000000100000000")
+	    errLog(err, logger)
+            v4HdrBuf, err = ipv4hdr.Marshal()
+            udp := append(udph[12:20], buff[:]...)
+            UDP := append(v4HdrBuf, udp...)
+
+            //gtpHdr, err := BuildGTPHeader(1)
+            tt := append(gtpHdr, UDP...)
+
+            _, err = conn.Write(tt)
+           errLog(err, logger)
+
+           time.Sleep(udpInterval)
+           i++
+           j++
+        }
+        endTime := time.Now()
+        duration := endTime.Sub(startTime)
+        durationSec := float64(duration) / 1000000000
+        fmt.Printf("%f Mbps\n", float64(traffic)/durationSec)
+    }
+    fmt.Println("UDP END")
+}
+func udpTrafficGenerator(teid uint32, ip string, conn *net.UDPConn, logger *log.Logger) {
+
+    buff := make([]byte, 1028)
+    ip_addr_src, _, _ := net.ParseCIDR(ip + "/24")
+    src := ip_addr_src
+    dst := net.IPv4(dNServerX[0], dNServerX[1], dNServerX[2], dNServerX[3])
 
     ipv4hdr := ipv4.Header{
         Version:  ipv4.Version,
