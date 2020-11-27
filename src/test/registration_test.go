@@ -508,7 +508,7 @@ func TestTransfer(t *testing.T) {
     wg.Add(1)
 	go udpTrafficGenerator(1, "60.60.0.1", upfConn1, logger)
 	wg.Add(1)
-    go gtpPacketListener(upfConn2, logger)
+    /*go gtpPacketListener(upfConn2, logger)
     wg.Add(1)
     go icmpTrafficGenerator2(1, "60.60.0.1", upfConn2, logger)
     wg.Add(1)
@@ -518,7 +518,7 @@ func TestTransfer(t *testing.T) {
     wg.Add(1)
     go icmpTrafficGenerator3(1, "60.60.0.1", upfConn3, logger)
     wg.Add(1)
-    go udpTrafficGenerator3(1, "60.60.0.1", upfConn3, logger)
+    go udpTrafficGenerator3(1, "60.60.0.1", upfConn3, logger)*/
     //}
 
     wg.Wait()
