@@ -8,17 +8,14 @@ ueRoutingInfo:
     PathList:
       - DestinationIP: 192.168.2.54
         UPF: !!seq
-          - BranchingUPF
           - UPF1
 
       - DestinationIP: 192.168.2.219
         UPF: !!seq
-          - BranchingUPF
           - UPF2
       
       - DestinationIP: 192.168.2.23
         UPF: !!seq
-          - BranchingUPF
           - UPF3
 
   - SUPI: imsi-2089300007486
