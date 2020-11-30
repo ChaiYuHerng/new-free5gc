@@ -4,17 +4,22 @@ info:
 
 ueRoutingInfo:
   - SUPI: imsi-2089300007487
-    AN: 10.200.200.101
+    AN: 192.168.2.157
     PathList:
-      - DestinationIP: 60.60.0.101
+      - DestinationIP: 192.168.2.54
         UPF: !!seq
           - BranchingUPF
-          - AnchorUPF1
+          - UPF1
 
-      - DestinationIP: 60.60.0.103
+      - DestinationIP: 192.168.2.219
         UPF: !!seq
           - BranchingUPF
-          - AnchorUPF2
+          - UPF2
+      
+      - DestinationIP: 192.168.2.23
+        UPF: !!seq
+          - BranchingUPF
+          - UPF3
 
   - SUPI: imsi-2089300007486
     AN: 10.200.200.102
