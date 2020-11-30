@@ -6,12 +6,12 @@ ueRoutingInfo:
   - SUPI: imsi-2089300007487
     AN: 192.168.2.157
     PathList:
-      - DestinationIP: 192.168.2.54
+      - DestinationIP: 192.168.2.219
         UPF: !!seq
           - UPF1
           - UPF2
 
-      - DestinationIP: 192.168.2.219
+      - DestinationIP: 192.168.2.23
         UPF: !!seq
           - UPF1
           - UPF3
