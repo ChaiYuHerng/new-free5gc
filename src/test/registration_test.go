@@ -479,7 +479,7 @@ func setUESecurityCapability(ue *test.RanUeContext) (UESecurityCapability *nasTy
 func TestTransfer(t *testing.T) {
     fmt.Println("Start Transmission...")
     // RAN connect to UPF
-    upfConn1, err := test.ConnectToUpf(ranIpAddr, upfIpAddr2, 2152, 2152)
+    upfConn1, err := test.ConnectToUpf(ranIpAddr, upfIpAddr1, 2152, 2152)
     //upfConn1, err := connectToUpf("192.168.2.146", "192.168.122.204", 2152, 2152)
 	assert.Nil(t, err)
 	/*upfConn2, err := test.ConnectToUpf(ranIpAddr, upfIpAddr2, 2152, 2152)
