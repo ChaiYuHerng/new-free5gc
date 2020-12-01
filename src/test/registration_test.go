@@ -46,9 +46,10 @@ var udpPacketCount int =        15000
 var totalUdpPacket int = 120000000000
 
 const my_type int = 1
-const ranIpAddr string = "192.168.2.151"
+const ranIpAddr string = "192.168.2.157"
 const amfIpAddr string = "192.168.2.102" // no need to change
 const upfIpAddr1 string = "192.168.2.111" // 110, 111
+const upfIpAddr2 string = "192.168.2.114" // 110, 111
 const dNServer1  string = "192.168.2.54" // 205, 206
 var dNServerI = [4]byte{192, 168, 2, 54} // 205, 206
 
@@ -478,7 +479,7 @@ func setUESecurityCapability(ue *test.RanUeContext) (UESecurityCapability *nasTy
 func TestTransfer(t *testing.T) {
     fmt.Println("Start Transmission...")
     // RAN connect to UPF
-    upfConn1, err := test.ConnectToUpf(ranIpAddr, upfIpAddr1, 2152, 2152)
+    upfConn1, err := test.ConnectToUpf(ranIpAddr, upfIpAddr2, 2152, 2152)
     //upfConn1, err := connectToUpf("192.168.2.146", "192.168.122.204", 2152, 2152)
 	assert.Nil(t, err)
 	/*upfConn2, err := test.ConnectToUpf(ranIpAddr, upfIpAddr2, 2152, 2152)
