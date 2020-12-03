@@ -36,10 +36,10 @@ func BuildSmfNfProfile() (uuId string, profile models.NfProfile) {
 						ApiFullVersion:  "1.0.0",
 					},
 				},
-				ApiPrefix: "https://localhost:29502",
+				ApiPrefix: "https://192.168.2.103:29502",
 				IpEndPoints: &[]models.IpEndPoint{
 					{
-						Ipv4Address: "127.0.0.1",
+						Ipv4Address: "192.168.2.103",
 						Port:        29502,
 					},
 				},

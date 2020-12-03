@@ -111,6 +111,10 @@ func GetSampleJSON(c *gin.Context) {
 					Sd:  "112233",
 					Sst: 1,
 				},
+				{
+					Sd:  "212223",
+					Sst: 1,
+				},
 			},
 			SingleNssais: []models.Snssai{
 				{
@@ -119,6 +123,10 @@ func GetSampleJSON(c *gin.Context) {
 				},
 				{
 					Sd:  "112233",
+					Sst: 1,
+				},
+				{
+					Sd:  "212223",
 					Sst: 1,
 				},
 			},
@@ -188,6 +196,35 @@ func GetSampleJSON(c *gin.Context) {
 				},
 			},
 		},
+		{
+			SingleNssai: &models.Snssai{
+				Sst: 1,
+				Sd:  "212223",
+			},
+			DnnConfigurations: map[string]models.DnnConfiguration{
+				"internet": models.DnnConfiguration{
+					PduSessionTypes: &models.PduSessionTypes{
+						DefaultSessionType:  models.PduSessionType_IPV4,
+						AllowedSessionTypes: []models.PduSessionType{models.PduSessionType_IPV4},
+					},
+					SscModes: &models.SscModes{
+						DefaultSscMode:  models.SscMode__1,
+						AllowedSscModes: []models.SscMode{models.SscMode__1},
+					},
+					SessionAmbr: &models.Ambr{
+						Downlink: "1000 Kbps",
+						Uplink:   "1000 Kbps",
+					},
+					Var5gQosProfile: &models.SubscribedDefaultQos{
+						Var5qi: 9,
+						Arp: &models.Arp{
+							PriorityLevel: 8,
+						},
+						PriorityLevel: 8,
+					},
+				},
+			},
+		},
 	}
 
 	smfSelData := models.SmfSelectionSubscriptionData{
@@ -200,6 +237,13 @@ func GetSampleJSON(c *gin.Context) {
 				},
 			},
 			"01112233": {
+				DnnInfos: []models.DnnInfo{
+					{
+						Dnn: "internet",
+					},
+				},
+			},
+			"01212223": {
 				DnnInfos: []models.DnnInfo{
 					{
 						Dnn: "internet",
@@ -231,6 +275,17 @@ func GetSampleJSON(c *gin.Context) {
 			"01112233": {
 				Snssai: &models.Snssai{
 					Sd:  "112233",
+					Sst: 1,
+				},
+				SmPolicyDnnData: map[string]models.SmPolicyDnnData{
+					"internet": {
+						Dnn: "internet",
+					},
+				},
+			},
+			"01212223": {
+				Snssai: &models.Snssai{
+					Sd:  "212223",
 					Sst: 1,
 				},
 				SmPolicyDnnData: map[string]models.SmPolicyDnnData{

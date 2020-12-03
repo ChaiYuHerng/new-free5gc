@@ -29,6 +29,10 @@ func init() {
 					Sst: 1,
 					Sd:  "112233",
 				},
+				{
+					Sst: 1,
+					Sd:  "212223",
+				},
 			},
 			SingleNssais: []models.Snssai{
 				{
@@ -38,6 +42,10 @@ func init() {
 				{
 					Sst: 1,
 					Sd:  "112233",
+				},
+				{
+					Sst: 1,
+					Sd:  "212223",
 				},
 			},
 		},
@@ -57,6 +65,13 @@ func init() {
 				},
 			},
 			"01112233": { // sst:1, sd:112233
+				DnnInfos: []models.DnnInfo{
+					{
+						Dnn: "internet",
+					},
+				},
+			},
+			"01212223": { // sst:1, sd:212223
 				DnnInfos: []models.DnnInfo{
 					{
 						Dnn: "internet",
@@ -88,6 +103,17 @@ func init() {
 			"01112233": {
 				Snssai: &models.Snssai{
 					Sd:  "112233",
+					Sst: 1,
+				},
+				SmPolicyDnnData: map[string]models.SmPolicyDnnData{
+					"internet": {
+						Dnn: "internet",
+					},
+				},
+			},
+			"01212223": {
+				Snssai: &models.Snssai{
+					Sd:  "212223",
 					Sst: 1,
 				},
 				SmPolicyDnnData: map[string]models.SmPolicyDnnData{
