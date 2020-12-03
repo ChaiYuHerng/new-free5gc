@@ -1,7 +1,7 @@
-import React, {Component} from 'react';
-import {withRouter} from "react-router-dom";
-import {connect} from "react-redux";
-import {Button, Table} from "react-bootstrap";
+import React, { Component } from 'react';
+import { withRouter } from "react-router-dom";
+import { connect } from "react-redux";
+import { Button, Table } from "react-bootstrap";
 import SubscriberModal from "./components/SubscriberModal";
 import ApiHelper from "../../util/ApiHelper";
 
@@ -36,7 +36,7 @@ class SubscriberOverview extends Component {
   }
 
   async addSubscriber(subscriberData) {
-    this.setState({subscriberModalOpen: false});
+    this.setState({ subscriberModalOpen: false });
 
     if (!await ApiHelper.createSubscriber(subscriberData)) {
       alert("Error creating new subscriber");
@@ -57,21 +57,17 @@ class SubscriberOverview extends Component {
    * @param subscriber  {Subscriber}
    */
   async updateSubscriber(subscriber) {
-      const result = await ApiHelper.updateSubscriber(subscriber.id, subscriber.plmn);
-  
-      if (!result) {
-        alert("Error updating subscriber: " + subscriber.id);
-      }
+    const result = await ApiHelper.updateSubscriber(subscriber.id, subscriber.plmn);
+
+    if (!result) {
+      alert("Error updating subscriber: " + subscriber.id);
     }
-
-  
-
-
+  }
 
   /**
   * @param subscriber  {Subscriber}
    */
-  async deleteSubscriber(subscriber) {   
+  async deleteSubscriber(subscriber) {
     if (!window.confirm(`Delete subscriber ${subscriber.id}?`))
       return;
 
@@ -81,7 +77,7 @@ class SubscriberOverview extends Component {
       alert("Error deleting subscriber: " + subscriber.id);
     }
   }
-   
+
   render() {
     return (
       <div className="container-fluid">
@@ -91,31 +87,31 @@ class SubscriberOverview extends Component {
               <div className="header subscribers__header">
                 <h4>Subscribers</h4>
                 <Button bsStyle={"primary"} className="subscribers__button"
-                        onClick={this.openAddSubscriber.bind(this)}>
-                   New Subscriber
+                  onClick={this.openAddSubscriber.bind(this)}>
+                  New Subscriber
                 </Button>
               </div>
               <div className="content subscribers__content">
                 <Table className="subscribers__table" striped bordered condensed hover>
                   <thead>
-                  <tr>
-                    <th style={{width: 80}}>PLMN</th>
-                    <th colSpan={2}>UE ID</th>
-                  </tr>
+                    <tr>
+                      <th style={{ width: 80 }}>PLMN</th>
+                      <th colSpan={2}>UE ID</th>
+                    </tr>
                   </thead>
-                  <tbody> 
-                  {this.props.subscribers.map(subscriber => (
-                    <tr key={subscriber.id}>
-                      <td>{subscriber.plmn}</td>
-                      <td>{subscriber.id}</td>
-                      <td style={{textAlign: 'center'}}>
-                         <Button variant="danger" onClick={this.deleteSubscriber.bind(this, subscriber)}>Delete</Button>
+                  <tbody>
+                    {this.props.subscribers.map(subscriber => (
+                      <tr key={subscriber.id}>
+                        <td>{subscriber.plmn}</td>
+                        <td>{subscriber.id}</td>
+                        <td style={{ textAlign: 'center' }}>
+                          <Button variant="danger" onClick={this.deleteSubscriber.bind(this, subscriber)}>Delete</Button>
                          &nbsp;&nbsp;&nbsp;&nbsp;
                         <Button variant="info" onClick={this.openEditSubscriber.bind(this)}>Modify</Button>
-                      </td>
+                        </td>
                       </tr>
-                   ))}
-                      </tbody>
+                    ))}
+                  </tbody>
                 </Table>
 
                 <p>&nbsp;</p><p>&nbsp;</p>
@@ -127,10 +123,10 @@ class SubscriberOverview extends Component {
         </div>
 
         <SubscriberModal open={this.state.subscriberModalOpen}
-                         setOpen={val => this.setState({subscriberModalOpen: val})}
-                         subscriber={this.state.subscriberModalData}
-                         onModify={this.updateSubscriber.bind(this)}
-                         onSubmit={this.addSubscriber.bind(this)}/>                         
+          setOpen={val => this.setState({ subscriberModalOpen: val })}
+          subscriber={this.state.subscriberModalData}
+          onModify={this.updateSubscriber.bind(this)}
+          onSubmit={this.addSubscriber.bind(this)} />
       </div>
     );
   }

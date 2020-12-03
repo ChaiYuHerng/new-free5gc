@@ -1,14 +1,8 @@
 # free5GC Web Console
 
-## Run the Web Console Server
-```
-go run server.go
-```
-
-## Development
-
-To merge the new verison of frontend part to the webconsole server
+To run free5GC webconsole server. The following steps are to be considered.
 ```bash
+# (In directory: ~/free5gc/webconsole)
 cd frontend
 yarn install
 yarn build
@@ -16,4 +10,8 @@ rm -rf ../public
 cp -R build ../public
 ```
 
-The run `go run server.go` to see the webconsole with the new frontend.
+### Run the Server
+```bash
+# (In directory: ~/free5gc/webconsole)
+go run server.go
+```

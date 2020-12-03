@@ -6,9 +6,14 @@
 
 package factory
 
+import (
+	"bitbucket.org/free5gc-team/logger_util"
+)
+
 type Config struct {
-	Info          *Info          `yaml:"info"`
-	Configuration *Configuration `yaml:"configuration"`
+	Info          *Info               `yaml:"info"`
+	Configuration *Configuration      `yaml:"configuration"`
+	Logger        *logger_util.Logger `yaml:"logger"`
 }
 
 type Info struct {

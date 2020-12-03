@@ -3,20 +3,22 @@ package webui_service
 import (
 	"bufio"
 	"fmt"
-	"free5gc/lib/MongoDBLibrary"
-	"free5gc/lib/path_util"
-	"free5gc/src/app"
-	"free5gc/webconsole/backend/WebUI"
-	"free5gc/webconsole/backend/factory"
-	"free5gc/webconsole/backend/logger"
-	"free5gc/webconsole/backend/webui_context"
 	"os/exec"
 	"sync"
 
 	"github.com/gin-contrib/cors"
-
 	"github.com/sirupsen/logrus"
 	"github.com/urfave/cli"
+
+	"bitbucket.org/free5gc-team/MongoDBLibrary"
+	mongoDBLibLogger "bitbucket.org/free5gc-team/MongoDBLibrary/logger"
+	openApiLogger "bitbucket.org/free5gc-team/openapi/logger"
+	"bitbucket.org/free5gc-team/path_util"
+	pathUtilLogger "bitbucket.org/free5gc-team/path_util/logger"
+	"bitbucket.org/free5gc-team/webconsole/backend/WebUI"
+	"bitbucket.org/free5gc-team/webconsole/backend/factory"
+	"bitbucket.org/free5gc-team/webconsole/backend/logger"
+	"bitbucket.org/free5gc-team/webconsole/backend/webui_context"
 )
 
 type WEBUI struct{}
@@ -51,29 +53,98 @@ func (*WEBUI) GetCliCmd() (flags []cli.Flag) {
 	return webuiCLi
 }
 
-func (*WEBUI) Initialize(c *cli.Context) {
+func (webui *WEBUI) Initialize(c *cli.Context) {
 
 	config = Config{
 		webuicfg: c.String("webuicfg"),
 	}
 
 	if config.webuicfg != "" {
-		factory.InitConfigFactory(config.webuicfg)
+		if err := factory.InitConfigFactory(config.webuicfg); err != nil {
+			panic(err)
+		}
 	} else {
-		DefaultWebUIConfigPath := path_util.Gofree5gcPath("free5gc/config/webuicfg.conf")
-		factory.InitConfigFactory(DefaultWebUIConfigPath)
-	}
-
-	initLog.Traceln("WEBUI debug level(string):", app.ContextSelf().Logger.WEBUI.DebugLevel)
-	if app.ContextSelf().Logger.WEBUI.DebugLevel != "" {
-		initLog.Infoln("WEBUI debug level(string):", app.ContextSelf().Logger.WEBUI.DebugLevel)
-		level, err := logrus.ParseLevel(app.ContextSelf().Logger.WEBUI.DebugLevel)
-		if err == nil {
-			logger.SetLogLevel(level)
+		DefaultWebUIConfigPath := path_util.Free5gcPath("free5gc/config/webuicfg.conf")
+		if err := factory.InitConfigFactory(DefaultWebUIConfigPath); err != nil {
+			panic(err)
 		}
 	}
 
-	logger.SetReportCaller(app.ContextSelf().Logger.WEBUI.ReportCaller)
+	webui.setLogLevel()
+
+}
+
+func (webui *WEBUI) setLogLevel() {
+
+	if factory.WebUIConfig.Logger == nil {
+		initLog.Warnln("Webconsole config without log level setting!!!")
+		return
+	}
+
+	if factory.WebUIConfig.Logger.WEBUI != nil {
+		if factory.WebUIConfig.Logger.WEBUI.DebugLevel != "" {
+			if level, err := logrus.ParseLevel(factory.WebUIConfig.Logger.WEBUI.DebugLevel); err != nil {
+				initLog.Warnf("WebUI Log level [%s] is invalid, set to [info] level",
+					factory.WebUIConfig.Logger.WEBUI.DebugLevel)
+				logger.SetLogLevel(logrus.InfoLevel)
+			} else {
+				initLog.Infof("WebUI Log level is set to [%s] level", level)
+				logger.SetLogLevel(level)
+			}
+		} else {
+			initLog.Warnln("WebUI Log level not set. Default set to [info] level")
+			logger.SetLogLevel(logrus.InfoLevel)
+		}
+		logger.SetReportCaller(factory.WebUIConfig.Logger.WEBUI.ReportCaller)
+	}
+
+	if factory.WebUIConfig.Logger.PathUtil != nil {
+		if factory.WebUIConfig.Logger.PathUtil.DebugLevel != "" {
+			if level, err := logrus.ParseLevel(factory.WebUIConfig.Logger.PathUtil.DebugLevel); err != nil {
+				pathUtilLogger.PathLog.Warnf("PathUtil Log level [%s] is invalid, set to [info] level",
+					factory.WebUIConfig.Logger.PathUtil.DebugLevel)
+				pathUtilLogger.SetLogLevel(logrus.InfoLevel)
+			} else {
+				pathUtilLogger.SetLogLevel(level)
+			}
+		} else {
+			pathUtilLogger.PathLog.Warnln("PathUtil Log level not set. Default set to [info] level")
+			pathUtilLogger.SetLogLevel(logrus.InfoLevel)
+		}
+		pathUtilLogger.SetReportCaller(factory.WebUIConfig.Logger.PathUtil.ReportCaller)
+	}
+
+	if factory.WebUIConfig.Logger.OpenApi != nil {
+		if factory.WebUIConfig.Logger.OpenApi.DebugLevel != "" {
+			if level, err := logrus.ParseLevel(factory.WebUIConfig.Logger.OpenApi.DebugLevel); err != nil {
+				openApiLogger.OpenApiLog.Warnf("OpenAPI Log level [%s] is invalid, set to [info] level",
+					factory.WebUIConfig.Logger.OpenApi.DebugLevel)
+				openApiLogger.SetLogLevel(logrus.InfoLevel)
+			} else {
+				openApiLogger.SetLogLevel(level)
+			}
+		} else {
+			openApiLogger.OpenApiLog.Warnln("OpenAPI Log level not set. Default set to [info] level")
+			openApiLogger.SetLogLevel(logrus.InfoLevel)
+		}
+		openApiLogger.SetReportCaller(factory.WebUIConfig.Logger.OpenApi.ReportCaller)
+	}
+
+	if factory.WebUIConfig.Logger.MongoDBLibrary != nil {
+		if factory.WebUIConfig.Logger.MongoDBLibrary.DebugLevel != "" {
+			if level, err := logrus.ParseLevel(factory.WebUIConfig.Logger.MongoDBLibrary.DebugLevel); err != nil {
+				mongoDBLibLogger.MongoDBLog.Warnf("MongoDBLibrary Log level [%s] is invalid, set to [info] level",
+					factory.WebUIConfig.Logger.MongoDBLibrary.DebugLevel)
+				mongoDBLibLogger.SetLogLevel(logrus.InfoLevel)
+			} else {
+				mongoDBLibLogger.SetLogLevel(level)
+			}
+		} else {
+			mongoDBLibLogger.MongoDBLog.Warnln("MongoDBLibrary Log level not set. Default set to [info] level")
+			mongoDBLibLogger.SetLogLevel(logrus.InfoLevel)
+		}
+		mongoDBLibLogger.SetReportCaller(factory.WebUIConfig.Logger.MongoDBLibrary.ReportCaller)
+	}
 
 }
 

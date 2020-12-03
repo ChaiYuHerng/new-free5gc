@@ -19,4 +19,4 @@ cscope.*
 
 # build
 bin/
-
+public/
