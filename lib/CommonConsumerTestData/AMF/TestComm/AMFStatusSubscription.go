@@ -22,7 +22,7 @@ func init() {
 	}
 
 	ConsumerAMFStatusSubscriptionTable[AMFStatusSubscription201] = models.SubscriptionData{
-		AmfStatusUri: "https://127.0.0.1:29333/AMFStatusNotify",
+		AmfStatusUri: "https://192.168.2.102:29333/AMFStatusNotify",
 		GuamiList: []models.Guami{
 			{
 				PlmnId: &models.PlmnId{
@@ -51,7 +51,7 @@ func init() {
 	}
 
 	ConsumerAMFStatusChangeSubscribeModfyTable[AMFStatusSubscriptionModfy200] = models.SubscriptionData{
-		AmfStatusUri: "https://127.0.0.1:29333/AMFStatusNotify/1",
+		AmfStatusUri: "https://192.168.2.102:29333/AMFStatusNotify/1",
 		GuamiList: []models.Guami{
 			{
 				PlmnId: &models.PlmnId{

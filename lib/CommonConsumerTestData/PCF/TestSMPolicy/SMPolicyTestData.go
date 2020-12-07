@@ -10,7 +10,7 @@ func CreateTestData() models.SmPolicyContextData {
 	t := time.Date(2000, 2, 1, 12, 30, 0, 0, time.UTC)
 	// timeNow := time.Now()
 	smReqData := models.SmPolicyContextData{
-		NotificationUri: "https://127.0.0.1:29502/nsmf-callback/v1/sm-policies/imsi-2089300007487-1",
+		NotificationUri: "https://192.168.2.103:29502/nsmf-callback/v1/sm-policies/imsi-2089300007487-1",
 		// AccNetChId: &models.AccNetChId{
 		// 	AccNetChaIdValue: 0,
 		// 	RefPccRuleIds:    []string{"A", "B", "C"},
