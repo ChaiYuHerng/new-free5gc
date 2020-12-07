@@ -350,7 +350,7 @@ func selectSmf(ue *context.AmfUe, anType models.AccessType, pduSession *models.P
 
 		ue.NssfUri = "http://192.168.2.107:29531"
 		fmt.Printf("ue NssfUri: %s\n",ue.NssfUri)
-		fmt.Printf("*pduSession.SNssai is %s\n",*pduSession.SNssai)
+		fmt.Printf("*pduSession.SNssai is %v\n",*pduSession.SNssai)
 
 		response, problemDetails, err := consumer.NSSelectionGetForPduSession(ue, *pduSession.SNssai)
 		if problemDetails != nil {
