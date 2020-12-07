@@ -46,12 +46,12 @@ var udpPacketCount int =        15000
 var totalUdpPacket int = 120000000000
 
 const my_type int = 1
-const ranIpAddr string = "192.168.2.157"
+const ranIpAddr string = "192.168.2.150" //157, 25
 const amfIpAddr string = "192.168.2.102" // no need to change
-const upfIpAddr1 string = "192.168.2.111" // 110, 111
-const upfIpAddr2 string = "192.168.2.114" // 110, 111
-const dNServer1  string = "192.168.2.54" // 205, 206
-var dNServerI = [4]byte{192, 168, 2, 54} // 205, 206
+const upfIpAddr1 string = "192.168.2.112" // 110, 111
+const upfIpAddr2 string = "192.168.2.112" // 110, 111
+const dNServer1  string = "192.168.2.219" // 54, 23
+var dNServerI = [4]byte{192, 168, 2, 219} // 54, 23
 
 type UE struct {
     Supi              string
@@ -75,8 +75,8 @@ var my_ue = UE{
         Len:    12, //, suci
         Buffer: []uint8{0x01, 0x02, 0xf8, 0x39, 0xf0, 0x00, 0x00, 0x00, 0x00, 0x00, 0x47, 0x78},
     },
-    PduSessionId1: 10,
-    PduSessionId2: 10,
+    PduSessionId1: 11,
+    PduSessionId2: 11,
     DN:            "internet",
     Ip:            "60.60.0.1",
     ranIpAddr:     ranIpAddr,
