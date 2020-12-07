@@ -197,7 +197,7 @@ func HandlePDUSessionEstablishmentRequest(ue *context.AmfUe, anType models.Acces
 			smfID = smfIDTmp
 			smfUri = smfUriTmp
 		}*/
-		fmt.Printf("UeType is %d\n",UeType)
+		fmt.Printf("UeType is %v\n",UeType)
 		//smfUri = "http://192.168.2.103:29502"
 		fmt.Printf("smfID: %s , smfUri:%s\n",smfID,smfUri)
 
