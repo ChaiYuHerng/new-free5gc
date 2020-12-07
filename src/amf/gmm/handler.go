@@ -183,8 +183,9 @@ func HandlePDUSessionEstablishmentRequest(ue *context.AmfUe, anType models.Acces
 		pduSession.Dnn = dnn
 
 		fmt.Printf("go into smfSelect\n")
-		//UeType := sNssai.Sd
-		UeType := pduSessionID
+		UeType := sNssai.Sd
+		//UeType := sNssai.Sst
+		//UeType := pduSessionID
 
 		smfID, smfUri, err := selectSmf(ue, anType, &pduSession, payload, UeType)
 		
@@ -401,16 +402,28 @@ func selectSmf(ue *context.AmfUe, anType models.AccessType, pduSession *models.P
 			break
 		}
 	}*/
-	if UeType%3 == 1 {
+	//using sd
+	if UeType == "010203" {
 		smfUri = "http://192.168.2.103:29502"
 		smfID = "1"
-	} else if UeType%3 == 2 {
+	} else if UeType == "112233" {
 		smfUri = "http://192.168.2.114:29512"
 		smfID = "2"
 	} else {
 		smfUri = "http://192.168.2.115:29522"
 		smfID = "3"
 	}
+	//using sst
+	/*if UeType == "010203" {
+		smfUri = "http://192.168.2.103:29502"
+		smfID = "1"
+	} else if UeType == "112233" {
+		smfUri = "http://192.168.2.114:29512"
+		smfID = "2"
+	} else {
+		smfUri = "http://192.168.2.115:29522"
+		smfID = "3"
+	}*/
 	return smfID, smfUri, nil
 }
 
