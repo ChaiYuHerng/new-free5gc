@@ -218,16 +218,21 @@ func GenerateDataPath(upPath UPPath, smContext *SMContext) *DataPath {
 
 func (upi *UserPlaneInformation) GenerateDefaultPath(dnn string) bool {
 
+	fmt.Printf("now in the GenerateDefaultPath\n\n")
 	var source *UPNode
 	var destination *UPNode
 
 	for _, node := range upi.AccessNetwork {
 
+		fmt.Printf("node.Type is %v,",node.Type)
+		fmt.Printf("UPNODE_AN is %v,",UPNODE_AN)
 		if node.Type == UPNODE_AN {
 			source = node
 			break
 		}
 	}
+
+	fmt.Printf("source is %v\n",source)
 
 	if source == nil {
 		logger.CtxLog.Errorf("There is no AN Node in config file!")
@@ -244,6 +249,8 @@ func (upi *UserPlaneInformation) GenerateDefaultPath(dnn string) bool {
 			}
 		}
 	}
+
+	fmt.Printf("destination is %v\n",destination)
 
 	if destination == nil {
 		logger.CtxLog.Errorf("Can't find UPF with DNN [%s]\n", dnn)
