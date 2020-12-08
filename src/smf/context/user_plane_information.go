@@ -277,7 +277,7 @@ func (upi *UserPlaneInformation) GetUPFIDByIP(ip string) string {
 func (upi *UserPlaneInformation) GetDefaultUserPlanePathByDNN(dnn string) (path UPPath) {
 	path, pathExist := upi.DefaultUserPlanePath[dnn]
 
-	fmt.Printf("now in the GetDefaultUserPlanePathByDNN\n\n")
+	fmt.Printf("now in the GetDefaultUserPlanePathByDNN,dnn is %v\n\n",dnn)
 	fmt.Printf("path now is %v\n",path)
 	//pathExist = false
 	fmt.Printf("pathExist is %v\n",pathExist)
