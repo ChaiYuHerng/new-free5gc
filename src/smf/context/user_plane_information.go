@@ -429,6 +429,8 @@ func (upi *UserPlaneInformation) GenerateDefaultPath(dnn string) bool {
 		return false
 	}
 
+	fmt.Printf("start run DFS\n")
+
 	//Run DFS
 	visited := make(map[*UPNode]bool)
 
@@ -442,9 +444,10 @@ func (upi *UserPlaneInformation) GenerateDefaultPath(dnn string) bool {
 
 	//fmt.Printf("path[0].Type is %v\n\n",path[0].Type)
 	//fmt.Printf("UPNODE_AN is %v\n\n",UPNODE_AN)
-	if path[0].Type == UPNODE_AN {
+	/*if path[0].Type == UPNODE_AN {
 		path = path[1:]
-	}
+	}*/
+	path = path[1:]
 	upi.DefaultUserPlanePath[dnn] = path
 	return pathExist
 }
