@@ -55,14 +55,19 @@ func AllocateUPFID() {
 
 // NewUserPlaneInformation process the configuration then returns a new instance of UserPlaneInformation
 func NewUserPlaneInformation(upTopology *factory.UserPlaneInformation) *UserPlaneInformation {
+	fmt.Printf("now in the NewUserPlaneInformation\n\n")
 	nodePool := make(map[string]*UPNode)
 	upfPool := make(map[string]*UPNode)
 	anPool := make(map[string]*UPNode)
 	upfIPMap := make(map[string]string)
 
+	fmt.Printf("upfPool is %v\n",upfPool)
+
 	for name, node := range upTopology.UPNodes {
 		upNode := new(UPNode)
 		upNode.Type = UPNodeType(node.Type)
+		fmt.Printf("upNode is %v\n",upNode)
+		fmt.Printf("upNode.Type is %v\n",upNode.Type)
 		switch upNode.Type {
 		case UPNODE_AN:
 			upNode.ANIP = net.ParseIP(node.ANIP)
