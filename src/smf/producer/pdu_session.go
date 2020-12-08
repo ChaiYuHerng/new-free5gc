@@ -152,8 +152,10 @@ func HandlePDUSessionSMContextCreate(request models.PostSmContextsRequest) *http
 		fmt.Printf("createData.Supi is %v\n",createData.Supi)
 		fmt.Printf("createData.Dnn is %v\n",createData.Dnn)
 		defaultUPPath := smf_context.GetUserPlaneInformation().GetDefaultUserPlanePathByDNN(createData.Dnn)
+		fmt.Printf("defaultUPPath is %v\n",defaultUPPath)
 		smContext.AllocateLocalSEIDForUPPath(defaultUPPath)
 		defaultPath = smf_context.GenerateDataPath(defaultUPPath, smContext)
+		fmt.Printf("defaultPath is %v\n",defaultPath)
 		if defaultPath != nil {
 			defaultPath.IsDefaultPath = true
 			smContext.Tunnel.AddDataPath(defaultPath)
