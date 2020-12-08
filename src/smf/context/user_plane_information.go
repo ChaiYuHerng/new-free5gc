@@ -349,6 +349,8 @@ func (upi *UserPlaneInformation) GenerateDefaultPath(dnn string) bool {
 	var destination2 *UPNode
 	var source3 *UPNode
 	var destination3 *UPNode
+	var source *UPNode
+	var destination *UPNode
 
 	for _, node := range upi.AccessNetwork {
 
@@ -371,8 +373,15 @@ func (upi *UserPlaneInformation) GenerateDefaultPath(dnn string) bool {
 	fmt.Printf("source1 is %v\n\n",source1)
 	fmt.Printf("source2 is %v\n\n",source2)
 	fmt.Printf("source3 is %v\n\n",source3)
+	if dnn == "internet" {
+		source = source1
+	} else if dnn == "internet2" {
+		source = source2
+	} else {
+		source = source3
+	} 
 
-	if source1 == nil {
+	if source == nil {
 		logger.CtxLog.Errorf("There is no AN Node in config file!")
 		return false
 	}
@@ -406,6 +415,14 @@ func (upi *UserPlaneInformation) GenerateDefaultPath(dnn string) bool {
 	fmt.Printf("destination1 is %v\n",destination1)
 	fmt.Printf("destination2 is %v\n",destination2)
 	fmt.Printf("destination3 is %v\n",destination3)
+	
+	if dnn == "internet" {
+		destination = destination1
+	} else if dnn == "internet2" {
+		destination = destination2
+	} else {
+		destination = destination3
+	}
 
 	if destination1 == nil {
 		logger.CtxLog.Errorf("Can't find UPF with DNN [%s]\n", dnn)
@@ -419,14 +436,7 @@ func (upi *UserPlaneInformation) GenerateDefaultPath(dnn string) bool {
 		visited[upNode] = false
 	}
 
-	path, pathExist := getPathBetween(source1, destination1, visited)
-	if dnn == "internet" {
-		fmt.Printf("OK!!")
-	} else if dnn == "internet2" {
-		path, pathExist = getPathBetween(source3, destination3, visited)
-	} else {
-		path, pathExist = getPathBetween(source2, destination2, visited)
-	}
+	path, pathExist := getPathBetween(source, destination, visited)
 
 
 
