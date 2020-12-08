@@ -255,66 +255,62 @@ func (upi *UserPlaneInformation) GenerateDefaultPath(dnn string) bool {
 	var source *UPNode
 	var destination *UPNode
 
-	check1 := 1
 	for _, node := range upi.AccessNetwork {
 
 		fmt.Printf("node.Type is %v\n",node.Type)
 		fmt.Printf("UPNODE_AN is %v\n",UPNODE_AN)
 		fmt.Printf("node is %v\n",node)
-		if check1 == 1 {
-			if node.Type == UPNODE_AN1 {
-				source = node
-				break
-			}
-		} else if check1 ==2 {
-			if node.Type == UPNODE_AN2 {
-				source = node
-				break
-			}
-		} else {
-			if node.Type == UPNODE_AN3 {
-				source = node
-				break
-			}
+		/*if node.Type == UPNODE_AN {
+			source = node
+			break
+		}*/
+		if node.Type == UPNODE_AN1 {
+			source1 = node
+		} else if node.Type == UPNODE_AN2 {
+			source2 = node
+		} else if node.Type == UPNODE_AN3 {
+			source3 = node
 		}
-		check1 +=1
 	}
 
-	fmt.Printf("source is %v\n\n",source)
+	fmt.Printf("source1 is %v\n\n",source1)
+	fmt.Printf("source2 is %v\n\n",source2)
+	fmt.Printf("source3 is %v\n\n",source3)
 
-	if source == nil {
+	if source1 == nil {
 		logger.CtxLog.Errorf("There is no AN Node in config file!")
 		return false
 	}
 
+
 	for _, node := range upi.UPFs {
 		fmt.Printf("node is %v\n",node)
 
-		check2 :=1
+		/*if node.UPF.UPIPInfo.NetworkInstance != nil {
+			node_dnn := string(node.UPF.UPIPInfo.NetworkInstance)
+			if node_dnn == dnn {
+				destination = node
+				break
+			}
+		}*/
+
 		if node.UPF.UPIPInfo.NetworkInstance != nil {
 			node_dnn := string(node.UPF.UPIPInfo.NetworkInstance)
 			fmt.Printf("node_dnn is %v\n",node_dnn)
 			fmt.Printf("dnn is %v\n",dnn)
-			if check2 == 1 {
-				if node.Type == UPNODE_UPF1 {
-					destination = node
-					break
-				}
-			} else if check2 ==2 {
-				if node.Type == UPNODE_UPF2 {
-					destination = node
-					break
-				}
+			if node.Type == UPNODE_UPF1 {
+				destination1 = node
+			} else if node.Type == UPNODE_UPF2 {
+				destination2 = node
 			} else {
-				if node.Type == UPNODE_UPF3 {
-					destination = node
-					break
-				}
+				destination3 = node
 			}
 		}
 	}
 
-	fmt.Printf("destination is %v\n",destination)
+	fmt.Printf("destination1 is %v\n",destination1)
+	fmt.Printf("destination2 is %v\n",destination2)
+	fmt.Printf("destination3 is %v\n",destination3)
 
 	if destination == nil {
 		logger.CtxLog.Errorf("Can't find UPF with DNN [%s]\n", dnn)
@@ -328,7 +324,9 @@ func (upi *UserPlaneInformation) GenerateDefaultPath(dnn string) bool {
 		visited[upNode] = false
 	}
 
-	path, pathExist := getPathBetween(source, destination, visited)
+	path, pathExist := getPathBetween(source1, destination1, visited)
+	path, pathExist := getPathBetween(source2, destination2, visited)
+	path, pathExist := getPathBetween(source3, destination3, visited)
 
 	fmt.Printf("path[0].Type is %v\n\n",path[0].Type)
 	fmt.Printf("UPNODE_AN is %v\n\n",UPNODE_AN)

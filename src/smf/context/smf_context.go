@@ -6,6 +6,7 @@ import (
 	"os"
 	"sync"
 	"sync/atomic"
+	"fmt"
 
 	"github.com/google/uuid"
 
@@ -171,6 +172,8 @@ func InitSmfContext(config *factory.Config) {
 	smfContext.SnssaiInfos = configuration.SNssaiInfo
 
 	smfContext.OnlySupportIPv4 = true
+
+	fmt.Printf("configuration.UserPlaneInformation is %v\n",&configuration.UserPlaneInformation)
 
 	smfContext.UserPlaneInformation = NewUserPlaneInformation(&configuration.UserPlaneInformation)
 
