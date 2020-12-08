@@ -78,15 +78,15 @@ func NewUserPlaneInformation(upTopology *factory.UserPlaneInformation) *UserPlan
 			upNode.ANIP = net.ParseIP(node.ANIP)
 			anPool[name] = upNode
 		case UPNODE_AN1:
-			fmt.Printf("now is the case UPNODE_AN\n\n")
+			fmt.Printf("now is the case UPNODE_AN1\n\n")
 			upNode.ANIP = net.ParseIP(node.ANIP)
 			anPool[name] = upNode
 		case UPNODE_AN2:
-			fmt.Printf("now is the case UPNODE_AN\n\n")
+			fmt.Printf("now is the case UPNODE_AN2\n\n")
 			upNode.ANIP = net.ParseIP(node.ANIP)
 			anPool[name] = upNode
 		case UPNODE_AN3:
-			fmt.Printf("now is the case UPNODE_AN\n\n")
+			fmt.Printf("now is the case UPNODE_AN3\n\n")
 			upNode.ANIP = net.ParseIP(node.ANIP)
 			anPool[name] = upNode
 		case UPNODE_UPF:
