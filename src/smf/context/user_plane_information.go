@@ -387,6 +387,7 @@ func (upi *UserPlaneInformation) GenerateDefaultPath(dnn string) bool {
 			source = source3
 		} 
 	}
+	fmt.Printf("source is %s\n",source)
 	
 
 	if source == nil {
@@ -398,6 +399,7 @@ func (upi *UserPlaneInformation) GenerateDefaultPath(dnn string) bool {
 	check2 :=0
 	for _, node := range upi.UPFs {
 		fmt.Printf("node is %v\n",node)
+		fmt.Printf("node.Type is %v\n",node.Type)
 
 		/*if node.UPF.UPIPInfo.NetworkInstance != nil {
 			node_dnn := string(node.UPF.UPIPInfo.NetworkInstance)
@@ -438,9 +440,10 @@ func (upi *UserPlaneInformation) GenerateDefaultPath(dnn string) bool {
 			destination = destination3
 		}
 	}
+	fmt.Printf("destination is %s\n",destination)
 	
 
-	if destination1 == nil {
+	if destination == nil {
 		logger.CtxLog.Errorf("Can't find UPF with DNN [%s]\n", dnn)
 		return false
 	}
