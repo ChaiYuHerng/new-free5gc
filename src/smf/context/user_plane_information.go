@@ -422,8 +422,8 @@ func (upi *UserPlaneInformation) GenerateDefaultPath(dnn string) bool {
 	path, pathExist = getPathBetween(source2, destination2, visited)
 	path, pathExist = getPathBetween(source3, destination3, visited)
 
-	fmt.Printf("path[0].Type is %v\n\n",path[0].Type)
-	fmt.Printf("UPNODE_AN is %v\n\n",UPNODE_AN)
+	//fmt.Printf("path[0].Type is %v\n\n",path[0].Type)
+	//fmt.Printf("UPNODE_AN is %v\n\n",UPNODE_AN)
 	if path[0].Type == UPNODE_AN {
 		path = path[1:]
 	}

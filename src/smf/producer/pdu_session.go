@@ -149,6 +149,8 @@ func HandlePDUSessionSMContextCreate(request models.PostSmContextsRequest) *http
 		//UE has no pre-config path.
 		//Use default route
 		logger.PduSessLog.Infof("SUPI[%s] has no pre-config route", createData.Supi)
+		fmt.Printf("createData.Supi is %v\n",createData.Supi)
+		fmt.Printf("createData.Dnn is %v\n",createData.Dnn)
 		defaultUPPath := smf_context.GetUserPlaneInformation().GetDefaultUserPlanePathByDNN(createData.Dnn)
 		smContext.AllocateLocalSEIDForUPPath(defaultUPPath)
 		defaultPath = smf_context.GenerateDataPath(defaultUPPath, smContext)
