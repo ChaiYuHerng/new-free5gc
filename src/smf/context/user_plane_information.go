@@ -24,13 +24,7 @@ type UPNodeType string
 
 const (
 	UPNODE_UPF UPNodeType = "UPF"
-	UPNODE_UPF UPNodeType1 = "UPF1"
-	UPNODE_UPF UPNodeType2 = "UPF2"
-	UPNODE_UPF UPNodeType3 = "UPF3"
 	UPNODE_AN  UPNodeType = "AN"
-	UPNODE_AN  UPNodeType1 = "AN1"
-	UPNODE_AN  UPNodeType2 = "AN2"
-	UPNODE_AN  UPNodeType3 = "AN3"
 )
 
 // UPNode represent the user plane node topology
