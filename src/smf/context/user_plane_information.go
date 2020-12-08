@@ -71,6 +71,7 @@ func NewUserPlaneInformation(upTopology *factory.UserPlaneInformation) *UserPlan
 		fmt.Printf("upNode.Type is %v\n",upNode.Type)
 		switch upNode.Type {
 		case UPNODE_AN:
+			fmt.Printf("now is the case UPNODE_AN\n\n")
 			upNode.ANIP = net.ParseIP(node.ANIP)
 			anPool[name] = upNode
 		case UPNODE_UPF:
