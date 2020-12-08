@@ -6,7 +6,6 @@ import (
 	"os"
 	"sync"
 	"sync/atomic"
-	"fmt"
 
 	"github.com/google/uuid"
 

@@ -316,7 +316,7 @@ func (upi *UserPlaneInformation) GenerateDefaultPath(dnn string) bool {
 	fmt.Printf("destination2 is %v\n",destination2)
 	fmt.Printf("destination3 is %v\n",destination3)
 
-	if destination == nil {
+	if destination1 == nil {
 		logger.CtxLog.Errorf("Can't find UPF with DNN [%s]\n", dnn)
 		return false
 	}
