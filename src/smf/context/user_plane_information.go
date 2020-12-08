@@ -252,8 +252,12 @@ func GenerateDataPath(upPath UPPath, smContext *SMContext) *DataPath {
 func (upi *UserPlaneInformation) GenerateDefaultPath(dnn string) bool {
 
 	fmt.Printf("now in the GenerateDefaultPath\n\n")
-	var source *UPNode
-	var destination *UPNode
+	var source1 *UPNode
+	var destination1 *UPNode
+	var source2 *UPNode
+	var destination2 *UPNode
+	var source3 *UPNode
+	var destination3 *UPNode
 
 	for _, node := range upi.AccessNetwork {
 
@@ -325,8 +329,8 @@ func (upi *UserPlaneInformation) GenerateDefaultPath(dnn string) bool {
 	}
 
 	path, pathExist := getPathBetween(source1, destination1, visited)
-	path, pathExist := getPathBetween(source2, destination2, visited)
-	path, pathExist := getPathBetween(source3, destination3, visited)
+	path, pathExist = getPathBetween(source2, destination2, visited)
+	path, pathExist = getPathBetween(source3, destination3, visited)
 
 	fmt.Printf("path[0].Type is %v\n\n",path[0].Type)
 	fmt.Printf("UPNODE_AN is %v\n\n",UPNODE_AN)
