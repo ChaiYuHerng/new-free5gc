@@ -24,6 +24,9 @@ type UPNodeType string
 
 const (
 	UPNODE_UPF UPNodeType = "UPF"
+	UPNODE_UPF1 UPNodeType = "UPF1"
+	UPNODE_UPF2 UPNodeType = "UPF2"
+	UPNODE_UPF3 UPNodeType = "UPF3"
 	UPNODE_AN  UPNodeType = "AN"
 	UPNODE_AN1  UPNodeType = "AN1"
 	UPNODE_AN2  UPNodeType = "AN2"
@@ -64,8 +67,8 @@ func NewUserPlaneInformation(upTopology *factory.UserPlaneInformation) *UserPlan
 	anPool := make(map[string]*UPNode)
 	upfIPMap := make(map[string]string)
 
-	fmt.Printf("1.upfPool is %v\n",upfPool)
-	fmt.Printf("1.nodePool is %v\n",nodePool)
+	//fmt.Printf("1.upfPool is %v\n",upfPool)
+	//fmt.Printf("1.nodePool is %v\n",nodePool)
 
 	for name, node := range upTopology.UPNodes {
 		upNode := new(UPNode)
@@ -155,8 +158,8 @@ func NewUserPlaneInformation(upTopology *factory.UserPlaneInformation) *UserPlan
 		DefaultUserPlanePath: make(map[string][]*UPNode),
 	}
 
-	fmt.Printf("2.upfPool is %v\n",upfPool)
-	fmt.Printf("2.nodePool is %v\n",nodePool)
+	//fmt.Printf("2.upfPool is %v\n",upfPool)
+	//fmt.Printf("2.nodePool is %v\n",nodePool)
 
 	return userplaneInformation
 }
@@ -252,15 +255,29 @@ func (upi *UserPlaneInformation) GenerateDefaultPath(dnn string) bool {
 	var source *UPNode
 	var destination *UPNode
 
+	check1 := 1
 	for _, node := range upi.AccessNetwork {
 
 		fmt.Printf("node.Type is %v\n",node.Type)
 		fmt.Printf("UPNODE_AN is %v\n",UPNODE_AN)
 		fmt.Printf("node is %v\n",node)
-		if node.Type == UPNODE_AN {
-			source = node
-			//break
+		if check1 == 1 {
+			if node.Type == UPNODE_AN1 {
+				source = node
+				break
+			}
+		} else if check1 ==2 {
+			if node.Type == UPNODE_AN2 {
+				source = node
+				break
+			}
+		} else {
+			if node.Type == UPNODE_AN3 {
+				source = node
+				break
+			}
 		}
+		check1 +=1
 	}
 
 	fmt.Printf("source is %v\n\n",source)
@@ -273,17 +290,26 @@ func (upi *UserPlaneInformation) GenerateDefaultPath(dnn string) bool {
 	for _, node := range upi.UPFs {
 		fmt.Printf("node is %v\n",node)
 
-		check :=0
+		check2 :=1
 		if node.UPF.UPIPInfo.NetworkInstance != nil {
 			node_dnn := string(node.UPF.UPIPInfo.NetworkInstance)
 			fmt.Printf("node_dnn is %v\n",node_dnn)
 			fmt.Printf("dnn is %v\n",dnn)
-			if node_dnn == dnn {
-				if check == 0 {
+			if check2 == 1 {
+				if node.Type == UPNODE_UPF1 {
 					destination = node
+					break
 				}
-				check = 1
-				//break
+			} else if check2 ==2 {
+				if node.Type == UPNODE_UPF2 {
+					destination = node
+					break
+				}
+			} else {
+				if node.Type == UPNODE_UPF3 {
+					destination = node
+					break
+				}
 			}
 		}
 	}
