@@ -342,6 +342,7 @@ func GenerateDataPath(upPath UPPath, smContext *SMContext) *DataPath {
 func (upi *UserPlaneInformation) GenerateDefaultPath(dnn string) bool {
 
 	fmt.Printf("now in the GenerateDefaultPath\n\n")
+	fmt.Printf("dnn is %v\n",dnn)
 	var source1 *UPNode
 	var destination1 *UPNode
 	var source2 *UPNode
@@ -402,9 +403,9 @@ func (upi *UserPlaneInformation) GenerateDefaultPath(dnn string) bool {
 		}
 	}
 
-	fmt.Printf("destination1 is %v\n",destination1)
+	/*fmt.Printf("destination1 is %v\n",destination1)
 	fmt.Printf("destination2 is %v\n",destination2)
-	fmt.Printf("destination3 is %v\n",destination3)
+	fmt.Printf("destination3 is %v\n",destination3)*/
 
 	if destination1 == nil {
 		logger.CtxLog.Errorf("Can't find UPF with DNN [%s]\n", dnn)
