@@ -247,7 +247,7 @@ func (upi *UserPlaneInformation) GenerateDefaultPath(dnn string) bool {
 		}
 	}
 
-	fmt.Printf("source is %v\n",source)
+	fmt.Printf("source is %v\n\n",source)
 
 	if source == nil {
 		logger.CtxLog.Errorf("There is no AN Node in config file!")
@@ -257,12 +257,16 @@ func (upi *UserPlaneInformation) GenerateDefaultPath(dnn string) bool {
 	for _, node := range upi.UPFs {
 		fmt.Printf("node is %v\n",node)
 
+		check :=0
 		if node.UPF.UPIPInfo.NetworkInstance != nil {
 			node_dnn := string(node.UPF.UPIPInfo.NetworkInstance)
 			fmt.Printf("node_dnn is %v\n",node_dnn)
 			fmt.Printf("dnn is %v\n",dnn)
 			if node_dnn == dnn {
-				destination = node
+				if check == 0 {
+					destination = node
+				}
+				check = 1
 				//break
 			}
 		}
