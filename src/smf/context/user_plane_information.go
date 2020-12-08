@@ -61,7 +61,8 @@ func NewUserPlaneInformation(upTopology *factory.UserPlaneInformation) *UserPlan
 	anPool := make(map[string]*UPNode)
 	upfIPMap := make(map[string]string)
 
-	fmt.Printf("upfPool is %v\n",upfPool)
+	fmt.Printf("1.upfPool is %v\n",upfPool)
+	fmt.Printf("1.nodePool is %v\n",nodePool)
 
 	for name, node := range upTopology.UPNodes {
 		upNode := new(UPNode)
@@ -137,6 +138,9 @@ func NewUserPlaneInformation(upTopology *factory.UserPlaneInformation) *UserPlan
 		UPFsIPtoID:           make(map[string]string),
 		DefaultUserPlanePath: make(map[string][]*UPNode),
 	}
+
+	fmt.Printf("2.upfPool is %v\n",upfPool)
+	fmt.Printf("2.nodePool is %v\n",nodePool)
 
 	return userplaneInformation
 }
