@@ -161,6 +161,7 @@ func (upi *UserPlaneInformation) GetDefaultUserPlanePathByDNN(dnn string) (path 
 
 	fmt.Printf("now in the GetDefaultUserPlanePathByDNN\n\n")
 	fmt.Printf("path now is %v\n",path)
+	pathExist = false
 	fmt.Printf("pathExist is %v\n",pathExist)
 
 	if pathExist {
