@@ -25,6 +25,9 @@ type UPNodeType string
 const (
 	UPNODE_UPF UPNodeType = "UPF"
 	UPNODE_AN  UPNodeType = "AN"
+	UPNODE_AN1  UPNodeType = "AN1"
+	UPNODE_AN2  UPNodeType = "AN2"
+	UPNODE_AN3  UPNodeType = "AN3"
 )
 
 // UPNode represent the user plane node topology
@@ -71,6 +74,18 @@ func NewUserPlaneInformation(upTopology *factory.UserPlaneInformation) *UserPlan
 		fmt.Printf("upNode.Type is %v\n",upNode.Type)
 		switch upNode.Type {
 		case UPNODE_AN:
+			fmt.Printf("now is the case UPNODE_AN\n\n")
+			upNode.ANIP = net.ParseIP(node.ANIP)
+			anPool[name] = upNode
+		case UPNODE_AN1:
+			fmt.Printf("now is the case UPNODE_AN\n\n")
+			upNode.ANIP = net.ParseIP(node.ANIP)
+			anPool[name] = upNode
+		case UPNODE_AN2:
+			fmt.Printf("now is the case UPNODE_AN\n\n")
+			upNode.ANIP = net.ParseIP(node.ANIP)
+			anPool[name] = upNode
+		case UPNODE_AN3:
 			fmt.Printf("now is the case UPNODE_AN\n\n")
 			upNode.ANIP = net.ParseIP(node.ANIP)
 			anPool[name] = upNode
