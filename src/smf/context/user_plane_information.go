@@ -420,7 +420,7 @@ func (upi *UserPlaneInformation) GenerateDefaultPath(dnn string) bool {
 	}
 	if dnn == internet {
 		path, pathExist := getPathBetween(source1, destination1, visited)
-	} else if dnn = internet2 {
+	} else if dnn == internet2 {
 		path, pathExist := getPathBetween(source2, destination2, visited)
 	} else {
 		path, pathExist := getPathBetween(source3, destination3, visited)
