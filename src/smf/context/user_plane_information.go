@@ -389,7 +389,8 @@ func (upi *UserPlaneInformation) GenerateDefaultPath(dnn string) bool {
 			source = source2
 		} else {
 			source = source3
-		} 
+		}
+		source = source1 
 	}
 	fmt.Printf("source is %s\n",source)
 	
@@ -443,6 +444,7 @@ func (upi *UserPlaneInformation) GenerateDefaultPath(dnn string) bool {
 		} else {
 			destination = destination3
 		}
+		destination = destination3
 	}
 	fmt.Printf("destination is %s\n",destination)
 	
