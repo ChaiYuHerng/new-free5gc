@@ -261,13 +261,19 @@ func (node *DataPathNode) GetUpLinkFAR() (far *FAR) {
 func (dataPathPool DataPathPool) GetDefaultPath() (dataPath *DataPath) {
 
 	fmt.Printf("now in the GetDefaultPath\n\n")
+	var tmp_checkpoint int
+	tmp_checkpoint = 1
 	for _, path := range dataPathPool {
 
 		fmt.Printf("path is %v\n",path)
 		fmt.Printf("path.IsDefaultPath is %v\n",path.IsDefaultPath)
-		if path.Destination.DestinationIP == "" {
+		fmt.Printf("tmp_checkpoint is %d,checkpoint is %d\n",tmp_checkpoint,checkpoint)
+		if tmp_checkpoint == checkpoint {
 			dataPath = path
-			//return
+			fmt.Printf("finish GetDefaultPath, now datapath is %v\n",dataPath)
+			return
+		} else {
+			tmp_checkpoint +=1;
 		}
 
 	}
