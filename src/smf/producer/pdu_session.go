@@ -165,6 +165,8 @@ func HandlePDUSessionSMContextCreate(request models.PostSmContextsRequest) *http
 		}
 	}
 
+	fmt.Printf("final defaultPath is %v\n",defaultPath)
+
 	if defaultPath == nil {
 		smContext.SMContextState = smf_context.InActive
 		logger.CtxLog.Traceln("SMContextState Change State: ", smContext.SMContextState.String())

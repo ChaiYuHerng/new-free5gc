@@ -379,6 +379,7 @@ func (upi *UserPlaneInformation) GetDefaultUserPlanePathByDNN(dnn string) (path 
 		return
 	} else {
 		pathExist = upi.GenerateDefaultPath(dnn)
+		fmt.Printf("pathExist is %v\n",pathExist)
 		if pathExist {
 			return upi.DefaultUserPlanePath[dnn]
 		}
