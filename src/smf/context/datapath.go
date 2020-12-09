@@ -269,6 +269,7 @@ func (dataPathPool DataPathPool) GetDefaultPath() (dataPath *DataPath) {
 		}
 
 	}
+	fmt.Printf("finish GetDefaultPath, now datapath is %v\n",dataPath)
 	return
 }
 
