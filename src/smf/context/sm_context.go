@@ -155,6 +155,7 @@ func NewSMContext(identifier string, pduSessID int32) (smContext *SMContext) {
 }
 
 func GetSMContext(ref string) (smContext *SMContext) {
+	fmt.Printf("GetSMContext test1\n\n")
 	if value, ok := smContextPool.Load(ref); ok {
 		fmt.Printf("value is %v,ok is %v\n\n",value,ok)
 		smContext = value.(*SMContext)
