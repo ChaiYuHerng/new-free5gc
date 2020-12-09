@@ -165,7 +165,7 @@ func HandlePDUSessionSMContextCreate(request models.PostSmContextsRequest) *http
 		}
 	}
 
-	fmt.Printf("final defaultPath is %v\n",defaultPath)
+	fmt.Printf("final defaultPath is %v\n\n\n",defaultPath)
 
 	if defaultPath == nil {
 		smContext.SMContextState = smf_context.InActive
