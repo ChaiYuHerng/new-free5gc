@@ -8,7 +8,7 @@ import (
 	"strconv"
 )
 
-var checkpoint int
+var tmp_dest string
 
 // GTPTunnel represents the GTP tunnel information
 type GTPTunnel struct {
@@ -262,13 +262,11 @@ func (dataPathPool DataPathPool) GetDefaultPath() (dataPath *DataPath) {
 
 	fmt.Printf("now in the GetDefaultPath\n\n")
 	var tmp_checkpoint int
-	tmp_checkpoint = 1
 	for _, path := range dataPathPool {
 
 		fmt.Printf("path is %v\n",path)
 		fmt.Printf("path.IsDefaultPath is %v\n",path.IsDefaultPath)
-		fmt.Printf("tmp_checkpoint is %d,checkpoint is %d\n",tmp_checkpoint,checkpoint)
-		if path.IsDefaultPath {
+		if path.Destination.DestinationIP == tmp_dest {
 			dataPath = path
 			fmt.Printf("finish GetDefaultPath, now datapath is %v\n",dataPath)
 			return
@@ -282,19 +280,16 @@ func (dataPathPool DataPathPool) GetDefaultPath2(dnn string) (dataPath *DataPath
 
 	fmt.Printf("now in the GetDefaultPath2\n\n")
 	fmt.Printf("dnn is %v\n",dnn)
-	var tmp_dest string
+	//var tmp_dest string
 	if dnn == "internet" {
 		tmp_dest = "192.168.2.111"
-		checkpoint = 1
 	} else if dnn == "internet2" {
 		tmp_dest = "192.168.2.112"
-		checkpoint = 2
 	} else if dnn == "internet3" {
 		tmp_dest = "192.168.2.113"
-		checkpoint = 3
 	}
 
-	fmt.Printf("tmp_dest is %s,checkpoint is %d\n",tmp_dest,checkpoint)
+	fmt.Printf("tmp_dest is %s\n",tmp_dest)
 
 	for _, path := range dataPathPool {
 
@@ -304,7 +299,6 @@ func (dataPathPool DataPathPool) GetDefaultPath2(dnn string) (dataPath *DataPath
 		if path.Destination.DestinationIP == tmp_dest {
 			path.IsDefaultPath = true
 		    path.Activated = true
-			path.Destination.DestinationIP = ""
 			dataPath = path
 			fmt.Printf("finish GetDefaultPath2, now datapath is %v\n",dataPath)
 			return
