@@ -268,13 +268,11 @@ func (dataPathPool DataPathPool) GetDefaultPath() (dataPath *DataPath) {
 		fmt.Printf("path is %v\n",path)
 		fmt.Printf("path.IsDefaultPath is %v\n",path.IsDefaultPath)
 		fmt.Printf("tmp_checkpoint is %d,checkpoint is %d\n",tmp_checkpoint,checkpoint)
-		if tmp_checkpoint == checkpoint {
+		if path.IsDefaultPath {
 			dataPath = path
 			fmt.Printf("finish GetDefaultPath, now datapath is %v\n",dataPath)
 			return
-		} else {
-			tmp_checkpoint +=1;
-		}
+		} 
 
 	}
 	fmt.Printf("finish GetDefaultPath, now datapath is %v\n",dataPath)
@@ -301,9 +299,11 @@ func (dataPathPool DataPathPool) GetDefaultPath2(dnn string) (dataPath *DataPath
 	for _, path := range dataPathPool {
 
 		fmt.Printf("path is %v\n",path)
-		path.IsDefaultPath = true
-		path.Activated = true
+		path.IsDefaultPath = false
+		path.Activated = false
 		if path.Destination.DestinationIP == tmp_dest {
+			path.IsDefaultPath = true
+		    path.Activated = true
 			path.Destination.DestinationIP = ""
 			dataPath = path
 			fmt.Printf("finish GetDefaultPath2, now datapath is %v\n",dataPath)
