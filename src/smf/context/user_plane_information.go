@@ -305,6 +305,7 @@ func GenerateDataPath(upPath UPPath, smContext *SMContext) *DataPath {
 		return nil
 	}
 	fmt.Printf("now in the GenerateDataPath function\n\n")
+	fmt.Printf("len(upPath) is %v\n",len(upPath))
 	var lowerBound = 0
 	var upperBound = len(upPath) - 1
 	var root *DataPathNode
