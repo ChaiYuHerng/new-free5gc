@@ -212,6 +212,96 @@ func NewUserPlaneInformation(upTopology *factory.UserPlaneInformation) *UserPlan
 			}
 
 			upfPool[name] = upNode
+		case UPNODE_UPF4:
+			//ParseIp() always return 16 bytes
+			//so we can't use the length of return ip to seperate IPv4 and IPv6
+			//This is just a work around
+			var ip net.IP
+			if net.ParseIP(node.NodeID).To4() == nil {
+				ip = net.ParseIP(node.NodeID)
+			} else {
+				ip = net.ParseIP(node.NodeID).To4()
+			}
+
+			switch len(ip) {
+			case net.IPv4len:
+				upNode.NodeID = pfcpType.NodeID{
+					NodeIdType:  pfcpType.NodeIdTypeIpv4Address,
+					NodeIdValue: ip,
+				}
+			case net.IPv6len:
+				upNode.NodeID = pfcpType.NodeID{
+					NodeIdType:  pfcpType.NodeIdTypeIpv6Address,
+					NodeIdValue: ip,
+				}
+			default:
+				upNode.NodeID = pfcpType.NodeID{
+					NodeIdType:  pfcpType.NodeIdTypeFqdn,
+					NodeIdValue: []byte(node.NodeID),
+				}
+			}
+
+			upfPool[name] = upNode
+		case UPNODE_UPF5:
+			//ParseIp() always return 16 bytes
+			//so we can't use the length of return ip to seperate IPv4 and IPv6
+			//This is just a work around
+			var ip net.IP
+			if net.ParseIP(node.NodeID).To4() == nil {
+				ip = net.ParseIP(node.NodeID)
+			} else {
+				ip = net.ParseIP(node.NodeID).To4()
+			}
+
+			switch len(ip) {
+			case net.IPv4len:
+				upNode.NodeID = pfcpType.NodeID{
+					NodeIdType:  pfcpType.NodeIdTypeIpv4Address,
+					NodeIdValue: ip,
+				}
+			case net.IPv6len:
+				upNode.NodeID = pfcpType.NodeID{
+					NodeIdType:  pfcpType.NodeIdTypeIpv6Address,
+					NodeIdValue: ip,
+				}
+			default:
+				upNode.NodeID = pfcpType.NodeID{
+					NodeIdType:  pfcpType.NodeIdTypeFqdn,
+					NodeIdValue: []byte(node.NodeID),
+				}
+			}
+
+			upfPool[name] = upNode
+		case UPNODE_UPF6:
+			//ParseIp() always return 16 bytes
+			//so we can't use the length of return ip to seperate IPv4 and IPv6
+			//This is just a work around
+			var ip net.IP
+			if net.ParseIP(node.NodeID).To4() == nil {
+				ip = net.ParseIP(node.NodeID)
+			} else {
+				ip = net.ParseIP(node.NodeID).To4()
+			}
+
+			switch len(ip) {
+			case net.IPv4len:
+				upNode.NodeID = pfcpType.NodeID{
+					NodeIdType:  pfcpType.NodeIdTypeIpv4Address,
+					NodeIdValue: ip,
+				}
+			case net.IPv6len:
+				upNode.NodeID = pfcpType.NodeID{
+					NodeIdType:  pfcpType.NodeIdTypeIpv6Address,
+					NodeIdValue: ip,
+				}
+			default:
+				upNode.NodeID = pfcpType.NodeID{
+					NodeIdType:  pfcpType.NodeIdTypeFqdn,
+					NodeIdValue: []byte(node.NodeID),
+				}
+			}
+
+			upfPool[name] = upNode
 		default:
 			logger.InitLog.Warningf("invalid UPNodeType: %s\n", upNode.Type)
 		}
@@ -422,11 +512,11 @@ func (upi *UserPlaneInformation) GenerateDefaultPath(dnn string) bool {
 				destination = node
 				check2 =1
 				break
-			} else if node.Type == UPNODE_UPF1 {
+			} else if node.Type == UPNODE_UPF4 {
 				destination1 = node
-			} else if node.Type == UPNODE_UPF2 {
+			} else if node.Type == UPNODE_UPF5 {
 				destination2 = node
-			} else {
+			} else if node.Type == UPNODE_UPF6 {
 				destination3 = node
 			}
 		}
@@ -444,7 +534,6 @@ func (upi *UserPlaneInformation) GenerateDefaultPath(dnn string) bool {
 		} else {
 			destination = destination3
 		}
-		destination = destination3
 	}
 	fmt.Printf("destination is %s\n",destination)
 	
