@@ -209,6 +209,8 @@ func HandlePDUSessionSMContextCreate(request models.PostSmContextsRequest) *http
 		logger.PduSessLog.Traceln("Send NF Discovery Serving AMF successfully")
 	}
 
+	fmt.Printf("pdu_session check point 1 \n")
+
 	for _, service := range *smContext.AMFProfile.NfServices {
 		if service.ServiceName == models.ServiceName_NAMF_COMM {
 			communicationConf := Namf_Communication.NewConfiguration()
@@ -216,6 +218,7 @@ func HandlePDUSessionSMContextCreate(request models.PostSmContextsRequest) *http
 			smContext.CommunicationClient = Namf_Communication.NewAPIClient(communicationConf)
 		}
 	}
+	fmt.Printf("smContext is %v\n",smContext)
 	SendPFCPRule(smContext, defaultPath)
 
 	response.JsonData = smContext.BuildCreatedData()
@@ -227,6 +230,7 @@ func HandlePDUSessionSMContextCreate(request models.PostSmContextsRequest) *http
 		Body:   response,
 	}
 
+	fmt.Printf("httpResponse is %v\n",httpResponse)
 	return httpResponse
 	// TODO: UECM registration
 
