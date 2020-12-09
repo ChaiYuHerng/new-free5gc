@@ -293,7 +293,7 @@ func (dataPathPool DataPathPool) GetDefaultPath2(dnn string) (dataPath *DataPath
 		path.IsDefaultPath = true
 		path.Activated = true
 		if path.Destination.DestinationIP == tmp_dest {
-			path.Destination = nil
+			path.Destination.DestinationIP = ""
 			dataPath = path
 			fmt.Printf("finish GetDefaultPath2, now datapath is %v\n",dataPath)
 			return
