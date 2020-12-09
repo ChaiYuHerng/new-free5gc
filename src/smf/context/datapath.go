@@ -8,6 +8,8 @@ import (
 	"strconv"
 )
 
+var checkpoint int
+
 // GTPTunnel represents the GTP tunnel information
 type GTPTunnel struct {
 	SrcEndPoint  *DataPathNode
@@ -263,7 +265,7 @@ func (dataPathPool DataPathPool) GetDefaultPath() (dataPath *DataPath) {
 
 		fmt.Printf("path is %v\n",path)
 		fmt.Printf("path.IsDefaultPath is %v\n",path.IsDefaultPath)
-		if path.IsDefaultPath {
+		if path.Destination.DestinationIP == "" {
 			dataPath = path
 			//return
 		}
@@ -279,13 +281,16 @@ func (dataPathPool DataPathPool) GetDefaultPath2(dnn string) (dataPath *DataPath
 	var tmp_dest string
 	if dnn == "internet" {
 		tmp_dest = "192.168.2.111"
+		checkpoint = 1
 	} else if dnn == "internet2" {
 		tmp_dest = "192.168.2.112"
+		checkpoint = 2
 	} else if dnn == "internet3" {
 		tmp_dest = "192.168.2.113"
+		checkpoint = 3
 	}
 
-	fmt.Printf("tmp_dest is %s\n",tmp_dest)
+	fmt.Printf("tmp_dest is %s,checkpoint is %d\n",tmp_dest,checkpoint)
 
 	for _, path := range dataPathPool {
 
