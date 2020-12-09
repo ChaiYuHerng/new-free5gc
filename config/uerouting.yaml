@@ -12,12 +12,12 @@ ueRoutingInfo:
           - UPF1
       - DestinationIP: 192.168.2.112
         UPF: !!seq
-          - UPF4
-          - UPF2
-      - DestinationIP: 192.168.2.113
-        UPF: !!seq
-          - UPF4
           - UPF3
+          - UPF2
+      #- DestinationIP: 192.168.2.113
+        #UPF: !!seq
+          #- UPF4
+          #- UPF3
       
 
   - SUPI: imsi-2089300007488
