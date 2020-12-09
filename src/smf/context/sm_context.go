@@ -158,6 +158,7 @@ func GetSMContext(ref string) (smContext *SMContext) {
 	if value, ok := smContextPool.Load(ref); ok {
 		smContext = value.(*SMContext)
 	}
+	fmt.Printf("value is %v,ok is %v\n\n",value,ok)
 
 	return
 }
