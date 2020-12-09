@@ -304,6 +304,7 @@ func GenerateDataPath(upPath UPPath, smContext *SMContext) *DataPath {
 		logger.CtxLog.Errorf("Invalid data path")
 		return nil
 	}
+	fmt.Printf("now in the GenerateDataPath function\n\n")
 	var lowerBound = 0
 	var upperBound = len(upPath) - 1
 	var root *DataPathNode
