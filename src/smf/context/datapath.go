@@ -258,10 +258,11 @@ func (node *DataPathNode) GetUpLinkFAR() (far *FAR) {
 
 func (dataPathPool DataPathPool) GetDefaultPath() (dataPath *DataPath) {
 
-	fmt.Printf("now in the GetDefaultPath\n\n\n")
+	fmt.Printf("now in the GetDefaultPath\n\n")
 	for _, path := range dataPathPool {
 
-		fmt.Printf("path is %s\n",path)
+		fmt.Printf("path is %v\n",path)
+		fmt.Printf("path.IsDefaultPath is %v\n",path.IsDefaultPath)
 		if path.IsDefaultPath {
 			dataPath = path
 			//return
