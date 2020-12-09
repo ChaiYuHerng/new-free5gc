@@ -142,7 +142,7 @@ func HandlePDUSessionSMContextCreate(request models.PostSmContextsRequest) *http
 		fmt.Printf("uePreConfigPaths is %v\n\n",uePreConfigPaths)
 		smContext.Tunnel.DataPathPool = uePreConfigPaths.DataPathPool
 		smContext.Tunnel.PathIDGenerator = uePreConfigPaths.PathIDGenerator
-		defaultPath = smContext.Tunnel.DataPathPool.GetDefaultPath()
+		defaultPath = smContext.Tunnel.DataPathPool.GetDefaultPath2(createData.Dnn)
 		fmt.Printf("defaultPath is %v\n\n",defaultPath)
 		smContext.AllocateLocalSEIDForDataPath(defaultPath)
 		defaultPath.ActivateTunnelAndPDR(smContext)

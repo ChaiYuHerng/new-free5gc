@@ -272,6 +272,23 @@ func (dataPathPool DataPathPool) GetDefaultPath() (dataPath *DataPath) {
 	fmt.Printf("finish GetDefaultPath, now datapath is %v\n",dataPath)
 	return
 }
+func (dataPathPool DataPathPool) GetDefaultPath2(dnn string) (dataPath *DataPath) {
+
+	fmt.Printf("now in the GetDefaultPath\n\n")
+	fmt.Printf("dnn is %v\n",dnn)
+	for _, path := range dataPathPool {
+
+		fmt.Printf("path is %v\n",path)
+		fmt.Printf("path.IsDefaultPath is %v\n",path.IsDefaultPath)
+		if path.IsDefaultPath {
+			dataPath = path
+			//return
+		}
+
+	}
+	fmt.Printf("finish GetDefaultPath, now datapath is %v\n",dataPath)
+	return
+}
 
 func (dataPath *DataPath) ToString() string {
 
