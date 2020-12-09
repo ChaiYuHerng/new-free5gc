@@ -203,6 +203,7 @@ func InitSMFUERouting(routingConfig *factory.RoutingConfig) {
 			logger.CtxLog.Warnln(err)
 			continue
 		}
+		fmt.Printf("uePreConfigPaths is %v\n",uePreConfigPaths)
 
 		smfContext.UEPreConfigPathPool[supi] = uePreConfigPaths
 	}
