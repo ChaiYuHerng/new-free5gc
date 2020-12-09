@@ -313,6 +313,7 @@ func GenerateDataPath(upPath UPPath, smContext *SMContext) *DataPath {
 	var prevDataPathNode *DataPathNode
 
 	for idx, upNode := range upPath {
+		fmt.Printf("upNode is %v\n",upNode)
 		curDataPathNode = NewDataPathNode()
 		curDataPathNode.UPF = upNode.UPF
 
@@ -338,6 +339,7 @@ func GenerateDataPath(upPath UPPath, smContext *SMContext) *DataPath {
 		},
 		FirstDPNode: root,
 	}
+	fmt.Printf("dataPath after GenerateDataPath is %v\n",dataPath)
 	return dataPath
 }
 
