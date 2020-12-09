@@ -241,6 +241,7 @@ func HandlePDUSessionSMContextUpdate(smContextRef string, body models.UpdateSmCo
 	//PDU Session Modification Reject(Cause Value == 43 || Cause Value != 43)/Complete
 	//PDU Session Release Command/Complete
 	logger.PduSessLog.Infoln("In HandlePDUSessionSMContextUpdate")
+	fmt.Printf("smContextRef is %v\n\n",smContextRef)
 	smContext := smf_context.GetSMContext(smContextRef)
 
 	if smContext == nil {
