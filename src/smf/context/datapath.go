@@ -261,7 +261,6 @@ func (node *DataPathNode) GetUpLinkFAR() (far *FAR) {
 func (dataPathPool DataPathPool) GetDefaultPath() (dataPath *DataPath) {
 
 	fmt.Printf("now in the GetDefaultPath\n\n")
-	var tmp_checkpoint int
 	for _, path := range dataPathPool {
 
 		fmt.Printf("path is %v\n",path)
