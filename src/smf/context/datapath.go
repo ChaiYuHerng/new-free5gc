@@ -276,7 +276,7 @@ func (dataPathPool DataPathPool) GetDefaultPath2(dnn string) (dataPath *DataPath
 
 	fmt.Printf("now in the GetDefaultPath2\n\n")
 	fmt.Printf("dnn is %v\n",dnn)
-	var tmp_dest Destination
+	var tmp_dest string
 	if dnn == "internet" {
 		tmp_dest = "192.168.2.111"
 	} else if dnn == "internet2" {
@@ -292,7 +292,7 @@ func (dataPathPool DataPathPool) GetDefaultPath2(dnn string) (dataPath *DataPath
 		fmt.Printf("path is %v\n",path)
 		path.IsDefaultPath = true
 		path.Activated = true
-		if path.Destination == tmp_dest {
+		if string(path.Destination) == tmp_dest {
 			dataPath = path
 			fmt.Printf("finish GetDefaultPath2, now datapath is %v\n",dataPath)
 			return
