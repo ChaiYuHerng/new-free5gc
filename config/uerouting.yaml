@@ -12,29 +12,29 @@ ueRoutingInfo:
           - UPF1
       - DestinationIP: 192.168.2.112
         UPF: !!seq
-          - UPF3
+          - UPF5
           - UPF2
-      #- DestinationIP: 192.168.2.113
-        #UPF: !!seq
-          #- UPF4
-          #- UPF3
+      - DestinationIP: 192.168.2.113
+        UPF: !!seq
+          - UPF6
+          - UPF3
       
 
-  - SUPI: imsi-2089300007488
-    AN: 192.168.2.150
-    PathList:
-      - DestinationIP: 192.168.2.219
-        UPF: !!seq
-          - UPF2
-          - UPF5
-      - DestinationIP: 192.168.2.54
-        UPF: !!seq
-          - UPF1
-          - UPF4
-      - DestinationIP: 192.168.2.23
-        UPF: !!seq
-          - UPF3
-          - UPF6
+  #- SUPI: imsi-2089300007488
+    #AN: 192.168.2.150
+    #PathList:
+      #- DestinationIP: 192.168.2.219
+        #UPF: !!seq
+          #- UPF2
+          #- UPF5
+      #- DestinationIP: 192.168.2.54
+        #UPF: !!seq
+          #- UPF1
+          #- UPF4
+      #- DestinationIP: 192.168.2.23
+        #UPF: !!seq
+          #- UPF3
+          #- UPF6
   
   #- SUPI: imsi-2089300007487
     #AN: 192.168.2.25
