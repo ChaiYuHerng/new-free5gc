@@ -160,6 +160,7 @@ func GetSMContext(ref string) (smContext *SMContext) {
 		fmt.Printf("value is %v,ok is %v\n\n",value,ok)
 		smContext = value.(*SMContext)
 	}
+	smContext = value.(*SMContext)
 
 	return
 }
