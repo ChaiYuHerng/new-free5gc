@@ -139,9 +139,11 @@ func HandlePDUSessionSMContextCreate(request models.PostSmContextsRequest) *http
 	if smf_context.SMF_Self().ULCLSupport && smf_context.CheckUEHasPreConfig(createData.Supi) {
 		logger.PduSessLog.Infof("SUPI[%s] has pre-config route", createData.Supi)
 		uePreConfigPaths := smf_context.GetUEPreConfigPaths(createData.Supi)
+		fmt.Printf("uePreConfigPaths is %v\n\n",uePreConfigPaths)
 		smContext.Tunnel.DataPathPool = uePreConfigPaths.DataPathPool
 		smContext.Tunnel.PathIDGenerator = uePreConfigPaths.PathIDGenerator
 		defaultPath = smContext.Tunnel.DataPathPool.GetDefaultPath()
+		fmt.Printf("defaultPath is %v\n\n",defaultPath)
 		smContext.AllocateLocalSEIDForDataPath(defaultPath)
 		defaultPath.ActivateTunnelAndPDR(smContext)
 		smContext.BPManager = smf_context.NewBPManager(createData.Supi)
