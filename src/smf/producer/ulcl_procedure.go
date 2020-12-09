@@ -8,6 +8,7 @@ import (
 	"free5gc/src/smf/logger"
 	"free5gc/src/smf/pfcp/message"
 	"net"
+	"fmt"
 	"reflect"
 )
 
