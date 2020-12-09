@@ -268,6 +268,7 @@ func EstablishRANTunnelInfo(smContext *context.SMContext) {
 	bpMGR := smContext.BPManager
 	activatingPath := bpMGR.ActivatingPath
 
+	fmt.Printf("Find GetDefaultPath4\n")
 	defaultPath := smContext.Tunnel.DataPathPool.GetDefaultPath()
 	defaultANUPF := defaultPath.FirstDPNode
 

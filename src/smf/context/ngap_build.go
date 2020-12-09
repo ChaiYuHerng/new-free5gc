@@ -9,6 +9,7 @@ import (
 
 func BuildPDUSessionResourceSetupRequestTransfer(ctx *SMContext) ([]byte, error) {
 
+	fmt.Printf("BuildPDUSessionResourceSetupRequestTransfer function\n\n")
 	var ANUPF = ctx.Tunnel.DataPathPool.GetDefaultPath().FirstDPNode
 	var UpNode = ANUPF.UPF
 	var teidOct = make([]byte, 4)
@@ -99,6 +100,7 @@ func BuildPDUSessionResourceSetupRequestTransfer(ctx *SMContext) ([]byte, error)
 
 // TS 38.413 9.3.4.9
 func BuildPathSwitchRequestAcknowledgeTransfer(ctx *SMContext) ([]byte, error) {
+	fmt.Printf("BuildPathSwitchRequestAcknowledgeTransfer function\n\n")
 	var ANUPF = ctx.Tunnel.DataPathPool.GetDefaultPath().FirstDPNode
 	var UpNode = ANUPF.UPF
 	var teidOct = make([]byte, 4)
@@ -195,6 +197,7 @@ func BuildPDUSessionResourceReleaseCommandTransfer(ctx *SMContext) (buf []byte, 
 }
 
 func BuildHandoverCommandTransfer(ctx *SMContext) (buf []byte, err error) {
+	fmt.Printf("BuildHandoverCommandTransfer function\n\n")
 	var ANUPF = ctx.Tunnel.DataPathPool.GetDefaultPath().FirstDPNode
 	var UpNode = ANUPF.UPF
 	var teidOct = make([]byte, 4)

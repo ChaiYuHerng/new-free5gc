@@ -147,6 +147,7 @@ func HandlePfcpSessionEstablishmentResponse(msg *pfcpUdp.Message) {
 		pfcpSessionCtx.RemoteSEID = rsp.UPFSEID.Seid
 	}
 
+	fmt.Printf("Find GetDefaultPath1\n")
 	ANUPF := smContext.Tunnel.DataPathPool.GetDefaultPath().FirstDPNode
 	if rsp.Cause.CauseValue == pfcpType.CauseRequestAccepted &&
 		ANUPF.UPF.NodeID.ResolveNodeIdToIp().Equal(rsp.NodeID.ResolveNodeIdToIp()) {
@@ -323,6 +324,7 @@ func HandlePfcpSessionReportRequest(msg *pfcpUdp.Message) {
 			logger.PfcpLog.Warnf("PFCP Session Report Request DownlinkDataServiceInformation handling is not implemented")
 		}
 
+		fmt.Printf("Find GetDefaultPath2\n")
 		ANUPF := smContext.Tunnel.DataPathPool.GetDefaultPath().FirstDPNode
 		DLPDR := ANUPF.DownLinkTunnel.PDR
 		if DLPDR.PDRID == pdrID {
