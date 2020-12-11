@@ -322,6 +322,7 @@ func HandlePDUSessionSMContextUpdate(smContextRef string, body models.UpdateSmCo
 			smContext.PendingUPF = make(smf_context.PendingUPF)
 			for _, dataPath := range smContext.Tunnel.DataPathPool {
 
+				fmt.Printf("datapath is %v\n",dataPath)
 				dataPath.DeactivateTunnelAndPDR(smContext)
 				for curDataPathNode := dataPath.FirstDPNode; curDataPathNode != nil; curDataPathNode = curDataPathNode.Next() {
 					curUPFID, err := curDataPathNode.GetUPFID()
