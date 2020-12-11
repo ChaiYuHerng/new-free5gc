@@ -78,10 +78,14 @@ func HTTPUpdateSmContext(c *gin.Context) {
 	req := http_wrapper.NewRequest(c.Request, request)
 	req.Params["smContextRef"] = c.Params.ByName("smContextRef")
 
+	
+	fmt.Printf("in the api_individual_sm_context, c.Request is %v\n\n",c.Request)
 	smContextRef := req.Params["smContextRef"]
+	fmt.Printf("in the api_individual_sm_context, smContextRef is %v\n\n",smContextRef)
 	HTTPResponse := producer.HandlePDUSessionSMContextUpdate(
 		smContextRef, req.Body.(models.UpdateSmContextRequest))
 
+	fmt.Printf("in the api_individual_sm_context, HTTPResponse is %v\n\n",HTTPResponse)
 	if HTTPResponse.Status < 300 {
 		c.Render(HTTPResponse.Status, openapi.MultipartRelatedRender{Data: HTTPResponse.Body})
 	} else {
