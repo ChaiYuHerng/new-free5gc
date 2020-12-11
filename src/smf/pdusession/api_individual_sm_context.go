@@ -17,6 +17,7 @@ import (
 	"free5gc/src/smf/producer"
 	"github.com/gin-gonic/gin"
 	"log"
+	"fmt"
 	"net/http"
 	"strings"
 )
