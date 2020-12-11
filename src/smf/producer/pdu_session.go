@@ -247,6 +247,7 @@ func HandlePDUSessionSMContextUpdate(smContextRef string, body models.UpdateSmCo
 	logger.PduSessLog.Infoln("In HandlePDUSessionSMContextUpdate")
 	fmt.Printf("smContextRef is %v\n\n",smContextRef)
 	smContext := smf_context.GetSMContext(smContextRef)
+	fmt.Printf("smContext is %v\n\n",smContext)
 
 	if smContext == nil {
 		logger.PduSessLog.Warnln("SMContext is nil")
