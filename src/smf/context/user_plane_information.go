@@ -484,7 +484,6 @@ func (upi *UserPlaneInformation) GenerateDefaultPath(dnn string) bool {
 		} else {
 			source = source3
 		}
-		source = source1 
 	}
 	fmt.Printf("source is %s\n",source)
 	
