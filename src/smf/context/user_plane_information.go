@@ -429,15 +429,15 @@ func GenerateDataPath(upPath UPPath, smContext *SMContext) *DataPath {
 		prevDataPathNode = curDataPathNode
 	}
 
-	/*dataPath := &DataPath{
+	dataPath := &DataPath{
 		Destination: Destination{
 			DestinationIP:   "",
 			DestinationPort: "",
 			Url:             "",
 		},
 		FirstDPNode: root,
-	}*/
-	dataPath := curDataPathNode
+	}
+	fmt.Printf("root after GenerateDataPath is %v\n",root)
 	fmt.Printf("dataPath after GenerateDataPath is %v\n",dataPath)
 	return dataPath
 }
