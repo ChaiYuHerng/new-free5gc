@@ -516,11 +516,11 @@ func (upi *UserPlaneInformation) GenerateDefaultPath(dnn string) bool {
 				destination = node
 				check2 =1
 				break
-			} else if node.Type == UPNODE_UPF4 {
+			} else if node.Type == UPNODE_UPF1 {
 				destination1 = node
-			} else if node.Type == UPNODE_UPF5 {
+			} else if node.Type == UPNODE_UPF2 {
 				destination2 = node
-			} else if node.Type == UPNODE_UPF6 {
+			} else if node.Type == UPNODE_UPF3 {
 				destination3 = node
 			}
 		}
