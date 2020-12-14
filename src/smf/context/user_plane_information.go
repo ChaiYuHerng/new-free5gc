@@ -135,6 +135,7 @@ func NewUserPlaneInformation(upTopology *factory.UserPlaneInformation) *UserPlan
 			} else {
 				ip = net.ParseIP(node.NodeID).To4()
 			}
+			fmt.Printf("ip is %v\n",ip)
 
 			switch len(ip) {
 			case net.IPv4len:
@@ -165,6 +166,7 @@ func NewUserPlaneInformation(upTopology *factory.UserPlaneInformation) *UserPlan
 			} else {
 				ip = net.ParseIP(node.NodeID).To4()
 			}
+			fmt.Printf("ip is %v\n",ip)
 
 			switch len(ip) {
 			case net.IPv4len:
@@ -195,6 +197,7 @@ func NewUserPlaneInformation(upTopology *factory.UserPlaneInformation) *UserPlan
 			} else {
 				ip = net.ParseIP(node.NodeID).To4()
 			}
+			fmt.Printf("ip is %v\n",ip)
 
 			switch len(ip) {
 			case net.IPv4len:
