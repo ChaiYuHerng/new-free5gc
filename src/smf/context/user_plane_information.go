@@ -409,16 +409,20 @@ func GenerateDataPath(upPath UPPath, smContext *SMContext) *DataPath {
 	for idx, upNode := range upPath {
 		fmt.Printf("upNode is %v\n",upNode)
 		curDataPathNode = NewDataPathNode()
+		fmt.Printf("curDataPathNode is %v\n",curDataPathNode)
 		curDataPathNode.UPF = upNode.UPF
 
 		if idx == lowerBound {
+			fmt.Printf("idx == lowerBound\n")
 			root = curDataPathNode
 			root.AddPrev(nil)
 		}
 		if idx == upperBound {
+			fmt.Printf("idx == upperBound\n")
 			curDataPathNode.AddNext(nil)
 		}
 		if prevDataPathNode != nil {
+			fmt.Printf("prevDataPathNode != nil\n")
 			prevDataPathNode.AddNext(curDataPathNode)
 			curDataPathNode.AddPrev(prevDataPathNode)
 		}
