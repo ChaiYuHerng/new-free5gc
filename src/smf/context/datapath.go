@@ -265,6 +265,8 @@ func (dataPathPool DataPathPool) GetDefaultPath() (dataPath *DataPath) {
 
 		fmt.Printf("path is %v\n",path)
 		fmt.Printf("path.IsDefaultPath is %v\n",path.IsDefaultPath)
+		fmt.Printf("path.Destination.DestinationIP is %v\n",path.Destination.DestinationIP)
+		fmt.Printf("tmp_dest is %v\n",tmp_dest)
 		if path.Destination.DestinationIP == tmp_dest {
 			dataPath = path
 			fmt.Printf("finish GetDefaultPath, now datapath is %v\n",dataPath)
