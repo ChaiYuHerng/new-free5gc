@@ -447,7 +447,7 @@ func GenerateDataPath(upPath UPPath, smContext *SMContext) *DataPath {
 		IsDefaultPath: true,
 		Destination: Destination{
 			DestinationIP:   tmp_dest,
-			DestinationIP:   "",
+			//DestinationIP:   "",
 			DestinationPort: "",
 			Url:             "",
 		},
