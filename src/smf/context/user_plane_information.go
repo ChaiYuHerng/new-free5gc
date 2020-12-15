@@ -443,15 +443,15 @@ func GenerateDataPath(upPath UPPath, smContext *SMContext) *DataPath {
 	}
 
 	dataPath := &DataPath{
-		//Activated: true,
-		//IsDefaultPath: true,
+		Activated: true,
+		IsDefaultPath: true,
 		Destination: Destination{
-			//DestinationIP:   tmp_dest,
+			DestinationIP:   tmp_dest,
 			DestinationIP:   "",
 			DestinationPort: "",
 			Url:             "",
 		},
-		//HasBranchingPoint: false,
+		HasBranchingPoint: false,
 		FirstDPNode: root,
 	}
 	fmt.Printf("root after GenerateDataPath is %v\n",root)
