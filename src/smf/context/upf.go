@@ -76,6 +76,7 @@ func (upTunnel *UPTunnel) AddDataPath(dataPath *DataPath) {
 		logger.CtxLog.Warnf("Allocate pathID error: %+v", err)
 		return
 	}
+	fmt.Printf("dataPath is %v\n",dataPath)
 	fmt.Printf("pathID is %v\n\n",pathID)
 
 	upTunnel.DataPathPool[pathID] = dataPath
