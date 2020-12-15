@@ -156,10 +156,11 @@ func HandlePDUSessionSMContextCreate(request models.PostSmContextsRequest) *http
 		defaultUPPath := smf_context.GetUserPlaneInformation().GetDefaultUserPlanePathByDNN(createData.Dnn)
 		fmt.Printf("defaultUPPath is %v\n",defaultUPPath)
 		smContext.AllocateLocalSEIDForUPPath(defaultUPPath)
+		fmt.Printf("smContext is %v\n\n",smContext)
 		defaultPath = smf_context.GenerateDataPath(defaultUPPath, smContext)
 		fmt.Printf("defaultPath is %v\n",defaultPath)
 		if defaultPath != nil {
-			fmt.Printf("!!!!!defaultPath is nil\n\n")
+			fmt.Printf("!!!!!defaultPath is nil---1\n\n")
 			defaultPath.IsDefaultPath = true
 			smContext.Tunnel.AddDataPath(defaultPath)
 			defaultPath.ActivateTunnelAndPDR(smContext)
@@ -169,6 +170,7 @@ func HandlePDUSessionSMContextCreate(request models.PostSmContextsRequest) *http
 	fmt.Printf("final defaultPath is %v\n\n\n",defaultPath)
 
 	if defaultPath == nil {
+		fmt.Printf("!!!!!defaultPath is nil---2\n\n")
 		smContext.SMContextState = smf_context.InActive
 		logger.CtxLog.Traceln("SMContextState Change State: ", smContext.SMContextState.String())
 		logger.PduSessLog.Warnf("Path for serve DNN[%s] not found\n", createData.Dnn)

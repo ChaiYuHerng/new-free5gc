@@ -351,6 +351,7 @@ func (dataPath *DataPath) ToString() string {
 
 func (dataPath *DataPath) ActivateTunnelAndPDR(smContext *SMContext) {
 
+	fmt.Printf("now in the ActivateTunnelAndPDR function \n\n")
 	firstDPNode := dataPath.FirstDPNode
 	logger.PduSessLog.Traceln("In ActivateTunnelAndPDR")
 	logger.PduSessLog.Traceln(dataPath.ToString())
