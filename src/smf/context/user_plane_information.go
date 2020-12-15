@@ -408,9 +408,11 @@ func GenerateDataPath(upPath UPPath, smContext *SMContext) *DataPath {
 	var root *DataPathNode
 	var curDataPathNode *DataPathNode
 	var prevDataPathNode *DataPathNode
+	//var tmp_dest string
 
 	for idx, upNode := range upPath {
 		fmt.Printf("upNode is %v\n",upNode)
+		fmt.Printf("upNode.ANIP is %v\n",upNode.ANIP)
 		curDataPathNode = NewDataPathNode()
 		fmt.Printf("curDataPathNode is %v\n",curDataPathNode)
 		curDataPathNode.UPF = upNode.UPF
@@ -433,11 +435,14 @@ func GenerateDataPath(upPath UPPath, smContext *SMContext) *DataPath {
 	}
 
 	dataPath := &DataPath{
+		Activated: true,
+		IsDefaultPath: true,
 		Destination: Destination{
 			DestinationIP:   "",
 			DestinationPort: "",
 			Url:             "",
 		},
+		HasBranchingPoint: false,
 		FirstDPNode: root,
 	}
 	fmt.Printf("root after GenerateDataPath is %v\n",root)
