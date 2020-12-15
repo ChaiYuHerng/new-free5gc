@@ -77,6 +77,13 @@ func (upTunnel *UPTunnel) AddDataPath(dataPath *DataPath) {
 		return
 	}
 	fmt.Printf("dataPath is %v\n",dataPath)
+	if dataPath.Destination.DestinationIP == "192.168.2.111" {
+		pathID = 1
+	} else if dataPath.Destination.DestinationIP == "192.168.2.112" {
+		pathID = 2
+	} else if dataPath.Destination.DestinationIP == "192.168.2.113" {
+		pathID = 3
+	}
 	fmt.Printf("pathID is %v\n\n",pathID)
 
 	upTunnel.DataPathPool[pathID] = dataPath
