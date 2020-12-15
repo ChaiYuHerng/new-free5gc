@@ -355,10 +355,13 @@ func (dataPath *DataPath) ActivateTunnelAndPDR(smContext *SMContext) {
 
 	fmt.Printf("now in the ActivateTunnelAndPDR function \n\n")
 	firstDPNode := dataPath.FirstDPNode
+	fmt.Printf("firstDPNode is %v\n",firstDPNode)
 	logger.PduSessLog.Traceln("In ActivateTunnelAndPDR")
 	logger.PduSessLog.Traceln(dataPath.ToString())
 	//Activate Tunnels
+	fmt.Printf("start Activate Tunnels for loop\n\n")
 	for curDataPathNode := firstDPNode; curDataPathNode != nil; curDataPathNode = curDataPathNode.Next() {
+		fmt.Printf("curDataPathNode is %v\n",curDataPathNode)
 		logger.PduSessLog.Traceln("Current DP Node IP: ", curDataPathNode.UPF.NodeID.ResolveNodeIdToIp().String())
 		err := curDataPathNode.ActivateUpLinkTunnel(smContext)
 
@@ -371,8 +374,10 @@ func (dataPath *DataPath) ActivateTunnelAndPDR(smContext *SMContext) {
 			logger.CtxLog.Warnln(err)
 		}
 	}
+	fmt.Printf("end Activate Tunnels for loop\n\n")
 
 	//Activate PDR
+	fmt.Printf("start Activate PDR for loop\n\n")
 	for curDataPathNode := firstDPNode; curDataPathNode != nil; curDataPathNode = curDataPathNode.Next() {
 		logger.CtxLog.Traceln("Calculate ", curDataPathNode.UPF.PFCPAddr().String())
 		curULTunnel := curDataPathNode.UpLinkTunnel
@@ -520,6 +525,7 @@ func (dataPath *DataPath) ActivateTunnelAndPDR(smContext *SMContext) {
 			}
 		}
 	}
+	fmt.Printf("end Activate PDR for loop\n\n")
 
 	dataPath.Activated = true
 }
