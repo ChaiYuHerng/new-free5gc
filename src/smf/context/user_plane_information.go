@@ -421,8 +421,9 @@ func GenerateDataPath(upPath UPPath, smContext *SMContext) *DataPath {
 		}
 		fmt.Printf("tmp_dest is %v\n",tmp_dest)
 		curDataPathNode = NewDataPathNode()
-		fmt.Printf("curDataPathNode is %v\n",curDataPathNode)
 		curDataPathNode.UPF = upNode.UPF
+		fmt.Printf("curDataPathNode is %v\n",curDataPathNode)
+		fmt.Printf("Current DP Node IP is %v\n",curDataPathNode.UPF.NodeID)
 
 		if idx == lowerBound {
 			fmt.Printf("idx == lowerBound\n")
@@ -475,7 +476,7 @@ func (upi *UserPlaneInformation) GenerateDefaultPath(dnn string) bool {
 	for _, node := range upi.AccessNetwork {
 
 		fmt.Printf("node.Type is %v\n",node.Type)
-		fmt.Printf("UPNODE IP is %v\n",node.UPF.NodeID)
+		fmt.Printf("UPNODE_AN is %v\n",UPNODE_AN)
 		fmt.Printf("node is %v\n",node)
 		/*if node.Type == UPNODE_AN {
 			source = node
