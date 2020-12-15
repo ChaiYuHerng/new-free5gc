@@ -180,6 +180,7 @@ func InitSmfContext(config *factory.Config) {
 }
 
 func InitSMFUERouting(routingConfig *factory.RoutingConfig) {
+	fmt.Printf("In the InitSMFUERouting~~~~~~~~~~~~~~~~\n\n")
 
 	if !smfContext.ULCLSupport {
 		return
