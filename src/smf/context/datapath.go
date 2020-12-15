@@ -296,6 +296,8 @@ func (dataPathPool DataPathPool) GetDefaultPath2(dnn string) (dataPath *DataPath
 		path.IsDefaultPath = false
 		path.Activated = false
 		if path.Destination.DestinationIP == tmp_dest {
+			fmt.Printf("path.Destination.DestinationPort is %v\n",path.Destination.DestinationPort)
+			fmt.Printf("path.Destination.Url is %v\n",path.Destination.Url)
 			path.IsDefaultPath = true
 		    path.Activated = true
 			dataPath = path
