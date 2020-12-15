@@ -170,6 +170,8 @@ func HandlePDUSessionSMContextCreate(request models.PostSmContextsRequest) *http
 	fmt.Printf("final defaultPath is %v\n\n\n",defaultPath)
 	fmt.Printf("defaultPath.root after final is %v\n",defaultPath.FirstDPNode)
 	fmt.Printf("defaultPath.root.UPF after final is %v\n",defaultPath.FirstDPNode.UPF.NodeID)
+	fmt.Printf("defaultPath.root.UpLinkTunnel after final is %v\n",defaultPath.FirstDPNode.UpLinkTunnel)
+	fmt.Printf("defaultPath.root.DownLinkTunnel after final is %v\n",defaultPath.FirstDPNode.DownLinkTunnel)
 	fmt.Printf("defaultPath.root.UpLinkTunnel.TEID after final is %v\n",defaultPath.FirstDPNode.UpLinkTunnel.TEID)
 	fmt.Printf("defaultPath.root.DownLinkTunnel.TEID after final is %v\n",defaultPath.FirstDPNode.DownLinkTunnel.TEID)
 
