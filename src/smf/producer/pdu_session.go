@@ -160,7 +160,7 @@ func HandlePDUSessionSMContextCreate(request models.PostSmContextsRequest) *http
 		defaultPath = smf_context.GenerateDataPath(defaultUPPath, smContext)
 		fmt.Printf("defaultPath is %v\n",defaultPath)
 		if defaultPath != nil {
-			fmt.Printf("!!!!!defaultPath is nil---1\n\n")
+			fmt.Printf("!!!!!defaultPath is not nil---1\n\n")
 			defaultPath.IsDefaultPath = true
 			smContext.Tunnel.AddDataPath(defaultPath)
 			defaultPath.ActivateTunnelAndPDR(smContext)

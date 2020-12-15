@@ -456,8 +456,8 @@ func GenerateDataPath(upPath UPPath, smContext *SMContext) *DataPath {
 	}
 	fmt.Printf("root after GenerateDataPath is %v\n",root)
 	fmt.Printf("root.UPF after GenerateDataPath is %v\n",root.UPF)
-	fmt.Printf("root.UpLinkTunnel after GenerateDataPath is %v\n",root.UpLinkTunnel)
-	fmt.Printf("root.DownLinkTunnel after GenerateDataPath is %v\n",root.DownLinkTunnel)
+	fmt.Printf("root.UpLinkTunnel.TEID after GenerateDataPath is %v\n",root.UpLinkTunnel.TEID)
+	fmt.Printf("root.DownLinkTunnel.TEID after GenerateDataPath is %v\n",root.DownLinkTunnel.TEID)
 	fmt.Printf("dataPath after GenerateDataPath is %v\n",dataPath)
 	return dataPath
 }
