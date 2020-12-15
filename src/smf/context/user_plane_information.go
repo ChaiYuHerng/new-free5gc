@@ -408,11 +408,17 @@ func GenerateDataPath(upPath UPPath, smContext *SMContext) *DataPath {
 	var root *DataPathNode
 	var curDataPathNode *DataPathNode
 	var prevDataPathNode *DataPathNode
-	//var tmp_dest string
+	var tmp_dest string
 
 	for idx, upNode := range upPath {
 		fmt.Printf("upNode is %v\n",upNode)
-		fmt.Printf("upNode.ANIP is %v\n",upNode.ANIP)
+		if upNode.Type == UPNODE_UPF1 {
+			tmp_dest = "192.168.2.111"
+		} else if upNode.Type == UPNODE_UPF2 {
+			tmp_dest = "192.168.2.112"
+		} else if upNode.Type == UPNODE_UPF3 {
+			tmp_dest = "192.168.2.113"
+		}
 		curDataPathNode = NewDataPathNode()
 		fmt.Printf("curDataPathNode is %v\n",curDataPathNode)
 		curDataPathNode.UPF = upNode.UPF
@@ -438,7 +444,7 @@ func GenerateDataPath(upPath UPPath, smContext *SMContext) *DataPath {
 		Activated: true,
 		IsDefaultPath: true,
 		Destination: Destination{
-			DestinationIP:   "",
+			DestinationIP:   tmp_dest,
 			DestinationPort: "",
 			Url:             "",
 		},
