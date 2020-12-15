@@ -419,6 +419,7 @@ func GenerateDataPath(upPath UPPath, smContext *SMContext) *DataPath {
 		} else if upNode.Type == UPNODE_UPF3 {
 			tmp_dest = "192.168.2.113"
 		}
+		fmt.Printf("tmp_dest is %v\n",tmp_dest)
 		curDataPathNode = NewDataPathNode()
 		fmt.Printf("curDataPathNode is %v\n",curDataPathNode)
 		curDataPathNode.UPF = upNode.UPF
@@ -441,14 +442,15 @@ func GenerateDataPath(upPath UPPath, smContext *SMContext) *DataPath {
 	}
 
 	dataPath := &DataPath{
-		Activated: true,
-		IsDefaultPath: true,
+		//Activated: true,
+		//IsDefaultPath: true,
 		Destination: Destination{
-			DestinationIP:   tmp_dest,
+			//DestinationIP:   tmp_dest,
+			DestinationIP:   "",
 			DestinationPort: "",
 			Url:             "",
 		},
-		HasBranchingPoint: false,
+		//HasBranchingPoint: false,
 		FirstDPNode: root,
 	}
 	fmt.Printf("root after GenerateDataPath is %v\n",root)
