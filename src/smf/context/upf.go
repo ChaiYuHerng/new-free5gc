@@ -70,6 +70,7 @@ func NewUPTunnel() (tunnel *UPTunnel) {
 }
 
 func (upTunnel *UPTunnel) AddDataPath(dataPath *DataPath) {
+	fmt.Printf("now in the AddDataPath\n\n")
 	pathID, err := upTunnel.PathIDGenerator.Allocate()
 	if err != nil {
 		logger.CtxLog.Warnf("Allocate pathID error: %+v", err)
@@ -78,6 +79,9 @@ func (upTunnel *UPTunnel) AddDataPath(dataPath *DataPath) {
 	fmt.Printf("pathID is %v\n\n",pathID)
 
 	upTunnel.DataPathPool[pathID] = dataPath
+	fmt.Printf("len(upTunnel.DataPathPool) is %d\n",len(upTunnel.DataPathPool))
+	fmt.Printf("upTunnel.DataPathPool is %v\n",upTunnel.DataPathPool)
+	
 }
 
 // NewUPF returns a new UPF context in SMF
