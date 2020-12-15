@@ -379,6 +379,7 @@ func (dataPath *DataPath) ActivateTunnelAndPDR(smContext *SMContext) {
 	//Activate PDR
 	fmt.Printf("start Activate PDR for loop\n\n")
 	for curDataPathNode := firstDPNode; curDataPathNode != nil; curDataPathNode = curDataPathNode.Next() {
+		fmt.Printf("curDataPathNode is %v\n",curDataPathNode)
 		logger.CtxLog.Traceln("Calculate ", curDataPathNode.UPF.PFCPAddr().String())
 		curULTunnel := curDataPathNode.UpLinkTunnel
 		curDLTunnel := curDataPathNode.DownLinkTunnel
@@ -474,6 +475,7 @@ func (dataPath *DataPath) ActivateTunnelAndPDR(smContext *SMContext) {
 			DLFAR := DLPDR.FAR
 
 			logger.PduSessLog.Traceln("Current DP Node IP: ", curDataPathNode.UPF.NodeID.ResolveNodeIdToIp().String())
+			fmt.Printf("Current DP Node IP is %v\n",curDataPathNode.UPF.NodeID)
 			logger.PduSessLog.Traceln("Before DLPDR OuterHeaderCreation")
 			if nextDLDest := curDataPathNode.Prev(); nextDLDest != nil {
 				logger.PduSessLog.Traceln("In DLPDR OuterHeaderCreation")
