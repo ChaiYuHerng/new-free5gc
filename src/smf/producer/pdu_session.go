@@ -28,6 +28,7 @@ import (
 )
 
 var registerNum int32
+var appLog *logrus.Entry
 
 func HandlePDUSessionSMContextCreate(request models.PostSmContextsRequest) *http_wrapper.Response {
 	//GSM State
