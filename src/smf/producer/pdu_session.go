@@ -22,12 +22,12 @@ import (
 	"github.com/antihax/optional"
 
 	"free5gc/src/app"
-	"free5gc/src/smf/logger"
 	"free5gc/src/smf/version"
 	"github.com/sirupsen/logrus"
 	"github.com/urfave/cli"
 )
-vat registerNum :=1
+var registerNum :=1
+
 func HandlePDUSessionSMContextCreate(request models.PostSmContextsRequest) *http_wrapper.Response {
 	//GSM State
 	//PDU Session Establishment Accept/Reject
