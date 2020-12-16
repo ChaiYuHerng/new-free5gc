@@ -35,6 +35,7 @@ func (idGenerator *IDGenerator) init(minValue int64, maxValue int64) {
 
 // Allocate and return an id in range [minValue, maxValue]
 func (idGenerator *IDGenerator) Allocate() (id int64, err error) {
+	fmt.Printf("idGenerator is %v\n",idGenerator)
 	fmt.Printf("now in the Allocate function~~!\n\n")
 	idGenerator.lock.Lock()
 	defer idGenerator.lock.Unlock()
