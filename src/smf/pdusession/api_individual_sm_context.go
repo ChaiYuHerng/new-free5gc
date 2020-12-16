@@ -91,5 +91,6 @@ func HTTPUpdateSmContext(c *gin.Context) {
 		c.Render(HTTPResponse.Status, openapi.MultipartRelatedRender{Data: HTTPResponse.Body})
 	} else {
 		c.JSON(HTTPResponse.Status, HTTPResponse.Body)
+		fmt.Printf("test!!!!~~~~~~\n\n")
 	}
 }

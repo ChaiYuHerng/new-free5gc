@@ -277,6 +277,7 @@ func HandlePDUSessionSMContextUpdate(smContextRef string, body models.UpdateSmCo
 				},
 			},
 		}
+		
 		return httpResponse
 	}
 
