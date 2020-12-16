@@ -20,11 +20,34 @@ import (
 	"net/http"
 
 	"github.com/antihax/optional"
-)
 
+	"free5gc/src/app"
+	"free5gc/src/smf/logger"
+	"free5gc/src/smf/version"
+	"github.com/sirupsen/logrus"
+	"github.com/urfave/cli"
+)
+vat registerNum :=1
 func HandlePDUSessionSMContextCreate(request models.PostSmContextsRequest) *http_wrapper.Response {
 	//GSM State
 	//PDU Session Establishment Accept/Reject
+	fmt.Printf("registerNum is %d\n\n",registerNum)
+	if registerNum == 1 {
+		registerNum+=1
+	} else {
+		app := cli.NewApp()
+		app.Name = "smf"
+		fmt.Print(app.Name, "\n")
+		appLog.Infoln("SMF version: ", version.GetVersion())
+		app.Usage = "-free5gccfg common configuration file -smfcfg smf configuration file"
+		app.Action = action
+		app.Flags = SMF.GetCliCmd()
+
+		if err := app.Run(os.Args); err != nil {
+			logger.AppLog.Errorf("SMF Run error: %v", err)
+		}
+		//SMF.Terminate()
+	}
 	var response models.PostSmContextsResponse
 	response.JsonData = new(models.SmContextCreatedData)
 	logger.PduSessLog.Infoln("In HandlePDUSessionSMContextCreate")
@@ -959,4 +982,11 @@ func SendPFCPRule(smContext *smf_context.SMContext, dataPath *smf_context.DataPa
 		}
 
 	}
+}
+func action(c *cli.Context) {
+	app.AppInitializeWillInitialize(c.String("free5gccfg"))
+	SMF.Initialize(c)
+	fmt.Printf("go to SMF.Start la~~~~~~~~~~~~~~~~~~~~\n\n\n\n")
+	SMF.Start()
+	fmt.Printf("Finish SMF.Start la~~~~~~~~~~~~~~~~~~~~\n\n\n\n")
 }
