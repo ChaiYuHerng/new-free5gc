@@ -27,7 +27,7 @@ import (
 	"github.com/urfave/cli"
 )
 
-registerNum := 1
+var registerNum int32
 
 func HandlePDUSessionSMContextCreate(request models.PostSmContextsRequest) *http_wrapper.Response {
 	//GSM State
