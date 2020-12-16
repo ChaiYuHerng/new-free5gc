@@ -26,7 +26,8 @@ import (
 	"github.com/sirupsen/logrus"
 	"github.com/urfave/cli"
 )
-var registerNum :=1
+var registerNum int
+registerNum = 1
 
 func HandlePDUSessionSMContextCreate(request models.PostSmContextsRequest) *http_wrapper.Response {
 	//GSM State
