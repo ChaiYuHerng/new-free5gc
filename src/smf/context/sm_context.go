@@ -128,9 +128,11 @@ func ResolveRef(identifier string, pduSessID int32) (ref string, err error) {
 }
 
 func NewSMContext(identifier string, pduSessID int32) (smContext *SMContext) {
+	fmt.Printf("now in the NewSMContext function\n")
 	smContext = new(SMContext)
 	// Create Ref and identifier
 	smContext.Ref = uuid.New().URN()
+	fmt.Printf("smContext.Ref is %v\n",smContext.Ref)
 	smContextPool.Store(smContext.Ref, smContext)
 	canonicalRef.Store(canonicalName(identifier, pduSessID), smContext.Ref)
 

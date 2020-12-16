@@ -65,6 +65,8 @@ func HandlePDUSessionSMContextCreate(request models.PostSmContextsRequest) *http
 	}
 
 	createData := request.JsonData
+	fmt.Printf("createData.Supi is %v\n",createData.Supi)
+	fmt.Printf("createData.PduSessionId is %v\n",createData.PduSessionId)
 	smContext := smf_context.NewSMContext(createData.Supi, createData.PduSessionId)
 	smContext.SMContextState = smf_context.ActivePending
 	logger.CtxLog.Traceln("SMContextState Change State: ", smContext.SMContextState.String())
