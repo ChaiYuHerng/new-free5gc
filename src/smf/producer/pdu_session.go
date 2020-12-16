@@ -234,6 +234,7 @@ func HandlePDUSessionSMContextCreate(request models.PostSmContextsRequest) *http
 		}
 	}
 	fmt.Printf("smContext is %v\n",smContext)
+	fmt.Printf("defaultPath is %v\n",defaultPath)
 	SendPFCPRule(smContext, defaultPath)
 
 	response.JsonData = smContext.BuildCreatedData()
@@ -277,7 +278,7 @@ func HandlePDUSessionSMContextUpdate(smContextRef string, body models.UpdateSmCo
 				},
 			},
 		}
-		
+
 		return httpResponse
 	}
 
