@@ -571,7 +571,7 @@ func (upi *UserPlaneInformation) GenerateDefaultPath(dnn string) bool {
 		return false
 	}
 
-	fmt.Printf("source is %v, destination is %v\n\n",source,destination)
+	fmt.Printf("source is %v\n, destination is %v\n\n",source,destination)
 	fmt.Printf("start run DFS\n")
 
 	//Run DFS
