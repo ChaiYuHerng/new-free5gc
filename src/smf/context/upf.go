@@ -71,6 +71,7 @@ func NewUPTunnel() (tunnel *UPTunnel) {
 
 func (upTunnel *UPTunnel) AddDataPath(dataPath *DataPath) {
 	fmt.Printf("now in the AddDataPath\n\n")
+	fmt.Printf("go to upTunnel.PathIDGenerator.Allocate()\n")
 	pathID, err := upTunnel.PathIDGenerator.Allocate()
 	if err != nil {
 		logger.CtxLog.Warnf("Allocate pathID error: %+v", err)

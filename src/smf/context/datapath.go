@@ -370,6 +370,7 @@ func (dataPath *DataPath) ActivateTunnelAndPDR(smContext *SMContext) {
 		if err != nil {
 			logger.CtxLog.Warnln(err)
 		}
+		fmt.Printf("go to curDataPathNode.ActivateDownLinkTunnel\n\n")
 		err = curDataPathNode.ActivateDownLinkTunnel(smContext)
 
 		if err != nil {
