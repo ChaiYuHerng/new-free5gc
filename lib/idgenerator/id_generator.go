@@ -40,6 +40,7 @@ func (idGenerator *IDGenerator) Allocate() (id int64, err error) {
 	defer idGenerator.lock.Unlock()
 
 	offsetBegin := idGenerator.offset
+	fmt.Printf("offsetBegin is %v\n",offsetBegin)
 	for {
 		if _, ok := idGenerator.usedMap[idGenerator.offset]; ok {
 			idGenerator.updateOffset()
@@ -54,6 +55,7 @@ func (idGenerator *IDGenerator) Allocate() (id int64, err error) {
 	}
 	idGenerator.usedMap[idGenerator.offset] = true
 	id = idGenerator.offset + idGenerator.minValue
+	fmt.Printf("id is %v\n",id)
 	idGenerator.updateOffset()
 	return
 }
