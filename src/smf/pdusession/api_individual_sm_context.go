@@ -16,11 +16,23 @@ import (
 	"free5gc/src/smf/logger"
 	"free5gc/src/smf/producer"
 	"github.com/gin-gonic/gin"
+	//new added
+	"free5gc/src/app"
+	"free5gc/src/smf/logger"
+	"free5gc/src/smf/service"
+	"free5gc/src/smf/version"
+	"github.com/sirupsen/logrus"
+	"github.com/urfave/cli"
+	"os"
+	//new added
 	"log"
 	"fmt"
 	"net/http"
 	"strings"
 )
+var SMF = &service.SMF{}
+
+var appLog *logrus.Entry
 
 // HTTPReleaseSmContext - Release SM Context
 func HTTPReleaseSmContext(c *gin.Context) {
@@ -92,5 +104,22 @@ func HTTPUpdateSmContext(c *gin.Context) {
 	} else {
 		c.JSON(HTTPResponse.Status, HTTPResponse.Body)
 		fmt.Printf("test!!!!~~~~~~\n\n")
+		appLog = logger.AppLog
+		app := cli.NewApp()
+		app.Name = "smf"
+		fmt.Print(app.Name, "\n")
+		appLog.Infoln("SMF version: ", version.GetVersion())
+		app.Usage = "-free5gccfg common configuration file -smfcfg smf configuration file"
+		app.Action = action
+		app.Flags = SMF.GetCliCmd()
+
+		if err := app.Run(os.Args); err != nil {
+			logger.AppLog.Errorf("SMF Run error: %v", err)
+		}
 	}
+}
+func action(c *cli.Context) {
+	app.AppInitializeWillInitialize(c.String("free5gccfg"))
+	SMF.Initialize(c)
+	SMF.Start()
 }
