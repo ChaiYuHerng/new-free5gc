@@ -161,7 +161,7 @@ func GetSMContext(ref string) (smContext *SMContext) {
 	fmt.Printf("ref is %v\n",ref)
 	fmt.Printf("smContextPool is %v\n",smContextPool)
 	SmIdex :=1
-	for SmItem := range smContextPool {
+	for SmItem := range *smContextPool {
 		fmt.Printf("%d : SmItem is %v\n",SmIdex,SmItem)
 		SmIdex+=1
 	}
