@@ -25,6 +25,7 @@ var canonicalRef sync.Map
 var seidSMContextMap sync.Map
 
 var tempSmRef string
+var PrevSmRef string
 
 var smContextCount uint64
 
@@ -135,6 +136,11 @@ func NewSMContext(identifier string, pduSessID int32) (smContext *SMContext) {
 	// Create Ref and identifier
 	smContext.Ref = uuid.New().URN()
 	fmt.Printf("smContext.Ref is %v\n",smContext.Ref)
+	if PrevSmRef == nil {
+		PrevSmRef = smContext.Ref
+	} else {
+		PrevSmRef = tempSmRef
+	}
 	tempSmRef = smContext.Ref
 	smContextPool.Store(smContext.Ref, smContext)
 	canonicalRef.Store(canonicalName(identifier, pduSessID), smContext.Ref)
@@ -161,9 +167,12 @@ func NewSMContext(identifier string, pduSessID int32) (smContext *SMContext) {
 
 func GetSMContext(ref string) (smContext *SMContext) {
 	fmt.Printf("GetSMContext test1\n\n")
-	fmt.Printf("ref is %v\n",ref)
-	fmt.Printf("smContextPool is %v\n",smContextPool)
+	fmt.Printf("first ref is %v\n",ref)
+	fmt.Printf("Before Delete smContextPool is %v\n\n",smContextPool)
+	smContextPool.Delete(PrevSmRef)
+	fmt.Printf("After Delete smContextPool is %v\n\n",smContextPool)
 	ref = tempSmRef
+	fmt.Printf("second ref is %v\n\n",ref)
 	if value, ok := smContextPool.Load(ref); ok {
 		fmt.Printf("value is %v,ok is %v\n\n",value,ok)
 		smContext = value.(*SMContext)
