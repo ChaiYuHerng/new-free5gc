@@ -24,6 +24,8 @@ var smContextPool sync.Map
 var canonicalRef sync.Map
 var seidSMContextMap sync.Map
 
+var tempSmRef string
+
 var smContextCount uint64
 
 type SMContextState int
@@ -133,6 +135,7 @@ func NewSMContext(identifier string, pduSessID int32) (smContext *SMContext) {
 	// Create Ref and identifier
 	smContext.Ref = uuid.New().URN()
 	fmt.Printf("smContext.Ref is %v\n",smContext.Ref)
+	tempSmRef = smContext.Ref
 	smContextPool.Store(smContext.Ref, smContext)
 	canonicalRef.Store(canonicalName(identifier, pduSessID), smContext.Ref)
 
@@ -160,11 +163,7 @@ func GetSMContext(ref string) (smContext *SMContext) {
 	fmt.Printf("GetSMContext test1\n\n")
 	fmt.Printf("ref is %v\n",ref)
 	fmt.Printf("smContextPool is %v\n",smContextPool)
-	SmIdex :=1
-	for SmItem := *smContextPool {
-		fmt.Printf("%d : SmItem is %v\n",SmIdex,SmItem)
-		SmIdex+=1
-	}
+	ref = tempSmRef
 	if value, ok := smContextPool.Load(ref); ok {
 		fmt.Printf("value is %v,ok is %v\n\n",value,ok)
 		smContext = value.(*SMContext)
