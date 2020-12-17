@@ -136,7 +136,8 @@ func NewSMContext(identifier string, pduSessID int32) (smContext *SMContext) {
 	// Create Ref and identifier
 	smContext.Ref = uuid.New().URN()
 	fmt.Printf("smContext.Ref is %v\n",smContext.Ref)
-	if PrevSmRef == nil {
+	if PrevSmRef == "" {
+		fmt.Printf("Now PrevSmRef is empty~~~~!!!!\n")
 		PrevSmRef = smContext.Ref
 	} else {
 		PrevSmRef = tempSmRef
