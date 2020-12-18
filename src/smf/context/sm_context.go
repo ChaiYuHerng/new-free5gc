@@ -174,6 +174,7 @@ func GetSMContext(ref string) (smContext *SMContext) {
 		fmt.Printf("First time, no need to delete\n\n")
 		//smContextPool.Delete(PrevSmRef)
 	} else {
+		fmt.Printf("delete Ref:%v\n",PrevSmRef)
 		smContextPool.Delete(PrevSmRef)
 	}
 	
