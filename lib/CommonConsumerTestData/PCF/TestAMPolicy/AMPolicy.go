@@ -48,6 +48,8 @@ UserLoc :
 */
 //Success Test
 func GetAMreqdata() models.PolicyAssociationRequest {
+	fmt.Printf("~~~~~~~~~~~~~~~~~~~~\n\n\n")
+	fmt.Printf("now in the AMPolicy.go, GetAMreqdata function\n\n\n")
 	timeNow := time.Now()
 	//d := time.Date(2019, 7, 5, 12, 30, 0, 0, time.UTC)
 	amCreateReqData := models.PolicyAssociationRequest{

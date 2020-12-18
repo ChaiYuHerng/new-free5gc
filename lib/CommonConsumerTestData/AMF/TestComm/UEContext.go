@@ -21,6 +21,8 @@ const (
 var ConsumerAMFCreateUEContextRequsetTable = make(map[string]models.CreateUeContextRequest)
 
 func init() {
+	fmt.Printf("~~~~~~~~~~~~~~~~~~~~\n\n\n")
+	fmt.Printf("now in the UEContext.go, init function\n\n\n")
 	ConsumerAMFCreateUEContextRequsetTable[CreateUEContext403] = models.CreateUeContextRequest{
 		JsonData: &models.UeContextCreateData{
 			UeContext: &models.UeContext{
