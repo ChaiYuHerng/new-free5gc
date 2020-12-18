@@ -145,6 +145,7 @@ func NewSMContext(identifier string, pduSessID int32) (smContext *SMContext) {
 	tempSmRef = smContext.Ref
 	smContextPool.Store(smContext.Ref, smContext)
 	canonicalRef.Store(canonicalName(identifier, pduSessID), smContext.Ref)
+	fmt.Printf("canonicalRef is %v\n",canonicalRef)
 
 	smContext.SMContextState = InActive
 	smContext.Identifier = identifier
