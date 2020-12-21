@@ -278,7 +278,8 @@ func HandlePDUSessionSMContextUpdate(smContextRef string, body models.UpdateSmCo
 	//PDU Session Release Command/Complete
 	logger.PduSessLog.Infoln("In HandlePDUSessionSMContextUpdate")
 	fmt.Printf("smContextRef is %v\n\n",smContextRef)
-	smContext := smf_context.GetSMContext(smContextRef)
+	smContext,tmp_ref := smf_context.GetSMContext2(smContextRef)
+	smContextRef = tmp_ref
 	fmt.Printf("After GetSMContext smContextRef is %v\n\n",smContextRef)
 	fmt.Printf("smContext is %v\n\n",smContext)
 
