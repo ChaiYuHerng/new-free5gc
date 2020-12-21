@@ -169,19 +169,20 @@ func NewSMContext(identifier string, pduSessID int32) (smContext *SMContext) {
 
 func GetSMContext(ref string) (smContext *SMContext) {
 	fmt.Printf("GetSMContext test1\n\n")
-	fmt.Printf("first ref is %v\n",ref)
-	fmt.Printf("Before Delete smContextPool is %v\n\n",smContextPool)
-	if PrevSmRef == "" {
+	ref = tempSmRef
+	fmt.Printf("now ref is %v\n",ref)
+	fmt.Printf("smContextPool is %v\n\n",smContextPool)
+	/*if PrevSmRef == "" {
 		fmt.Printf("First time, no need to delete\n\n")
 		//smContextPool.Delete(PrevSmRef)
 	} else {
-		fmt.Printf("delete Ref:%v\n",PrevSmRef)
+		//fmt.Printf("delete Ref:%v\n",PrevSmRef)
 		smContextPool.Delete(PrevSmRef)
-	}
+	}*/
 	
-	fmt.Printf("After Delete smContextPool is %v\n\n",smContextPool)
-	ref = tempSmRef
-	fmt.Printf("second ref is %v\n\n",ref)
+	//fmt.Printf("After Delete smContextPool is %v\n\n",smContextPool)
+	//ref = tempSmRef
+	fmt.Printf("SMcontext switch to %v\n\n",ref)
 	if value, ok := smContextPool.Load(ref); ok {
 		fmt.Printf("value is %v,ok is %v\n\n",value,ok)
 		smContext = value.(*SMContext)
