@@ -13,6 +13,7 @@ func BuildPDUSessionResourceSetupRequestTransfer(ctx *SMContext) ([]byte, error)
 	var ANUPF = ctx.Tunnel.DataPathPool.GetDefaultPath().FirstDPNode
 	var UpNode = ANUPF.UPF
 	var teidOct = make([]byte, 4)
+	fmt.Printf("UpNode is %v\n",UpNode)
 	binary.BigEndian.PutUint32(teidOct, ANUPF.UpLinkTunnel.TEID)
 
 	resourceSetupRequestTransfer := ngapType.PDUSessionResourceSetupRequestTransfer{}
