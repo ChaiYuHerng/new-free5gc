@@ -69,6 +69,7 @@ func RetrieveSmContext(c *gin.Context) {
 // HTTPUpdateSmContext - Update SM Context
 func HTTPUpdateSmContext(c *gin.Context) {
 	logger.PduSessLog.Info("Recieve Update SM Context Request")
+	fmt.Printf("now in the HTTPUpdateSmContext. Recieve Update SM Context Request\n\n")
 	var request models.UpdateSmContextRequest
 	request.JsonData = new(models.SmContextUpdateData)
 
@@ -96,6 +97,7 @@ func HTTPUpdateSmContext(c *gin.Context) {
 		smContextRef, req.Body.(models.UpdateSmContextRequest))
 
 	fmt.Printf("in the api_individual_sm_context, HTTPResponse is %v\n\n",HTTPResponse)
+	fmt.Printf("HTTPResponse.Body is %v\n",HTTPResponse.Body)
 	if HTTPResponse.Status < 300 {
 		c.Render(HTTPResponse.Status, openapi.MultipartRelatedRender{Data: HTTPResponse.Body})
 	} else {
