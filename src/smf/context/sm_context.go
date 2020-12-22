@@ -143,7 +143,9 @@ func NewSMContext(identifier string, pduSessID int32) (smContext *SMContext) {
 		PrevSmRef = tempSmRef
 	}
 	tempSmRef = smContext.Ref
+	fmt.Printf("Before Store smContextPool is %v\n",smContextPool)
 	smContextPool.Store(smContext.Ref, smContext)
+	fmt.Printf("After Store smContextPool is %v\n",smContextPool)
 	canonicalRef.Store(canonicalName(identifier, pduSessID), smContext.Ref)
 	fmt.Printf("canonicalRef is %v\n",canonicalRef)
 
