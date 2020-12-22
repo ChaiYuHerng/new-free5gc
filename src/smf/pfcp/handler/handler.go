@@ -212,8 +212,11 @@ func HandlePfcpSessionEstablishmentResponse(msg *pfcpUdp.Message) {
 func HandlePfcpSessionModificationResponse(msg *pfcpUdp.Message) {
 	pfcpRsp := msg.PfcpMessage.Body.(pfcp.PFCPSessionModificationResponse)
 
+	fmt.Printf("now in the HandlePfcpSessionModificationResponse")
 	SEID := msg.PfcpMessage.Header.SEID
+	fmt.Printf("SEID is %v\n",SEID)
 	smContext := smf_context.GetSMContextBySEID(SEID)
+	fmt.Printf("smContext is %v\n",smContext)
 
 	logger.PfcpLog.Infoln("In HandlePfcpSessionModificationResponse")
 
@@ -232,6 +235,7 @@ func HandlePfcpSessionModificationResponse(msg *pfcpUdp.Message) {
 
 			upfNodeID := smContext.GetNodeIDByLocalSEID(SEID)
 			upfIP := upfNodeID.ResolveNodeIdToIp().String()
+			fmt.Printf("upfNodeID is %v, and upfIP is %v\n\n",upfNodeID,upfIP)
 			delete(smContext.PendingUPF, upfIP)
 			logger.PduSessLog.Tracef("Delete pending pfcp response: UPF IP [%s]\n", upfIP)
 
@@ -258,6 +262,7 @@ func HandlePfcpSessionModificationResponse(msg *pfcpUdp.Message) {
 	}
 
 	logger.CtxLog.Traceln("PFCP Session Context")
+	fmt.Printf("smContext.PFCPContext is %v\n",smContext.PFCPContext)
 	for _, ctx := range smContext.PFCPContext {
 
 		logger.CtxLog.Traceln(ctx.ToString())
