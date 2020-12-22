@@ -137,9 +137,12 @@ func HandlePfcpSessionSetDeletionResponse(msg *pfcpUdp.Message) {
 func HandlePfcpSessionEstablishmentResponse(msg *pfcpUdp.Message) {
 	rsp := msg.PfcpMessage.Body.(pfcp.PFCPSessionEstablishmentResponse)
 	logger.PfcpLog.Infoln("In HandlePfcpSessionEstablishmentResponse")
+	fmt.Printf("now in the HandlePfcpSessionEstablishmentResponse\n")
 
 	SEID := msg.PfcpMessage.Header.SEID
+	fmt.Printf("SEID is %v\n",SEID)
 	smContext := smf_context.GetSMContextBySEID(SEID)
+	fmt.Printf("smContext is %v\n",smContext)
 
 	if rsp.UPFSEID != nil {
 		NodeIDtoIP := rsp.NodeID.ResolveNodeIdToIp().String()
@@ -212,7 +215,7 @@ func HandlePfcpSessionEstablishmentResponse(msg *pfcpUdp.Message) {
 func HandlePfcpSessionModificationResponse(msg *pfcpUdp.Message) {
 	pfcpRsp := msg.PfcpMessage.Body.(pfcp.PFCPSessionModificationResponse)
 
-	fmt.Printf("now in the HandlePfcpSessionModificationResponse")
+	fmt.Printf("now in the HandlePfcpSessionModificationResponse\n")
 	SEID := msg.PfcpMessage.Header.SEID
 	fmt.Printf("SEID is %v\n",SEID)
 	smContext := smf_context.GetSMContextBySEID(SEID)
