@@ -6,6 +6,7 @@ import (
 )
 
 func BuildSmfNfProfile() (uuId string, profile models.NfProfile) {
+	fmt.Printf("\n\n\nnow in the BuildSmfNfProfile function\n\n\n")
 	uuId = uuid.New().String()
 	profile = models.NfProfile{
 		NfInstanceId: uuId,

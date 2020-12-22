@@ -7,6 +7,7 @@ import (
 )
 
 func CreateTestData() models.SmPolicyContextData {
+	fmt.Printf("\n\n\nnow in the CreateTestData function\n\n\n")
 	t := time.Date(2000, 2, 1, 12, 30, 0, 0, time.UTC)
 	// timeNow := time.Now()
 	smReqData := models.SmPolicyContextData{

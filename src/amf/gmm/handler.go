@@ -216,6 +216,7 @@ func HandlePDUSessionEstablishmentRequest(ue *context.AmfUe, anType models.Acces
 				SmContextStatusUri: fmt.Sprintf("%s/namf-callback/v1/smContextStatus/%s/%d",
 					amfSelf.GetIPv4Uri(), ue.Guti, pduSessionID),
 			}
+			fmt.Printf("updateData is %v\n\n",updateData)
 			logger.GmmLog.Warningln("Duplicated PDU session ID")
 			response, _, _, err := consumer.SendUpdateSmContextRequest(ue, smContext.SmfUri,
 				smContext.PduSessionContext.SmContextRef, updateData, nil, nil)
