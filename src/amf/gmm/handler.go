@@ -203,6 +203,7 @@ func HandlePDUSessionEstablishmentRequest(ue *context.AmfUe, anType models.Acces
 
 		// Store PduSessionContext For duplicated PDU Session Id
 		if smContext, ok := ue.SmContextList[pduSessionID]; ok {
+			fmt.Printf("ok is %v\n",ok)
 			fmt.Printf("Store PduSessionContext For duplicated PDU Session Id\n")
 			ue.StoredSmContext[pduSessionID] = &context.StoredSmContext{
 				SmfId:             smfID,
@@ -244,7 +245,6 @@ func HandlePDUSessionEstablishmentRequest(ue *context.AmfUe, anType models.Acces
 			}
 			return nil
 		}
-		fmt.Printf("ok is %v\n",ok)
 
 		smContextCreateData := consumer.BuildCreateSmContextRequest(ue, pduSession, requestType)
 
