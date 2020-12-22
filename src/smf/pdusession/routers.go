@@ -14,7 +14,7 @@ import (
 	"free5gc/src/smf/logger"
 	"net/http"
 	"strings"
-	"fmt"
+	//"fmt"
 
 	"github.com/gin-gonic/gin"
 )
@@ -37,9 +37,9 @@ type Routes []Route
 // NewRouter returns a new router.
 func NewRouter() *gin.Engine {
 	router := logger_util.NewGinWithLogrus(logger.GinLog)
-	fmt.Printf("router before add service is %v\n",router)
+	//fmt.Printf("router before add service is %v\n",router)
 	AddService(router)
-	fmt.Printf("router after add service is %v\n",router)
+	//fmt.Printf("router after add service is %v\n",router)
 	return router
 }
 
