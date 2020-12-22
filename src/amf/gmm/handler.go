@@ -245,6 +245,10 @@ func HandlePDUSessionEstablishmentRequest(ue *context.AmfUe, anType models.Acces
 			}
 			return nil
 		}
+		fmt.Printf("no ok \n\n")
+		fmt.Printf("ue is %v\n",ue)
+		fmt.Printf("pduSession is %v\n",pduSession)
+		fmt.Printf("requestType is %v\n",requestType)
 
 		smContextCreateData := consumer.BuildCreateSmContextRequest(ue, pduSession, requestType)
 
