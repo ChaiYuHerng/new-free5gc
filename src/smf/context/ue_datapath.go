@@ -31,7 +31,6 @@ func NewUEDataPathNode(name string) (node *DataPathNode, err error) {
 }
 
 func NewUEPreConfigPaths(SUPI string, paths []factory.Path) (*UEPreConfigPaths, error) {
-	fmt.Printf("In the NewUEPreConfigPaths~~~~~~~~~~~~~\n\n")
 	var uePreConfigPaths *UEPreConfigPaths
 	ueDataPathPool := NewDataPathPool()
 	lowerBound := 0

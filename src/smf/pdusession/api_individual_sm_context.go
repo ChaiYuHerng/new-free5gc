@@ -16,17 +16,7 @@ import (
 	"free5gc/src/smf/logger"
 	"free5gc/src/smf/producer"
 	"github.com/gin-gonic/gin"
-	//new added
-	/*"free5gc/src/app"
-	"free5gc/src/smf/logger"
-	//"free5gc/src/smf/service"
-	"free5gc/src/smf/version"
-	"github.com/sirupsen/logrus"
-	"github.com/urfave/cli"
-	"os"*/
-	//new added
 	"log"
-	"fmt"
 	"net/http"
 	"strings"
 )
@@ -69,12 +59,8 @@ func RetrieveSmContext(c *gin.Context) {
 // HTTPUpdateSmContext - Update SM Context
 func HTTPUpdateSmContext(c *gin.Context) {
 	logger.PduSessLog.Info("Recieve Update SM Context Request")
-	fmt.Printf("now in the HTTPUpdateSmContext. Recieve Update SM Context Request\n\n")
 	var request models.UpdateSmContextRequest
 	request.JsonData = new(models.SmContextUpdateData)
-
-	fmt.Printf("request.JsonData is %v\n\n",request.JsonData)
-	fmt.Printf("c is %v\n\n",c)
 
 	s := strings.Split(c.GetHeader("Content-Type"), ";")
 	var err error
@@ -92,19 +78,13 @@ func HTTPUpdateSmContext(c *gin.Context) {
 	req := http_wrapper.NewRequest(c.Request, request)
 	req.Params["smContextRef"] = c.Params.ByName("smContextRef")
 
-	
-	fmt.Printf("in the api_individual_sm_context, c.Request is %v\n\n",c.Request)
 	smContextRef := req.Params["smContextRef"]
-	fmt.Printf("in the api_individual_sm_context, smContextRef is %v\n\n",smContextRef)
 	HTTPResponse := producer.HandlePDUSessionSMContextUpdate(
 		smContextRef, req.Body.(models.UpdateSmContextRequest))
 
-	fmt.Printf("in the api_individual_sm_context, HTTPResponse is %v\n\n",HTTPResponse)
-	fmt.Printf("HTTPResponse.Body is %v\n",HTTPResponse.Body)
 	if HTTPResponse.Status < 300 {
 		c.Render(HTTPResponse.Status, openapi.MultipartRelatedRender{Data: HTTPResponse.Body})
 	} else {
 		c.JSON(HTTPResponse.Status, HTTPResponse.Body)
-		fmt.Printf("test!!!!~~~~~~\n\n")
 	}
 }

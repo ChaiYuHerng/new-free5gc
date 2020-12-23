@@ -8,7 +8,6 @@ import (
 	"free5gc/src/smf/logger"
 	"free5gc/src/smf/pfcp/message"
 	"net"
-	"fmt"
 	"reflect"
 )
 
@@ -269,7 +268,6 @@ func EstablishRANTunnelInfo(smContext *context.SMContext) {
 	bpMGR := smContext.BPManager
 	activatingPath := bpMGR.ActivatingPath
 
-	fmt.Printf("Find GetDefaultPath4\n")
 	defaultPath := smContext.Tunnel.DataPathPool.GetDefaultPath()
 	defaultANUPF := defaultPath.FirstDPNode
 

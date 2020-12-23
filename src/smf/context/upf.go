@@ -70,27 +70,13 @@ func NewUPTunnel() (tunnel *UPTunnel) {
 }
 
 func (upTunnel *UPTunnel) AddDataPath(dataPath *DataPath) {
-	fmt.Printf("now in the AddDataPath\n\n")
-	fmt.Printf("go to upTunnel.PathIDGenerator.Allocate()\n")
 	pathID, err := upTunnel.PathIDGenerator.Allocate()
 	if err != nil {
 		logger.CtxLog.Warnf("Allocate pathID error: %+v", err)
 		return
 	}
-	fmt.Printf("dataPath is %v\n",dataPath)
-	/*if dataPath.Destination.DestinationIP == "192.168.2.111" {
-		pathID = 1
-	} else if dataPath.Destination.DestinationIP == "192.168.2.112" {
-		pathID = 2
-	} else if dataPath.Destination.DestinationIP == "192.168.2.113" {
-		pathID = 3
-	}*/
-	fmt.Printf("pathID is %v\n\n",pathID)
 
 	upTunnel.DataPathPool[pathID] = dataPath
-	fmt.Printf("len(upTunnel.DataPathPool) is %d\n",len(upTunnel.DataPathPool))
-	fmt.Printf("upTunnel.DataPathPool is %v\n",upTunnel.DataPathPool)
-	
 }
 
 // NewUPF returns a new UPF context in SMF

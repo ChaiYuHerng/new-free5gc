@@ -24,9 +24,6 @@ var smContextPool sync.Map
 var canonicalRef sync.Map
 var seidSMContextMap sync.Map
 
-var tempSmRef string
-var PrevSmRef string
-
 var smContextCount uint64
 
 type SMContextState int
@@ -131,23 +128,11 @@ func ResolveRef(identifier string, pduSessID int32) (ref string, err error) {
 }
 
 func NewSMContext(identifier string, pduSessID int32) (smContext *SMContext) {
-	fmt.Printf("now in the NewSMContext function\n")
 	smContext = new(SMContext)
 	// Create Ref and identifier
 	smContext.Ref = uuid.New().URN()
-	fmt.Printf("smContext.Ref is %v\n",smContext.Ref)
-	if tempSmRef == "" {
-		fmt.Printf("First time tempSmRef and PrevSmRef is empty~~~~!!!!\n")
-		//PrevSmRef = smContext.Ref
-	} else {
-		PrevSmRef = tempSmRef
-	}
-	tempSmRef = smContext.Ref
-	fmt.Printf("Before Store smContextPool is %v\n",smContextPool)
 	smContextPool.Store(smContext.Ref, smContext)
-	fmt.Printf("After Store smContextPool is %v\n",smContextPool)
 	canonicalRef.Store(canonicalName(identifier, pduSessID), smContext.Ref)
-	fmt.Printf("canonicalRef is %v\n",canonicalRef)
 
 	smContext.SMContextState = InActive
 	smContext.Identifier = identifier
@@ -170,48 +155,8 @@ func NewSMContext(identifier string, pduSessID int32) (smContext *SMContext) {
 }
 
 func GetSMContext(ref string) (smContext *SMContext) {
-	fmt.Printf("GetSMContext test1\n\n")
-	ref = tempSmRef
-	fmt.Printf("now ref is %v\n",ref)
-	fmt.Printf("smContextPool is %v\n\n",smContextPool)
-	/*if PrevSmRef == "" {
-		fmt.Printf("First time, no need to delete\n\n")
-		//smContextPool.Delete(PrevSmRef)
-	} else {
-		//fmt.Printf("delete Ref:%v\n",PrevSmRef)
-		smContextPool.Delete(PrevSmRef)
-	}*/
-	
-	//fmt.Printf("After Delete smContextPool is %v\n\n",smContextPool)
-	//ref = tempSmRef
-	fmt.Printf("SMcontext switch to %v\n\n",ref)
 	if value, ok := smContextPool.Load(ref); ok {
-		fmt.Printf("value is %v,ok is %v\n\n",value,ok)
 		smContext = value.(*SMContext)
-	}
-
-	return
-}
-func GetSMContext2(ref string) (smContext *SMContext, tmpString string) {
-	fmt.Printf("GetSMContext2 test1\n\n")
-	ref = tempSmRef
-	fmt.Printf("now ref is %v\n",ref)
-	fmt.Printf("smContextPool is %v\n\n",smContextPool)
-	/*if PrevSmRef == "" {
-		fmt.Printf("First time, no need to delete\n\n")
-		//smContextPool.Delete(PrevSmRef)
-	} else {
-		//fmt.Printf("delete Ref:%v\n",PrevSmRef)
-		smContextPool.Delete(PrevSmRef)
-	}*/
-	
-	//fmt.Printf("After Delete smContextPool is %v\n\n",smContextPool)
-	//ref = tempSmRef
-	fmt.Printf("SMcontext switch to %v\n\n",ref)
-	if value, ok := smContextPool.Load(ref); ok {
-		fmt.Printf("value is %v,ok is %v\n\n",value,ok)
-		smContext = value.(*SMContext)
-		tmpString = ref
 	}
 
 	return

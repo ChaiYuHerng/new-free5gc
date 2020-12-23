@@ -6,14 +6,11 @@ import (
 	smf_context "free5gc/src/smf/context"
 	"free5gc/src/smf/logger"
 	"net/http"
-	"fmt"
 )
 
 func HandleSMPolicyUpdateNotify(smContextRef string, request models.SmPolicyNotification) *http_wrapper.Response {
-	fmt.Printf("\n\nnow in the HandleSMPolicyUpdateNotify function\n\n")
 	logger.PduSessLog.Infoln("In HandleSMPolicyUpdateNotify")
 	decision := request.SmPolicyDecision
-	fmt.Printf("smContextRef is %v\n",smContextRef)
 	smContext := smf_context.GetSMContext(smContextRef)
 	if smContext == nil {
 		logger.PduSessLog.Errorf("SMContext[%s] not found", smContextRef)
