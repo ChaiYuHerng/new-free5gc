@@ -21,7 +21,6 @@ import (
 )
 
 var smContextPool sync.Map
-var smContextPool2 sync.Map
 var canonicalRef sync.Map
 var seidSMContextMap sync.Map
 
@@ -144,7 +143,6 @@ func NewSMContext(identifier string, pduSessID int32) (smContext *SMContext) {
 		PrevSmRef = tempSmRef
 	}
 	tempSmRef = smContext.Ref
-	smContextPool = smContextPool2
 	fmt.Printf("Before Store smContextPool is %v\n",smContextPool)
 	smContextPool.Store(smContext.Ref, smContext)
 	fmt.Printf("After Store smContextPool is %v\n",smContextPool)
