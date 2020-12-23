@@ -183,8 +183,8 @@ func HandlePDUSessionEstablishmentRequest(ue *context.AmfUe, anType models.Acces
 		pduSession.Dnn = dnn
 
 		fmt.Printf("go into smfSelect\n")
-		UeType := sNssai.Sd
-		//UeType := sNssai.Sst
+		//UeType := sNssai.Sd
+		UeType := sNssai.Sst
 		//UeType := pduSessionID
 
 		smfID, smfUri, err := selectSmf(ue, anType, &pduSession, payload, UeType)
@@ -322,7 +322,7 @@ func HandlePDUSessionEstablishmentRequest(ue *context.AmfUe, anType models.Acces
 }
 
 func selectSmf(ue *context.AmfUe, anType models.AccessType, pduSession *models.PduSessionContext,
-	payload []byte, UeType string) (string, string, error) {
+	payload []byte, UeType int32) (string, string, error) {
 	
 	fmt.Printf("now in the selectsmf function\n")
 
