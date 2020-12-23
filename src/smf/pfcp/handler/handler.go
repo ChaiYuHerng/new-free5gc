@@ -139,6 +139,7 @@ func HandlePfcpSessionEstablishmentResponse(msg *pfcpUdp.Message) {
 	logger.PfcpLog.Infoln("In HandlePfcpSessionEstablishmentResponse")
 
 	SEID := msg.PfcpMessage.Header.SEID
+	fmt.Printf("SEID is %v\n",SEID)
 	smContext := smf_context.GetSMContextBySEID(SEID)
 
 	if rsp.UPFSEID != nil {
