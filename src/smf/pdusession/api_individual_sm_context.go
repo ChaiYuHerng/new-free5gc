@@ -68,6 +68,7 @@ func RetrieveSmContext(c *gin.Context) {
 
 // HTTPUpdateSmContext - Update SM Context
 func HTTPUpdateSmContext(c *gin.Context) {
+	return 
 	logger.PduSessLog.Info("Recieve Update SM Context Request")
 	fmt.Printf("now in the HTTPUpdateSmContext. Recieve Update SM Context Request\n\n")
 	var request models.UpdateSmContextRequest
