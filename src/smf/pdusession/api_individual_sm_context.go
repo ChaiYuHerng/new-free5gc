@@ -73,6 +73,8 @@ func HTTPUpdateSmContext(c *gin.Context) {
 	var request models.UpdateSmContextRequest
 	request.JsonData = new(models.SmContextUpdateData)
 
+	fmt.Printf("request.JsonData is %v\n",request.JsonData)
+
 	s := strings.Split(c.GetHeader("Content-Type"), ";")
 	var err error
 	switch s[0] {
