@@ -8,6 +8,8 @@ import (
 	"strconv"
 )
 
+var tmp_dest string
+
 // GTPTunnel represents the GTP tunnel information
 type GTPTunnel struct {
 	SrcEndPoint  *DataPathNode
@@ -258,14 +260,59 @@ func (node *DataPathNode) GetUpLinkFAR() (far *FAR) {
 
 func (dataPathPool DataPathPool) GetDefaultPath() (dataPath *DataPath) {
 
+	fmt.Printf("now in the GetDefaultPath\n\n")
 	for _, path := range dataPathPool {
 
-		if path.IsDefaultPath {
+		fmt.Printf("path is %v\n",path)
+		fmt.Printf("path.IsDefaultPath is %v\n",path.IsDefaultPath)
+		fmt.Printf("path.Destination.DestinationIP is %v\n",path.Destination.DestinationIP)
+		fmt.Printf("tmp_dest is %v\n",tmp_dest)
+		if path.IsDefaultPath == true {
 			dataPath = path
+			fmt.Printf("finish GetDefaultPath, now datapath is %v\n",dataPath)
 			return
-		}
+		} 
 
 	}
+	fmt.Printf("finish GetDefaultPath, now datapath is %v\n",dataPath)
+	return
+}
+func (dataPathPool DataPathPool) GetDefaultPath2(dnn string) (dataPath *DataPath) {
+
+	fmt.Printf("now in the GetDefaultPath2\n\n")
+	fmt.Printf("dnn is %v\n",dnn)
+	//var tmp_dest string
+	if dnn == "internet" {
+		tmp_dest = "192.168.2.111"
+	} else if dnn == "internet2" {
+		tmp_dest = "192.168.2.112"
+	} else if dnn == "internet3" {
+		tmp_dest = "192.168.2.113"
+	}
+
+	fmt.Printf("tmp_dest is %s\n",tmp_dest)
+
+	for _, path := range dataPathPool {
+
+		fmt.Printf("path is %v\n",path)
+		path.IsDefaultPath = false
+		path.Activated = false
+		if path.Destination.DestinationIP == tmp_dest {
+			fmt.Printf("path.Destination.DestinationPort is %v\n",path.Destination.DestinationPort)
+			fmt.Printf("path.Destination.Url is %v\n",path.Destination.Url)
+			path.IsDefaultPath = true
+		    path.Activated = true
+			dataPath = path
+			fmt.Printf("finish GetDefaultPath2, now datapath is %v\n",dataPath)
+			return
+		}
+		/*if path.IsDefaultPath {
+			dataPath = path
+			//return
+		}*/
+
+	}
+	fmt.Printf("finish GetDefaultPath2, now datapath is %v\n",dataPath)
 	return
 }
 
@@ -308,26 +355,34 @@ func (dataPath *DataPath) ToString() string {
 
 func (dataPath *DataPath) ActivateTunnelAndPDR(smContext *SMContext) {
 
+	fmt.Printf("now in the ActivateTunnelAndPDR function \n\n")
 	firstDPNode := dataPath.FirstDPNode
+	fmt.Printf("firstDPNode is %v\n",firstDPNode)
 	logger.PduSessLog.Traceln("In ActivateTunnelAndPDR")
 	logger.PduSessLog.Traceln(dataPath.ToString())
 	//Activate Tunnels
+	fmt.Printf("start Activate Tunnels for loop\n\n")
 	for curDataPathNode := firstDPNode; curDataPathNode != nil; curDataPathNode = curDataPathNode.Next() {
+		fmt.Printf("curDataPathNode is %v\n",curDataPathNode)
 		logger.PduSessLog.Traceln("Current DP Node IP: ", curDataPathNode.UPF.NodeID.ResolveNodeIdToIp().String())
 		err := curDataPathNode.ActivateUpLinkTunnel(smContext)
 
 		if err != nil {
 			logger.CtxLog.Warnln(err)
 		}
+		fmt.Printf("go to curDataPathNode.ActivateDownLinkTunnel\n\n")
 		err = curDataPathNode.ActivateDownLinkTunnel(smContext)
 
 		if err != nil {
 			logger.CtxLog.Warnln(err)
 		}
 	}
+	fmt.Printf("end Activate Tunnels for loop\n\n")
 
 	//Activate PDR
+	fmt.Printf("start Activate PDR for loop\n\n")
 	for curDataPathNode := firstDPNode; curDataPathNode != nil; curDataPathNode = curDataPathNode.Next() {
+		fmt.Printf("curDataPathNode is %v\n",curDataPathNode)
 		logger.CtxLog.Traceln("Calculate ", curDataPathNode.UPF.PFCPAddr().String())
 		curULTunnel := curDataPathNode.UpLinkTunnel
 		curDLTunnel := curDataPathNode.DownLinkTunnel
@@ -423,6 +478,7 @@ func (dataPath *DataPath) ActivateTunnelAndPDR(smContext *SMContext) {
 			DLFAR := DLPDR.FAR
 
 			logger.PduSessLog.Traceln("Current DP Node IP: ", curDataPathNode.UPF.NodeID.ResolveNodeIdToIp().String())
+			fmt.Printf("Current DP Node IP is %v\n",curDataPathNode.UPF.NodeID)
 			logger.PduSessLog.Traceln("Before DLPDR OuterHeaderCreation")
 			if nextDLDest := curDataPathNode.Prev(); nextDLDest != nil {
 				logger.PduSessLog.Traceln("In DLPDR OuterHeaderCreation")
@@ -474,6 +530,7 @@ func (dataPath *DataPath) ActivateTunnelAndPDR(smContext *SMContext) {
 			}
 		}
 	}
+	fmt.Printf("end Activate PDR for loop\n\n")
 
 	dataPath.Activated = true
 }
