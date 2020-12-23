@@ -180,7 +180,6 @@ func InitSmfContext(config *factory.Config) {
 }
 
 func InitSMFUERouting(routingConfig *factory.RoutingConfig) {
-	fmt.Printf("In the InitSMFUERouting~~~~~~~~~~~~~~~~\n\n")
 
 	if !smfContext.ULCLSupport {
 		return
@@ -204,7 +203,6 @@ func InitSMFUERouting(routingConfig *factory.RoutingConfig) {
 			logger.CtxLog.Warnln(err)
 			continue
 		}
-		fmt.Printf("uePreConfigPaths is %v\n",uePreConfigPaths)
 
 		smfContext.UEPreConfigPathPool[supi] = uePreConfigPaths
 	}

@@ -20,29 +20,11 @@ import (
 	"net/http"
 
 	"github.com/antihax/optional"
-
 )
 
 func HandlePDUSessionSMContextCreate(request models.PostSmContextsRequest) *http_wrapper.Response {
 	//GSM State
 	//PDU Session Establishment Accept/Reject
-	/*fmt.Printf("registerNum is %d\n\n",registerNum)
-	if registerNum == 1 {
-		registerNum+=1
-	} else {
-		app := cli.NewApp()
-		app.Name = "smf"
-		fmt.Print(app.Name, "\n")
-		appLog.Infoln("SMF version: ", version.GetVersion())
-		app.Usage = "-free5gccfg common configuration file -smfcfg smf configuration file"
-		app.Action = action
-		app.Flags = SMF.GetCliCmd()
-
-		if err := app.Run(os.Args); err != nil {
-			logger.AppLog.Errorf("SMF Run error: %v", err)
-		}
-		//SMF.Terminate()
-	}*/
 	var response models.PostSmContextsResponse
 	response.JsonData = new(models.SmContextCreatedData)
 	logger.PduSessLog.Infoln("In HandlePDUSessionSMContextCreate")
@@ -65,8 +47,6 @@ func HandlePDUSessionSMContextCreate(request models.PostSmContextsRequest) *http
 	}
 
 	createData := request.JsonData
-	fmt.Printf("createData.Supi is %v\n",createData.Supi)
-	fmt.Printf("createData.PduSessionId is %v\n",createData.PduSessionId)
 	smContext := smf_context.NewSMContext(createData.Supi, createData.PduSessionId)
 	smContext.SMContextState = smf_context.ActivePending
 	logger.CtxLog.Traceln("SMContextState Change State: ", smContext.SMContextState.String())
@@ -159,11 +139,9 @@ func HandlePDUSessionSMContextCreate(request models.PostSmContextsRequest) *http
 	if smf_context.SMF_Self().ULCLSupport && smf_context.CheckUEHasPreConfig(createData.Supi) {
 		logger.PduSessLog.Infof("SUPI[%s] has pre-config route", createData.Supi)
 		uePreConfigPaths := smf_context.GetUEPreConfigPaths(createData.Supi)
-		fmt.Printf("uePreConfigPaths is %v\n\n",uePreConfigPaths)
 		smContext.Tunnel.DataPathPool = uePreConfigPaths.DataPathPool
 		smContext.Tunnel.PathIDGenerator = uePreConfigPaths.PathIDGenerator
-		defaultPath = smContext.Tunnel.DataPathPool.GetDefaultPath2(createData.Dnn)
-		fmt.Printf("defaultPath is %v\n\n",defaultPath)
+		defaultPath = smContext.Tunnel.DataPathPool.GetDefaultPath()
 		smContext.AllocateLocalSEIDForDataPath(defaultPath)
 		defaultPath.ActivateTunnelAndPDR(smContext)
 		smContext.BPManager = smf_context.NewBPManager(createData.Supi)
@@ -174,31 +152,16 @@ func HandlePDUSessionSMContextCreate(request models.PostSmContextsRequest) *http
 		fmt.Printf("createData.Supi is %v\n",createData.Supi)
 		fmt.Printf("createData.Dnn is %v\n",createData.Dnn)
 		defaultUPPath := smf_context.GetUserPlaneInformation().GetDefaultUserPlanePathByDNN(createData.Dnn)
-		fmt.Printf("defaultUPPath is %v\n",defaultUPPath)
 		smContext.AllocateLocalSEIDForUPPath(defaultUPPath)
-		fmt.Printf("smContext is %v\n\n",smContext)
 		defaultPath = smf_context.GenerateDataPath(defaultUPPath, smContext)
-		fmt.Printf("defaultPath is %v\n",defaultPath)
 		if defaultPath != nil {
-			fmt.Printf("!!!!!defaultPath is not nil---1\n\n")
 			defaultPath.IsDefaultPath = true
 			smContext.Tunnel.AddDataPath(defaultPath)
 			defaultPath.ActivateTunnelAndPDR(smContext)
 		}
 	}
 
-	fmt.Printf("final defaultPath is %v\n\n\n",defaultPath)
-	fmt.Printf("defaultPath.root after final is %v\n",defaultPath.FirstDPNode)
-	fmt.Printf("defaultPath.root.UPF after final is %v\n",defaultPath.FirstDPNode.UPF.NodeID)
-	fmt.Printf("defaultPath.root.UpLinkTunnel after final is %v\n",defaultPath.FirstDPNode.UpLinkTunnel)
-	fmt.Printf("defaultPath.root.DownLinkTunnel after final is %v\n",defaultPath.FirstDPNode.DownLinkTunnel)
-	fmt.Printf("defaultPath.root.UpLinkTunnel.DestEndPoint after final is %v\n",defaultPath.FirstDPNode.UpLinkTunnel.DestEndPoint.UPF)
-	fmt.Printf("defaultPath.root.DownLinkTunnel.DestEndPoint after final is %v\n",defaultPath.FirstDPNode.DownLinkTunnel.DestEndPoint.UPF)
-	fmt.Printf("defaultPath.root.UpLinkTunnel.TEID after final is %v\n",defaultPath.FirstDPNode.UpLinkTunnel.TEID)
-	fmt.Printf("defaultPath.root.DownLinkTunnel.TEID after final is %v\n",defaultPath.FirstDPNode.DownLinkTunnel.TEID)
-
 	if defaultPath == nil {
-		fmt.Printf("!!!!!defaultPath is nil---2\n\n")
 		smContext.SMContextState = smf_context.InActive
 		logger.CtxLog.Traceln("SMContextState Change State: ", smContext.SMContextState.String())
 		logger.PduSessLog.Warnf("Path for serve DNN[%s] not found\n", createData.Dnn)
@@ -244,8 +207,6 @@ func HandlePDUSessionSMContextCreate(request models.PostSmContextsRequest) *http
 		logger.PduSessLog.Traceln("Send NF Discovery Serving AMF successfully")
 	}
 
-	fmt.Printf("pdu_session check point 1 \n")
-
 	for _, service := range *smContext.AMFProfile.NfServices {
 		if service.ServiceName == models.ServiceName_NAMF_COMM {
 			communicationConf := Namf_Communication.NewConfiguration()
@@ -253,8 +214,6 @@ func HandlePDUSessionSMContextCreate(request models.PostSmContextsRequest) *http
 			smContext.CommunicationClient = Namf_Communication.NewAPIClient(communicationConf)
 		}
 	}
-	fmt.Printf("smContext is %v\n",smContext)
-	fmt.Printf("defaultPath is %v\n",defaultPath)
 	SendPFCPRule(smContext, defaultPath)
 
 	response.JsonData = smContext.BuildCreatedData()
@@ -266,7 +225,6 @@ func HandlePDUSessionSMContextCreate(request models.PostSmContextsRequest) *http
 		Body:   response,
 	}
 
-	fmt.Printf("httpResponse is %v\n",httpResponse)
 	return httpResponse
 	// TODO: UECM registration
 
@@ -277,11 +235,7 @@ func HandlePDUSessionSMContextUpdate(smContextRef string, body models.UpdateSmCo
 	//PDU Session Modification Reject(Cause Value == 43 || Cause Value != 43)/Complete
 	//PDU Session Release Command/Complete
 	logger.PduSessLog.Infoln("In HandlePDUSessionSMContextUpdate")
-	fmt.Printf("smContextRef is %v\n\n",smContextRef)
-	smContext,tmp_ref := smf_context.GetSMContext2(smContextRef)
-	smContextRef = tmp_ref
-	fmt.Printf("After GetSMContext smContextRef is %v\n\n",smContextRef)
-	fmt.Printf("smContext is %v\n\n",smContext)
+	smContext := smf_context.GetSMContext(smContextRef)
 
 	if smContext == nil {
 		logger.PduSessLog.Warnln("SMContext is nil")
@@ -300,7 +254,6 @@ func HandlePDUSessionSMContextUpdate(smContextRef string, body models.UpdateSmCo
 				},
 			},
 		}
-
 		return httpResponse
 	}
 
@@ -358,7 +311,6 @@ func HandlePDUSessionSMContextUpdate(smContextRef string, body models.UpdateSmCo
 			smContext.PendingUPF = make(smf_context.PendingUPF)
 			for _, dataPath := range smContext.Tunnel.DataPathPool {
 
-				fmt.Printf("datapath is %v\n",dataPath)
 				dataPath.DeactivateTunnelAndPDR(smContext)
 				for curDataPathNode := dataPath.FirstDPNode; curDataPathNode != nil; curDataPathNode = curDataPathNode.Next() {
 					curUPFID, err := curDataPathNode.GetUPFID()
@@ -752,7 +704,6 @@ func HandlePDUSessionSMContextUpdate(smContextRef string, body models.UpdateSmCo
 		logger.CtxLog.Traceln("In case PFCPModification")
 
 		if sendPFCPModification {
-			fmt.Printf("Find GetDefaultPath3\n")
 			defaultPath := smContext.Tunnel.DataPathPool.GetDefaultPath()
 			ANUPF := defaultPath.FirstDPNode
 			pfcp_message.SendPfcpSessionModificationRequest(ANUPF.UPF.NodeID, smContext, pdrList, farList, barList)
@@ -982,4 +933,3 @@ func SendPFCPRule(smContext *smf_context.SMContext, dataPath *smf_context.DataPa
 
 	}
 }
-

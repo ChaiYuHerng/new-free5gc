@@ -27,9 +27,6 @@ const (
 	UPNODE_UPF1 UPNodeType = "UPF1"
 	UPNODE_UPF2 UPNodeType = "UPF2"
 	UPNODE_UPF3 UPNodeType = "UPF3"
-	UPNODE_UPF4 UPNodeType = "UPF4"
-	UPNODE_UPF5 UPNodeType = "UPF5"
-	UPNODE_UPF6 UPNodeType = "UPF6"
 	UPNODE_AN  UPNodeType = "AN"
 	UPNODE_AN1  UPNodeType = "AN1"
 	UPNODE_AN2  UPNodeType = "AN2"
@@ -135,7 +132,6 @@ func NewUserPlaneInformation(upTopology *factory.UserPlaneInformation) *UserPlan
 			} else {
 				ip = net.ParseIP(node.NodeID).To4()
 			}
-			fmt.Printf("ip is %v\n",ip)
 
 			switch len(ip) {
 			case net.IPv4len:
@@ -166,7 +162,6 @@ func NewUserPlaneInformation(upTopology *factory.UserPlaneInformation) *UserPlan
 			} else {
 				ip = net.ParseIP(node.NodeID).To4()
 			}
-			fmt.Printf("ip is %v\n",ip)
 
 			switch len(ip) {
 			case net.IPv4len:
@@ -188,97 +183,6 @@ func NewUserPlaneInformation(upTopology *factory.UserPlaneInformation) *UserPlan
 
 			upfPool[name] = upNode
 		case UPNODE_UPF3:
-			//ParseIp() always return 16 bytes
-			//so we can't use the length of return ip to seperate IPv4 and IPv6
-			//This is just a work around
-			var ip net.IP
-			if net.ParseIP(node.NodeID).To4() == nil {
-				ip = net.ParseIP(node.NodeID)
-			} else {
-				ip = net.ParseIP(node.NodeID).To4()
-			}
-			fmt.Printf("ip is %v\n",ip)
-
-			switch len(ip) {
-			case net.IPv4len:
-				upNode.NodeID = pfcpType.NodeID{
-					NodeIdType:  pfcpType.NodeIdTypeIpv4Address,
-					NodeIdValue: ip,
-				}
-			case net.IPv6len:
-				upNode.NodeID = pfcpType.NodeID{
-					NodeIdType:  pfcpType.NodeIdTypeIpv6Address,
-					NodeIdValue: ip,
-				}
-			default:
-				upNode.NodeID = pfcpType.NodeID{
-					NodeIdType:  pfcpType.NodeIdTypeFqdn,
-					NodeIdValue: []byte(node.NodeID),
-				}
-			}
-
-			upfPool[name] = upNode
-		case UPNODE_UPF4:
-			//ParseIp() always return 16 bytes
-			//so we can't use the length of return ip to seperate IPv4 and IPv6
-			//This is just a work around
-			var ip net.IP
-			if net.ParseIP(node.NodeID).To4() == nil {
-				ip = net.ParseIP(node.NodeID)
-			} else {
-				ip = net.ParseIP(node.NodeID).To4()
-			}
-
-			switch len(ip) {
-			case net.IPv4len:
-				upNode.NodeID = pfcpType.NodeID{
-					NodeIdType:  pfcpType.NodeIdTypeIpv4Address,
-					NodeIdValue: ip,
-				}
-			case net.IPv6len:
-				upNode.NodeID = pfcpType.NodeID{
-					NodeIdType:  pfcpType.NodeIdTypeIpv6Address,
-					NodeIdValue: ip,
-				}
-			default:
-				upNode.NodeID = pfcpType.NodeID{
-					NodeIdType:  pfcpType.NodeIdTypeFqdn,
-					NodeIdValue: []byte(node.NodeID),
-				}
-			}
-
-			upfPool[name] = upNode
-		case UPNODE_UPF5:
-			//ParseIp() always return 16 bytes
-			//so we can't use the length of return ip to seperate IPv4 and IPv6
-			//This is just a work around
-			var ip net.IP
-			if net.ParseIP(node.NodeID).To4() == nil {
-				ip = net.ParseIP(node.NodeID)
-			} else {
-				ip = net.ParseIP(node.NodeID).To4()
-			}
-
-			switch len(ip) {
-			case net.IPv4len:
-				upNode.NodeID = pfcpType.NodeID{
-					NodeIdType:  pfcpType.NodeIdTypeIpv4Address,
-					NodeIdValue: ip,
-				}
-			case net.IPv6len:
-				upNode.NodeID = pfcpType.NodeID{
-					NodeIdType:  pfcpType.NodeIdTypeIpv6Address,
-					NodeIdValue: ip,
-				}
-			default:
-				upNode.NodeID = pfcpType.NodeID{
-					NodeIdType:  pfcpType.NodeIdTypeFqdn,
-					NodeIdValue: []byte(node.NodeID),
-				}
-			}
-
-			upfPool[name] = upNode
-		case UPNODE_UPF6:
 			//ParseIp() always return 16 bytes
 			//so we can't use the length of return ip to seperate IPv4 and IPv6
 			//This is just a work around
@@ -382,7 +286,6 @@ func (upi *UserPlaneInformation) GetDefaultUserPlanePathByDNN(dnn string) (path 
 		return
 	} else {
 		pathExist = upi.GenerateDefaultPath(dnn)
-		fmt.Printf("pathExist is %v\n",pathExist)
 		if pathExist {
 			return upi.DefaultUserPlanePath[dnn]
 		}
@@ -401,41 +304,24 @@ func GenerateDataPath(upPath UPPath, smContext *SMContext) *DataPath {
 		logger.CtxLog.Errorf("Invalid data path")
 		return nil
 	}
-	fmt.Printf("now in the GenerateDataPath function\n\n")
-	fmt.Printf("len(upPath) is %v\n",len(upPath))
 	var lowerBound = 0
 	var upperBound = len(upPath) - 1
 	var root *DataPathNode
 	var curDataPathNode *DataPathNode
 	var prevDataPathNode *DataPathNode
-	var tmp_dest string
 
 	for idx, upNode := range upPath {
-		fmt.Printf("upNode is %v\n",upNode)
-		if upNode.Type == UPNODE_UPF1 {
-			tmp_dest = "192.168.2.111"
-		} else if upNode.Type == UPNODE_UPF2 {
-			tmp_dest = "192.168.2.112"
-		} else if upNode.Type == UPNODE_UPF3 {
-			tmp_dest = "192.168.2.113"
-		}
-		fmt.Printf("tmp_dest is %v\n",tmp_dest)
 		curDataPathNode = NewDataPathNode()
 		curDataPathNode.UPF = upNode.UPF
-		fmt.Printf("curDataPathNode is %v\n",curDataPathNode)
-		fmt.Printf("Current DP Node IP is %v\n",curDataPathNode.UPF.NodeID)
 
 		if idx == lowerBound {
-			fmt.Printf("idx == lowerBound\n")
 			root = curDataPathNode
 			root.AddPrev(nil)
 		}
 		if idx == upperBound {
-			fmt.Printf("idx == upperBound\n")
 			curDataPathNode.AddNext(nil)
 		}
 		if prevDataPathNode != nil {
-			fmt.Printf("prevDataPathNode != nil\n")
 			prevDataPathNode.AddNext(curDataPathNode)
 			curDataPathNode.AddPrev(prevDataPathNode)
 		}
@@ -443,22 +329,13 @@ func GenerateDataPath(upPath UPPath, smContext *SMContext) *DataPath {
 	}
 
 	dataPath := &DataPath{
-		Activated: true,
-		IsDefaultPath: true,
 		Destination: Destination{
-			DestinationIP:   tmp_dest,
-			//DestinationIP:   "",
+			DestinationIP:   "",
 			DestinationPort: "",
 			Url:             "",
 		},
-		HasBranchingPoint: false,
 		FirstDPNode: root,
 	}
-	fmt.Printf("root after GenerateDataPath is %v\n",root)
-	fmt.Printf("root.UPF after GenerateDataPath is %v\n",root.UPF)
-	fmt.Printf("root.UpLinkTunnel.TEID after GenerateDataPath is %v\n",root.UpLinkTunnel.TEID)
-	fmt.Printf("root.DownLinkTunnel.TEID after GenerateDataPath is %v\n",root.DownLinkTunnel.TEID)
-	fmt.Printf("dataPath after GenerateDataPath is %v\n",dataPath)
 	return dataPath
 }
 
@@ -508,7 +385,7 @@ func (upi *UserPlaneInformation) GenerateDefaultPath(dnn string) bool {
 			source = source2
 		} else {
 			source = source3
-		}
+		} 
 	}
 	fmt.Printf("source is %s\n",source)
 	
@@ -544,7 +421,7 @@ func (upi *UserPlaneInformation) GenerateDefaultPath(dnn string) bool {
 				destination1 = node
 			} else if node.Type == UPNODE_UPF2 {
 				destination2 = node
-			} else if node.Type == UPNODE_UPF3 {
+			} else {
 				destination3 = node
 			}
 		}
@@ -571,7 +448,7 @@ func (upi *UserPlaneInformation) GenerateDefaultPath(dnn string) bool {
 		return false
 	}
 
-	fmt.Printf("source is %v\n, destination is %v\n\n",source,destination)
+	fmt.Printf("source is %v, destination is %v\n\n",source,destination)
 	fmt.Printf("start run DFS\n")
 
 	//Run DFS

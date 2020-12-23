@@ -45,7 +45,5 @@ func main() {
 func action(c *cli.Context) {
 	app.AppInitializeWillInitialize(c.String("free5gccfg"))
 	SMF.Initialize(c)
-	fmt.Printf("go to SMF.Start la~~~~~~~~~~~~~~~~~~~~\n\n\n\n")
 	SMF.Start()
-	fmt.Printf("Finish SMF.Start la~~~~~~~~~~~~~~~~~~~~\n\n\n\n")
 }

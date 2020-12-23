@@ -137,7 +137,6 @@ func HandlePfcpSessionSetDeletionResponse(msg *pfcpUdp.Message) {
 func HandlePfcpSessionEstablishmentResponse(msg *pfcpUdp.Message) {
 	rsp := msg.PfcpMessage.Body.(pfcp.PFCPSessionEstablishmentResponse)
 	logger.PfcpLog.Infoln("In HandlePfcpSessionEstablishmentResponse")
-	fmt.Printf("now in the HandlePfcpSessionEstablishmentResponse\n")
 
 	SEID := msg.PfcpMessage.Header.SEID
 	fmt.Printf("SEID is %v\n",SEID)
@@ -150,7 +149,6 @@ func HandlePfcpSessionEstablishmentResponse(msg *pfcpUdp.Message) {
 		pfcpSessionCtx.RemoteSEID = rsp.UPFSEID.Seid
 	}
 
-	fmt.Printf("Find GetDefaultPath1\n")
 	ANUPF := smContext.Tunnel.DataPathPool.GetDefaultPath().FirstDPNode
 	if rsp.Cause.CauseValue == pfcpType.CauseRequestAccepted &&
 		ANUPF.UPF.NodeID.ResolveNodeIdToIp().Equal(rsp.NodeID.ResolveNodeIdToIp()) {
@@ -215,11 +213,8 @@ func HandlePfcpSessionEstablishmentResponse(msg *pfcpUdp.Message) {
 func HandlePfcpSessionModificationResponse(msg *pfcpUdp.Message) {
 	pfcpRsp := msg.PfcpMessage.Body.(pfcp.PFCPSessionModificationResponse)
 
-	fmt.Printf("now in the HandlePfcpSessionModificationResponse\n")
 	SEID := msg.PfcpMessage.Header.SEID
-	fmt.Printf("SEID is %v\n",SEID)
 	smContext := smf_context.GetSMContextBySEID(SEID)
-	fmt.Printf("smContext is %v\n",smContext)
 
 	logger.PfcpLog.Infoln("In HandlePfcpSessionModificationResponse")
 
@@ -238,7 +233,6 @@ func HandlePfcpSessionModificationResponse(msg *pfcpUdp.Message) {
 
 			upfNodeID := smContext.GetNodeIDByLocalSEID(SEID)
 			upfIP := upfNodeID.ResolveNodeIdToIp().String()
-			fmt.Printf("upfNodeID is %v, and upfIP is %v\n\n",upfNodeID,upfIP)
 			delete(smContext.PendingUPF, upfIP)
 			logger.PduSessLog.Tracef("Delete pending pfcp response: UPF IP [%s]\n", upfIP)
 
@@ -265,9 +259,8 @@ func HandlePfcpSessionModificationResponse(msg *pfcpUdp.Message) {
 	}
 
 	logger.CtxLog.Traceln("PFCP Session Context")
-	fmt.Printf("smContext.PFCPContext is %v\n",smContext.PFCPContext)
 	for _, ctx := range smContext.PFCPContext {
-		fmt.Printf("ctx is %v\n",ctx)
+
 		logger.CtxLog.Traceln(ctx.ToString())
 	}
 
@@ -332,7 +325,6 @@ func HandlePfcpSessionReportRequest(msg *pfcpUdp.Message) {
 			logger.PfcpLog.Warnf("PFCP Session Report Request DownlinkDataServiceInformation handling is not implemented")
 		}
 
-		fmt.Printf("Find GetDefaultPath2\n")
 		ANUPF := smContext.Tunnel.DataPathPool.GetDefaultPath().FirstDPNode
 		DLPDR := ANUPF.DownLinkTunnel.PDR
 		if DLPDR.PDRID == pdrID {
