@@ -141,6 +141,7 @@ func HandlePfcpSessionEstablishmentResponse(msg *pfcpUdp.Message) {
 	SEID := msg.PfcpMessage.Header.SEID
 	fmt.Printf("SEID is %v\n",SEID)
 	smContext := smf_context.GetSMContextBySEID(SEID)
+	fmt.Printf("smContext is %v\n",smContext)
 
 	if rsp.UPFSEID != nil {
 		NodeIDtoIP := rsp.NodeID.ResolveNodeIdToIp().String()
