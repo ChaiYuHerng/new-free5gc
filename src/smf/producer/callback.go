@@ -6,6 +6,7 @@ import (
 	smf_context "free5gc/src/smf/context"
 	"free5gc/src/smf/logger"
 	"net/http"
+	"fmt"
 )
 
 func HandleSMPolicyUpdateNotify(smContextRef string, request models.SmPolicyNotification) *http_wrapper.Response {
