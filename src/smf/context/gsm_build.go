@@ -52,28 +52,6 @@ func BuildGSMPDUSessionEstablishmentAccept(smContext *SMContext) ([]byte, error)
 	pDUSessionEstablishmentAccept.SessionAMBR = nasConvert.ModelsToSessionAMBR(sessRule.AuthSessAmbr)
 	pDUSessionEstablishmentAccept.SessionAMBR.SetLen(uint8(len(pDUSessionEstablishmentAccept.SessionAMBR.Octet)))
 
-	qoSRules := QoSRules{
-		QoSRule{
-			Identifier:    0x01,
-			DQR:           0x01,
-			OperationCode: OperationCodeCreateNewQoSRule,
-			Precedence:    0xff,
-			QFI:           9,
-			PacketFilterList: []PacketFilter{
-				{
-					Identifier:    0x01,
-					Direction:     PacketFilterDirectionBidirectional,
-					ComponentType: PacketFilterComponentTypeMatchAll,
-				},
-			},
-		},
-	}
-
-	qosRulesBytes, err := qoSRules.MarshalBinary()
-	if err != nil {
-		return nil, err
-	}
-
 	pDUSessionEstablishmentAccept.AuthorizedQosRules.SetLen(uint16(len(qosRulesBytes)))
 	pDUSessionEstablishmentAccept.AuthorizedQosRules.SetQosRule(qosRulesBytes)
 
@@ -89,7 +67,7 @@ func BuildGSMPDUSessionEstablishmentAccept(smContext *SMContext) ([]byte, error)
 	pDUSessionEstablishmentAccept.AuthorizedQosFlowDescriptions =
 		nasType.NewAuthorizedQosFlowDescriptions(nasMessage.PDUSessionEstablishmentAcceptAuthorizedQosFlowDescriptionsType)
 	pDUSessionEstablishmentAccept.AuthorizedQosFlowDescriptions.SetLen(6)
-	pDUSessionEstablishmentAccept.SetQoSFlowDescriptions([]uint8{uint8(authDefQos.Var5qi), 0x20, 0x41, 0x01, 0x01, 0x09})
+	pDUSessionEstablishmentAccept.SetQoSFlowDescriptions([]uint8{uint8(9), 0x20, 0x41, 0x01, 0x01, 0x09})
 
 	pDUSessionEstablishmentAccept.Cause5GSM = nasType.NewCause5GSM(nasMessage.PDUSessionEstablishmentAcceptCause5GSMType)
 	pDUSessionEstablishmentAccept.Cause5GSM.SetCauseValue(nasMessage.Cause5GSMPDUSessionTypeIPv4OnlyAllowed)
