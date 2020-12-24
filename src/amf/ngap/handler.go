@@ -1112,7 +1112,7 @@ func HandlePDUSessionResourceSetupResponse(ran *context.AmfRan, message *ngapTyp
 				_, _, _, err := consumer.SendUpdateSmContextN2Info(amfUe, pduSessionID,
 					models.N2SmInfoType_PDU_RES_SETUP_RSP, transfer)
 				if err != nil {
-					//Ngaplog.Errorf("first SendUpdateSmContextN2Info[PDUSessionResourceSetupResponseTransfer] Error:\n%s", err.Error())
+					Ngaplog.Errorf("first SendUpdateSmContextN2Info[PDUSessionResourceSetupResponseTransfer] Error:\n%s", err.Error())
 				}
 				// RAN initiated QoS Flow Mobility in subclause 5.2.2.3.7
 				// if response != nil && response.BinaryDataN2SmInformation != nil {
