@@ -22,7 +22,6 @@ func BuildGSMPDUSessionEstablishmentAccept(smContext *SMContext) ([]byte, error)
 	pDUSessionEstablishmentAccept := m.PDUSessionEstablishmentAccept
 
 	sessRule := smContext.SelectedSessionRule()
-	authDefQos := sessRule.AuthDefQos
 
 	pDUSessionEstablishmentAccept.SetPDUSessionID(uint8(smContext.PDUSessionID))
 	pDUSessionEstablishmentAccept.SetMessageType(nas.MsgTypePDUSessionEstablishmentAccept)
@@ -59,7 +58,7 @@ func BuildGSMPDUSessionEstablishmentAccept(smContext *SMContext) ([]byte, error)
 			DQR:           0x01,
 			OperationCode: OperationCodeCreateNewQoSRule,
 			Precedence:    0xff,
-			QFI:           uint8(authDefQos.Var5qi),
+			QFI:           9,
 			PacketFilterList: []PacketFilter{
 				{
 					Identifier:    0x01,
