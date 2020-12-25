@@ -70,6 +70,8 @@ func createSMPolicyProcedure(request models.SmPolicyContextData) (
 	var smData models.SmPolicyData
 	smPolicyID := fmt.Sprintf("%s-%d", ue.Supi, request.PduSessionId)
 	smPolicyData := ue.SmPolicyData[smPolicyID]
+	fmt.Printf("smPolicyID is %v\n",smPolicyID)
+	fmt.Printf("smPolicyData is %v\n",smPolicyData)
 	if smPolicyData == nil || smPolicyData.SmPolicyData == nil {
 		client := util.GetNudrClient(udrUri)
 		param := Nudr_DataRepository.PolicyDataUesUeIdSmDataGetParamOpts{
