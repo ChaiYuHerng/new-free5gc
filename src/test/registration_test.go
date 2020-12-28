@@ -82,23 +82,6 @@ var my_ue = UE{
     ranIpAddr:     ranIpAddr,
 }
 
-var my_ue2 = UE{
-    Supi:        "imsi-2089300007488",
-    Teid:        2,
-    RanUeNgapId: 2,
-    AmfUeNgapId: 2,
-    MobileIdentity5GS: nasType.MobileIdentity5GS{
-        Len:    12, //, suci
-        Buffer: []uint8{0x01, 0x02, 0xf8, 0x39, 0xf0, 0x00, 0x00, 0x00, 0x00, 0x00, 0x47, 0x88},
-    },
-    PduSessionId1: 11,
-    PduSessionId2: 11,
-    DN:            "internet2",
-    Ip:            "60.60.0.1",
-    ranIpAddr:     ranIpAddr,
-}
-
-
 
 
 func BuildGTPHeader(teid uint32, seq uint16) ([]byte, error) {
@@ -303,32 +286,32 @@ func TestRegistration(t *testing.T) {
 	assert.Nil(t, err)
 	_, err = conn.Write(sendMsg)
 	assert.Nil(t, err)
-        fmt.Printf("send InitialUeMessage\n")
+    fmt.Printf("send InitialUeMessage\n")
 	// receive NAS Authentication Request Msg
 	n, err = conn.Read(recvMsg)
 	assert.Nil(t, err)
 	ngapMsg, err := ngap.Decoder(recvMsg[:n])
 	assert.Nil(t, err)
-        fmt.Printf("receive NAS Authentication Request Msg\n")
+    fmt.Printf("receive NAS Authentication Request Msg\n")
 	// Calculate for RES*
 	nasPdu := test.GetNasPdu(ue,ngapMsg.InitiatingMessage.Value.DownlinkNASTransport)
 	assert.NotNil(t, nasPdu)
 	rand := nasPdu.AuthenticationRequest.GetRANDValue()
 	resStat := ue.DeriveRESstarAndSetKey(ue.AuthenticationSubs, rand[:], "5G:mnc093.mcc208.3gppnetwork.org")
-        fmt.Printf("Calculate for RES*\n")
+    fmt.Printf("Calculate for RES*\n")
 	// send NAS Authentication Response
 	pdu := nasTestpacket.GetAuthenticationResponse(resStat, "")
 	sendMsg, err = test.GetUplinkNASTransport(ue.AmfUeNgapId, ue.RanUeNgapId, pdu)
 	assert.Nil(t, err)
 	_, err = conn.Write(sendMsg)
 	assert.Nil(t, err)
-        fmt.Printf("send NAS Authentication Response\n")
+    fmt.Printf("send NAS Authentication Response\n")
 	// receive NAS Security Mode Command Msg
 	n, err = conn.Read(recvMsg)
 	assert.Nil(t, err)
 	_, err = ngap.Decoder(recvMsg[:n])
 	assert.Nil(t, err)
-        fmt.Printf("receive NAS Security Mode Command Msg\n")
+    fmt.Printf("receive NAS Security Mode Command Msg\n")
 	// send NAS Security Mode Complete Msg
 	pdu = nasTestpacket.GetSecurityModeComplete(registrationRequest)
 	pdu, err = test.EncodeNasPduWithSecurity(ue, pdu, nas.SecurityHeaderTypeIntegrityProtectedAndCipheredWithNew5gNasSecurityContext, true, true)
@@ -337,19 +320,19 @@ func TestRegistration(t *testing.T) {
 	assert.Nil(t, err)
 	_, err = conn.Write(sendMsg)
 	assert.Nil(t, err)
-        fmt.Printf("send NAS Security Mode Complete Msg\n")
+    fmt.Printf("send NAS Security Mode Complete Msg\n")
 	// receive ngap Initial Context Setup Request Msg
 	n, err = conn.Read(recvMsg)
 	assert.Nil(t, err)
 	_, err = ngap.Decoder(recvMsg[:n])
 	assert.Nil(t, err)
-        fmt.Printf("receive ngap Initial Context Setup Request Msg\n")
+    fmt.Printf("receive ngap Initial Context Setup Request Msg\n")
 	// send ngap Initial Context Setup Response Msg
 	sendMsg, err = test.GetInitialContextSetupResponse(ue.AmfUeNgapId, ue.RanUeNgapId)
 	assert.Nil(t, err)
 	_, err = conn.Write(sendMsg)
 	assert.Nil(t, err)
-        fmt.Printf("send ngap Initial Context Setup Response Msg\n")
+    fmt.Printf("send ngap Initial Context Setup Response Msg\n")
 	// send NAS Registration Complete Msg
 	pdu = nasTestpacket.GetRegistrationComplete(nil)
 	pdu, err = test.EncodeNasPduWithSecurity(ue, pdu, nas.SecurityHeaderTypeIntegrityProtectedAndCiphered, true, false)
@@ -360,7 +343,7 @@ func TestRegistration(t *testing.T) {
 	//fmt.Printf("check2\n")
 	_, err = conn.Write(sendMsg)
 	assert.Nil(t, err)
-        fmt.Printf("send NAS Registration Complete Msg\n")
+    fmt.Printf("send NAS Registration Complete Msg\n")
 	time.Sleep(100 * time.Millisecond)
 	// send GetPduSessionEstablishmentRequest Msg
 
@@ -378,19 +361,20 @@ func TestRegistration(t *testing.T) {
 	_, err = conn.Write(sendMsg)
 	//fmt.Printf("check3\n")
 	assert.Nil(t, err)
-        fmt.Printf("send GetPduSessionEstablishmentRequest Msg\n")
+    fmt.Printf("send GetPduSessionEstablishmentRequest Msg\n")
 	// receive 12. NGAP-PDU Session Resource Setup Request(DL nas transport((NAS msg-PDU session setup Accept)))
 	n, err = conn.Read(recvMsg)
 	assert.Nil(t, err)
 	_, err = ngap.Decoder(recvMsg[:n])
 	assert.Nil(t, err)
-        fmt.Printf("receive 12. NGAP-PDU Session Resource Setup Request\n")
+    fmt.Printf("receive 12. NGAP-PDU Session Resource Setup Request\n")
+    fmt.Printf("NAS msg-PDU session setup Accept is %v\n",recvMsg.PDUAddress)
 	// send 14. NGAP-PDU Session Resource Setup Response
 	sendMsg, err = test.GetPDUSessionResourceSetupResponse(ue.AmfUeNgapId, ue.RanUeNgapId, ranIpAddr)
 	assert.Nil(t, err)
 	_, err = conn.Write(sendMsg)
 	assert.Nil(t, err)
-        fmt.Printf("send 14. NGAP-PDU Session Resource Setup Response\n")
+    fmt.Printf("send 14. NGAP-PDU Session Resource Setup Response\n")
 	// wait 1s
 	time.Sleep(1 * time.Second)
 
