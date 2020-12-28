@@ -378,8 +378,7 @@ func TestRegistration(t *testing.T) {
 	_, err = conn.Write(sendMsg)
 	//fmt.Printf("check3\n")
 	assert.Nil(t, err)
-    fmt.Printf("send GetPduSessionEstablishmentRequest Msg\n")
-    fmt.Printf("pdu is %v\n",pdu)
+        fmt.Printf("send GetPduSessionEstablishmentRequest Msg\n")
 	// receive 12. NGAP-PDU Session Resource Setup Request(DL nas transport((NAS msg-PDU session setup Accept)))
 	n, err = conn.Read(recvMsg)
 	assert.Nil(t, err)
@@ -480,7 +479,7 @@ func setUESecurityCapability(ue *test.RanUeContext) (UESecurityCapability *nasTy
 func TestTransfer(t *testing.T) {
     fmt.Println("Start Transmission...")
     // RAN connect to UPF
-    upfConn1, err := test.ConnectToUpf(ranIpAddr, upfIpAddr1, 2152, 2152)
+    upfConn1, err := test.ConnectToUpf(ranIpAddr, upfIpAddr2, 2152, 2152)
     //upfConn1, err := connectToUpf("192.168.2.146", "192.168.122.204", 2152, 2152)
 	assert.Nil(t, err)
 	/*upfConn2, err := test.ConnectToUpf(ranIpAddr, upfIpAddr2, 2152, 2152)
