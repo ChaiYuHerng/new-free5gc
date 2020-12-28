@@ -15,7 +15,8 @@ import (
 	"free5gc/lib/ngap"
 	//"free5gc/lib/openapi/Npcf_PolicyAuthorization"
 	"free5gc/lib/openapi/models"
-	//"net/http"
+    //"net/http"
+    "io/ioutil"
 
 	//"github.com/gin-gonic/gin"
 	//"github.com/mohae/deepcopy"
@@ -25,10 +26,10 @@ import (
 	"net"
 	"testing"
 	"time"
-        "os"
+    "os"
 	"golang.org/x/net/icmp"
 	"golang.org/x/net/ipv4"
-        "log"
+    "log"
 	"fmt"
 	//"os/exec"
         "bytes"
@@ -45,13 +46,16 @@ var udpInterval time.Duration = 100 * time.Nanosecond
 var udpPacketCount int =        15000
 var totalUdpPacket int = 120000000000
 
+
 const my_type int = 1
-const ranIpAddr string = "192.168.2.157" //157, 150, 25
+const ranIpAddr string = "192.168.2.25" //157, 150, 25
 const amfIpAddr string = "192.168.2.102" // no need to change
-const upfIpAddr1 string = "192.168.2.111" // 110, 111
-const upfIpAddr2 string = "192.168.2.111" // 110, 111
-const dNServer1  string = "192.168.2.54" // 54, 219, 23
-var dNServerI = [4]byte{192, 168, 2, 54} // 54, 219, 23
+const upfIpAddr1 string = "192.168.2.113" // 110, 111
+const upfIpAddr2 string = "192.168.2.113" // 110, 111
+const dNServer1  string = "192.168.2.23" // 54, 219, 23
+var dNServerI = [4]byte{192, 168, 2, 23} // 54, 219, 23
+
+var tmp_ip string
 
 type UE struct {
     Supi              string
@@ -67,17 +71,17 @@ type UE struct {
 }
 
 var my_ue = UE{
-    Supi:        "imsi-2089300007487",
+    Supi:        "imsi-2089300007489",
     Teid:        1,
     RanUeNgapId: 1,
     AmfUeNgapId: 1,
     MobileIdentity5GS: nasType.MobileIdentity5GS{
         Len:    12, //, suci
-        Buffer: []uint8{0x01, 0x02, 0xf8, 0x39, 0xf0, 0x00, 0x00, 0x00, 0x00, 0x00, 0x47, 0x78},
+        Buffer: []uint8{0x01, 0x02, 0xf8, 0x39, 0xf0, 0x00, 0x00, 0x00, 0x00, 0x00, 0x47, 0x98},
     },
     PduSessionId1: 10,
     PduSessionId2: 10,
-    DN:            "internet",
+    DN:            "internet3",
     Ip:            "60.60.0.1",
     ranIpAddr:     ranIpAddr,
 }
@@ -349,7 +353,7 @@ func TestRegistration(t *testing.T) {
 
 	sNssai := models.Snssai{
 		Sst: 1,
-		Sd:  "010203",
+		Sd:  "212223",
 	}
 	pdu = nasTestpacket.GetUlNasTransport_PduSessionEstablishmentRequest(rg_ues.PduSessionId1, nasMessage.ULNASTransportRequestTypeInitialRequest, rg_ues.DN, &sNssai)
 	pdu, err = test.EncodeNasPduWithSecurity(ue, pdu, nas.SecurityHeaderTypeIntegrityProtectedAndCiphered, true, false)
@@ -368,8 +372,37 @@ func TestRegistration(t *testing.T) {
 	_, err = ngap.Decoder(recvMsg[:n])
 	assert.Nil(t, err)
     fmt.Printf("receive 12. NGAP-PDU Session Resource Setup Request\n")
-    fmt.Printf("NAS msg-PDU session setup Accept is %v\n",recvMsg.PDUAddress)
-	// send 14. NGAP-PDU Session Resource Setup Response
+    fmt.Printf("NAS msg-PDU session setup Accept is %v\n",recvMsg)
+    fmt.Printf("NAS msg-PDU session setup Accept is %v,%v,%v,%v\n",recvMsg[70],recvMsg[71],recvMsg[72],recvMsg[73])
+    //parse IP
+    f, err := os.Create("DNIP.txt")
+    if err != nil {
+        fmt.Println("conn.Read err =", err)
+    }
+    if recvMsg[73] == 0x00000001 {
+        fmt.Printf("check1\n")
+        _, err = f.WriteString("60.60.0.1")
+        if err != nil {
+        fmt.Println("conn.Read err =", err)
+        }
+        tmp_ip = "60.60.0.1"
+    } else if recvMsg[73] == 0x00000002 {
+        fmt.Printf("check2\n")
+        _, err = f.WriteString("60.60.0.2")
+        if err != nil {
+        fmt.Println("conn.Read err =", err)
+        }   
+        tmp_ip = "60.60.0.2"
+    } else if recvMsg[73] == 0x00000003 {
+        fmt.Printf("check3\n")
+        _, err = f.WriteString("60.60.0.3")
+        if err != nil {
+        fmt.Println("conn.Read err =", err)
+        }   
+        tmp_ip = "60.60.0.3"
+    }
+    //f.close()
+    // send 14. NGAP-PDU Session Resource Setup Response
 	sendMsg, err = test.GetPDUSessionResourceSetupResponse(ue.AmfUeNgapId, ue.RanUeNgapId, ranIpAddr)
 	assert.Nil(t, err)
 	_, err = conn.Write(sendMsg)
@@ -462,6 +495,17 @@ func setUESecurityCapability(ue *test.RanUeContext) (UESecurityCapability *nasTy
 
 func TestTransfer(t *testing.T) {
     fmt.Println("Start Transmission...")
+    //single msf
+    data, err := ioutil.ReadFile("DNIP.txt")
+    if err != nil {
+        fmt.Println("File reading error", err)
+        return
+    }
+    tmp_ip = string(data)
+    
+    //tmp_ip = "60.60.0.1"
+    fmt.Printf("tmp_ip is %s\n",tmp_ip)
+    
     // RAN connect to UPF
     upfConn1, err := test.ConnectToUpf(ranIpAddr, upfIpAddr2, 2152, 2152)
     //upfConn1, err := connectToUpf("192.168.2.146", "192.168.122.204", 2152, 2152)
@@ -483,9 +527,9 @@ func TestTransfer(t *testing.T) {
     wg.Add(1)
     go gtpPacketListener(upfConn1, logger)
     wg.Add(1)
-    go icmpTrafficGenerator(1, "60.60.0.1", upfConn1, logger)
+    go icmpTrafficGenerator(1, tmp_ip, upfConn1, logger)
     wg.Add(1)
-	go udpTrafficGenerator(1, "60.60.0.1", upfConn1, logger)
+	go udpTrafficGenerator(1, tmp_ip, upfConn1, logger)
 	wg.Add(1)
     /*go gtpPacketListener(upfConn2, logger)
     wg.Add(1)
