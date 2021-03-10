@@ -210,6 +210,7 @@ func HandlePDUSessionEstablishmentRequest(ue *context.AmfUe, anType models.Acces
 				AnType:            anType,
 				Payload:           payload,
 			}
+			fmt.Printf("go to updateData\n")
 			updateData := models.SmContextUpdateData{
 				Release: true,
 				Cause:   models.Cause_REL_DUE_TO_DUPLICATE_SESSION_ID,
