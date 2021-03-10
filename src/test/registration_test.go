@@ -48,12 +48,12 @@ var totalUdpPacket int = 120000000000
 
 
 const my_type int = 1
-const ranIpAddr string = "192.168.2.25" //157, 150, 25
+const ranIpAddr string = "192.168.2.23" //157, 150, 25
 const amfIpAddr string = "192.168.2.102" // no need to change
-const upfIpAddr1 string = "192.168.2.113" // 110, 111
-const upfIpAddr2 string = "192.168.2.113" // 110, 111
-const dNServer1  string = "192.168.2.23" // 54, 219, 23
-var dNServerI = [4]byte{192, 168, 2, 23} // 54, 219, 23
+const upfIpAddr1 string = "192.168.2.111" // 110, 111
+const upfIpAddr2 string = "192.168.2.111" // 110, 111
+const dNServer1  string = "192.168.2.197" // 54, 219, 23
+var dNServerI = [4]byte{192, 168, 2, 197} // 54, 219, 23
 
 var tmp_ip string
 
@@ -71,17 +71,17 @@ type UE struct {
 }
 
 var my_ue = UE{
-    Supi:        "imsi-2089300007489",
+    Supi:        "imsi-2089300007487",
     Teid:        1,
     RanUeNgapId: 1,
     AmfUeNgapId: 1,
     MobileIdentity5GS: nasType.MobileIdentity5GS{
         Len:    12, //, suci
-        Buffer: []uint8{0x01, 0x02, 0xf8, 0x39, 0xf0, 0x00, 0x00, 0x00, 0x00, 0x00, 0x47, 0x98},
+        Buffer: []uint8{0x01, 0x02, 0xf8, 0x39, 0xf0, 0x00, 0x00, 0x00, 0x00, 0x00, 0x47, 0x78},
     },
     PduSessionId1: 10,
     PduSessionId2: 10,
-    DN:            "internet3",
+    DN:            "internet1",
     Ip:            "60.60.0.1",
     ranIpAddr:     ranIpAddr,
 }
@@ -353,7 +353,7 @@ func TestRegistration(t *testing.T) {
 
 	sNssai := models.Snssai{
 		Sst: 1,
-		Sd:  "212223",
+		Sd:  "010203",
 	}
 	pdu = nasTestpacket.GetUlNasTransport_PduSessionEstablishmentRequest(rg_ues.PduSessionId1, nasMessage.ULNASTransportRequestTypeInitialRequest, rg_ues.DN, &sNssai)
 	pdu, err = test.EncodeNasPduWithSecurity(ue, pdu, nas.SecurityHeaderTypeIntegrityProtectedAndCiphered, true, false)
@@ -400,8 +400,10 @@ func TestRegistration(t *testing.T) {
         fmt.Println("conn.Read err =", err)
         }   
         tmp_ip = "60.60.0.3"
+    } else{
+        fmt.Printf("error\n")
     }
-    //f.close()
+    f.close()
     // send 14. NGAP-PDU Session Resource Setup Response
 	sendMsg, err = test.GetPDUSessionResourceSetupResponse(ue.AmfUeNgapId, ue.RanUeNgapId, ranIpAddr)
 	assert.Nil(t, err)
