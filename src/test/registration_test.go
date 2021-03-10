@@ -81,7 +81,7 @@ var my_ue = UE{
     },
     PduSessionId1: 10,
     PduSessionId2: 10,
-    DN:            "internet1",
+    DN:            "internet",
     Ip:            "60.60.0.1",
     ranIpAddr:     ranIpAddr,
 }
@@ -403,7 +403,7 @@ func TestRegistration(t *testing.T) {
     } else{
         fmt.Printf("error\n")
     }
-    f.close()
+    //f.close()
     // send 14. NGAP-PDU Session Resource Setup Response
 	sendMsg, err = test.GetPDUSessionResourceSetupResponse(ue.AmfUeNgapId, ue.RanUeNgapId, ranIpAddr)
 	assert.Nil(t, err)
